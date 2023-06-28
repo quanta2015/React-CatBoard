@@ -1,0 +1,106 @@
+@media screen and (min-width: 1000px) {
+  .index{
+    width: 100%;
+    height: 100%;
+    background-color: #168BD5;
+    .header{
+      width: 100%;
+      height: 160px;
+      .logo{
+        height: 50%;
+        padding: 40px ;
+        position: relative;
+        .web_logo{
+            display: block;
+            padding-left: 120px;
+        }
+      }
+    }
+  }
+  .login {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    width: 100%;
+    flex: 1;
+    padding-top: 100px;
+    align-items: center;
+    border-radius: 20px;
+  }
+
+  .wrap {
+    width: 1000px;
+    height: 500px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    display: flex;
+  }
+
+  .logo {
+    flex: 3;
+    color: var(--clr-main);
+    background: #f9f9f9;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edu {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    img {
+      width: 200px;
+    }
+  }
+
+  .title {
+    display: flex;
+
+
+    p {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: 20px;
+      height: 64px;
+    }
+
+    img {
+      height: 64px;
+      width: 64px;
+    }
+
+    span {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    label {
+      font-size: 12px;
+    }
+  }
+
+  .login_frm {
+    flex: 2;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    
+    &>p {
+      flex: 1;
+    }
+
+    &>label {
+      height: 100px;
+      font-size: 24px;
+      text-align: center;
+    }
+  }
+
+}
+
