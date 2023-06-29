@@ -27,8 +27,7 @@
   .bd {
     display: flex;
     flex-direction: column;
-
-    padding: 40px;
+    padding: 40px 60px;
 
 
     section {
@@ -36,7 +35,7 @@
       flex-direction: column;
 
 
-      h1 {
+      &>h1 {
         color: #000;
         font-size: 24px;
         font-family: Inter;
@@ -83,6 +82,34 @@
 
   }
 
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  margin: 25px 0;
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+    font-weight: 700;
+    color: #000;
+    flex: 1;
+  }
+
+  &>span {
+    color: #424242;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &>img {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+  }
 }
 
 
