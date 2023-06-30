@@ -7,8 +7,8 @@ import { getNewsList,ltList,fdList,ptList,neList,qiList,qeList,qList } from '@/c
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
 import CardQ2 from '@/component/CardQ2'
-
-
+import Footer from '@/component/Footer'
+import ToTop from '@/component/ToTop'
 
 import s from './index.module.less';
 
@@ -142,6 +142,13 @@ const Index = () => {
             {qList.map((item,i)=> <CardQ2 {...item} id={i+1} /> )}
           </p>
         </section>
+
+
+        <ToTop />
+
+        <Footer />
+
+
 
       </div>
       

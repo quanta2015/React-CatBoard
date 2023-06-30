@@ -1,8 +1,8 @@
 
 import icon_user from '@/img/UserCircle.png'
-import cat_lost from '@/img/item/lost.png'
-import cat_find from '@/img/item/find.png'
-import cat_prot from '@/img/item/prot.png'
+import cat_lost from '@/img/item/lost.webp'
+import cat_find from '@/img/item/find.webp'
+import cat_prot from '@/img/item/prot.webp'
 import cat_note from '@/img/item/note.png'
 
 
@@ -233,3 +233,7 @@ export const qList = [{
   qDesc: '今月３度目の質問です。お目にとめて頂きありがとうございます。2匹目の…',
   qDate: '2022-11-26',
 }]
+
+
+
+export const footList = ['このサイトについて','お問い合わせ','運営会社','利用規約','プライバシーポリシー','サービスサイト']
