@@ -7,18 +7,11 @@ const opt = {
   region: "us-east-1",
   accessKeyId: 'AKIAY2HDORQUZZPNVB6Y',
   secretAccessKey: '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',
-  
-  // region: "ap-northeast-1",
-  // accessKeyId: 'AKIAY2HDORQUTT2FZNQY',
-  // secretAccessKey: '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',
 }
 const client = new DynamoDBClient(opt);
 
 // const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
-
-
-
 
 
 
@@ -51,10 +44,10 @@ const deleteAws =async({tab,cnd, attr})=>{
 const main = async () => {
   console.time("executionTime");
   const params = {
-    tab: "Nekonara_board",
-    cnd: "board_id = :board_id",
+    tab: "Nekonara_board2",
+    cnd: "category = :category",
     attr: {
-      ":board_id": 3333
+      ":category": "目撃"
     }
   }
   const ret = await queryAws(params)
