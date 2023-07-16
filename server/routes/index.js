@@ -7,101 +7,89 @@ var express = require('express')
 var jwt = require('jsonwebtoken')
 var formidable = require('formidable')
 var router = express.Router()
-var db = require("../db/db")
+// var db = require("../db/db")
+const { DynamoDBClient,DynamoDB, QueryCommand,ScanCommand } = require("@aws-sdk/client-dynamodb")
+const { unmarshall} = require("@aws-sdk/util-dynamodb");
 
 dotenv.config()
 
 var root = path.resolve(__dirname,'../')
-var clone =(e)=> {
-  return JSON.parse(JSON.stringify(e))
+
+
+
+const opt = {
+  region: "us-east-1",
+  accessKeyId: 'AKIAY2HDORQUZZPNVB6Y',
+  secretAccessKey: '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',
+}
+const client = new DynamoDBClient(opt);
+
+
+const ums = (list)=> list.Items.map(item => unmarshall(item))
+
+
+// const queryBoard =async(board_type,category,Limit=10)=>{
+//   const params = {
+//     TableName: "Nekonara_board2",
+//     IndexName: "type-category-index",
+//     KeyConditionExpression: "board_type = :board_type_value AND category = :category_value",
+//     ExpressionAttributeValues: {
+//       ":board_type_value": { S: board_type },
+//       ":category_value": { S: category }
+//     },
+//     ScanIndexForward: false,
+//     Limit,
+//   };
+
+//   try {
+//     const ret = await client.send(new QueryCommand(params));
+//     return ums(ret)
+//   } catch (err) {
+//     console.error(err);
+//     return null
+//   }
+// }
+
+
+const queryBoard =async(board_type,category,Limit=9)=>{
+  
+  const params = {
+      TableName: "Nekonara_board2",
+      IndexName: "type-category-date-index",
+      KeyConditionExpression: "#bc = :bc_value",
+      ExpressionAttributeNames: {
+          "#bc": "board_type#category",
+      },
+      ExpressionAttributeValues: {
+          ":bc_value": { S: `${board_type}#${category}` }
+      },
+      ScanIndexForward: false,
+      Limit,
+  };
+
+  try {
+    const ret = await client.send(new QueryCommand(params));
+    return ret.Items.map(item => unmarshall(item))
+  } catch (err) {
+    console.error(err);
+    return null
+  }
 }
 
-const callSQLProc = (sql, params, res) => {
-  return new Promise (resolve => {
-    db.procedureSQL(sql,JSON.stringify(params),(err,ret)=>{
-      if (err) {
-        res.status(500).json({ code: -1, msg: '提交请求失败，请联系管理员！', data: null})
-      }else{
-        resolve(ret)
-      }
-    })
-  })
-}
-
-const callP = async (sql, params, res) => {
-  return  await callSQLProc(sql, params, res)
-}
-
-const jsonToObj = (list)=>{
-  let ret = []
-
-  list.map(o=>{
-    o.data = JSON.parse(o.data_json);
-    o.app = JSON.parse(o.app_json);
-    o.attr = JSON.parse(o.attr_json)
-    o.asset = JSON.parse(o.asset_json)
-    let {data_json, app_json, attr_json,asset_json, ...n} = o
-    ret.push(n)
-  })
-  return ret
-}
+router.post('/queryCat', async (req, res, next) =>{
 
 
-router.post('/queryParts', async (req, res, next) =>{
-  let params = req.body
-  let sql = `CALL PROC_QUERY_PARTS(?)`
-  let r = await callP(sql, params, res)
-  let ret = jsonToObj(r)
-  res.status(200).json({code: 0, data: ret })
+  const cat_lose = await queryBoard("cat","迷子")
+  const cat_find = await queryBoard("cat","目撃")
+  const cat_prot = await queryBoard("cat","保護")
+  const note  = await queryBoard("note","NULL")
+  const qa_s  = await queryBoard("qa","解決",4)
+  const qa_i  = await queryBoard("qa","受付中",4)
+
+  res.status(200).json({code: 200, qa_s, qa_i, note, cat_lose, cat_find, cat_prot  })
 })
 
 
-const convert =(input)=>{
-  var elements = input.split(', ');
-  var result = elements.map((element,i)=> {
-      var obj = {};
-      var pairs = element.split('#');
-      pairs.forEach(function(pair) {
-          var keyValue = pair.split(': ');
-          obj[keyValue[0]] = keyValue[1];
-      });
-      obj.key = i+1
-      return obj;
-  });
-  return result
-}
-
-router.post('/queryTable', async (req, res, next) =>{
-  let params = req.body
-
-  let sql = `CALL PROC_QUERY_TABLE(?)`
-  let r = await callP(sql, params, res)
-  r.map(o=>o.sub = (o.sub)?convert(o.sub):[])
-
-  res.status(200).json({code: 0, data: r })
-})
-
-
-router.post('/saveTable', async (req, res, next) =>{
-  let {table, def} = req.body
-
-  let fields = def.map(item => item.dataIndex).join(', ');
-  let values = def.map(item => `'${item.val}'`).join(', '); 
-  let sql = `INSERT INTO ${table} (${fields}) VALUES (${values});`;
-  let r = await callP(sql, null, res)
-
-  res.status(200).json({code: 0 })
-})
-
-
-router.post('/deleteRecord', async (req, res, next) =>{
-  let {table, key, val} = req.body
-  let sql = `delete from ${table} where ${key}='${val}'`
-  // console.log(sql);
-  let r = await callP(sql, null, res)
-
-  res.status(200).json({code: 0 })
-})
 
 
 

@@ -44,7 +44,7 @@
     border: 50px solid transparent;
   }
 
-  &:global(.lost) {
+  &:global(.lose) {
     border: 2px solid var(--clr-lost);
 
     &:before {
@@ -190,6 +190,9 @@
       h1 {
         font-size: 22px;
         margin: 10px 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       h2 {

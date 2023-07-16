@@ -73,11 +73,8 @@ export const list3 = {
 
 
 
-
-
-
 const lt = {
-  type: 'lost',
+  type: 'lose',
   img: cat_lost,
   addr: '静岡県静岡市駿河区小鹿',
   user: 'Sorairo',

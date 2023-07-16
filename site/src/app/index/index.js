@@ -3,7 +3,7 @@ import React,{useEffect,useState} from 'react';
 import {Input, Table, Space, Pagination, Spin,Carousel} from 'antd'
 import {API_SERVER} from '@/constant/apis'
 import { observer,MobXProviderContext } from 'mobx-react'
-import { getNewsList,ltList,fdList,ptList,neList,qiList,qeList,qList } from '@/constant/data'
+import { getNewsList,neList,qiList,qeList,qList } from '@/constant/data'
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
 import CardQ2 from '@/component/CardQ2'
@@ -22,6 +22,36 @@ import slide03 from '@/img/slide03.png'
 
 const Index = () => {
   const { store } = React.useContext(MobXProviderContext)
+  const [findList, setFindList] = useState([])
+  const [loseList, setLoseList] = useState([])
+  const [protList, setProtList] = useState([])
+  const [noteList, setNoteList] = useState([])
+  const [qaiList,  setQaiList] = useState([])
+  const [qasList,  setQasList] = useState([])
+
+  useEffect(()=>{
+    store.queryCats().then(r=>{
+      console.log(r)
+
+      r.cat_find.map(o=>o.type = 'find' )
+      r.cat_lose.map(o=>o.type = 'lose' )
+      r.cat_prot.map(o=>o.type = 'prot' )
+      r.note.map(o=>o.type = 'note' )
+      r.qa_i.map(o=>o.type = '受付中' )
+      r.qa_s.map(o=>o.type = '解決' )
+
+
+      setFindList(r.cat_find)
+      setLoseList(r.cat_lose)
+      setProtList(r.cat_prot)
+      setNoteList(r.note)
+      setQaiList(r.qa_i)
+      setQasList(r.qa_s)
+
+    })
+  },[])
+
+
   
   const contentStyle = {
     margin: 0,
@@ -35,6 +65,12 @@ const Index = () => {
   const listS = [1,1,1,1]
 
   const newsList = getNewsList()
+
+
+  // const newsList = []
+
+
+
 
 
   const Header = (title)=>(
@@ -69,34 +105,28 @@ const Index = () => {
       <div className={s.bd}>
 
         <section>
-          <p>
+          <div>
             {newsList.map((item,i)=>
-              <Card {...item} />
+              <Card {...item} key={i}/>
             )}
-          </p>
+          </div>
         </section>
         
         <div className={s.adv}>ADVer</div>
 
         <section>
-          {Header('目撃情報')}
-          <p>
-            {ltList.map((item,i)=> <Card {...item} /> )}
-          </p>
+          {Header('迷子情報')}
+          <div>{loseList.map((item,i)=> <Card key={i} {...item} /> )}</div>
         </section>
 
         <section>
-          {Header('迷子情報')}
-          <p>
-            {fdList.map((item,i)=> <Card {...item} /> )}
-          </p>
+          {Header('目撃情報')}
+          <div>{findList.map((item,i)=> <Card key={i} {...item} /> )}</div>
         </section>
 
         <section>
           {Header('保護情報')}
-          <p>
-            {ptList.map((item,i)=> <Card {...item} /> )}
-          </p>
+          <div>{protList.map((item,i)=> <Card key={i} {...item} /> )}</div>
         </section>
         
 
@@ -104,24 +134,22 @@ const Index = () => {
 
         <section>
           {Header('記事')}
-          <p>
-            {neList.map((item,i)=> <Card {...item} /> )}
-          </p>
+          <div>{noteList.map((item,i)=> <Card key={i} {...item} /> )}</div>
         </section>
 
 
         <section>
           {Header('Q&A')}
-          <p>
+          <div>
             <div className={s.wrap}>
               <span className={s.title}>受付中の質問</span>
-              {qiList.map((item,i)=> <CardQ1 {...item} clr={'#33831F'} /> )}
+              {qaiList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#33831F'} /> )}
             </div>
             <div className={s.wrap}>
               <span className={s.title}>受付中の質問</span>
-              {qeList.map((item,i)=> <CardQ1 {...item} clr={'#DE5A5A'} fit={'var(--fil-grey)'} /> )}
+              {qasList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#DE5A5A'} fit={'var(--fil-grey)'} /> )}
             </div>
-          </p>
+          </div>
         </section>
 
         <div className={s.adv}>ADVer</div>
@@ -130,17 +158,17 @@ const Index = () => {
           
         <section>
           {Header('記事 ランキング')}
-          <p>
-            {neList.map((item,i)=> <Card {...item} id={i+1} /> )}
-          </p>
+          <div>
+            {neList.map((item,i)=> <Card key={i} {...item} id={i+1} /> )}
+          </div>
         </section>
 
 
         <section>
           {Header('Q&A ランキング')}
-          <p>
-            {qList.map((item,i)=> <CardQ2 {...item} id={i+1} /> )}
-          </p>
+          <div>
+            {qList.map((item,i)=> <CardQ2 key={i} {...item} id={i+1} /> )}
+          </div>
         </section>
 
 

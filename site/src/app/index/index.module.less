@@ -42,14 +42,15 @@
         font-weight: 700;
       }
 
-      &>p {
+      &>div {
         display: flex;
         flex-wrap: wrap;
 
         .wrap {
           display: flex;
           flex-direction: column;
-          flex: 1;
+          width: calc(50% - 10px);
+          // flex: 1;
 
           &+.wrap {
             margin-left: 20px;

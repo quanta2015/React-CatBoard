@@ -14,8 +14,8 @@ class Store {
 
   async post(url, params) {
     const r = await post(url,params)
-    if (r.code === 0) {
-      return r.data
+    if (r.code === 200) {
+      return r
     }else{
       return null
       message.error(' 网络接口数据出错!')
@@ -32,22 +32,9 @@ class Store {
     }
   }
 
-  async queryParts(params) {
-    return await this.post(urls.API_QUERY_PARTS,params)
+  async queryCats(params) {
+    return await this.post(urls.API_QUERY_CATS,params)
   }
-
-  async queryTable(params) {
-    return await this.post(urls.API_QUERY_TABLE,params)
-  }
-
-  async saveTable(params) {
-    return await this.post(urls.API_SAVE_TABLE,params)
-  }
-
-  async deleteRecord(params) {
-    return await this.post(urls.API_DELETE_RECORD,params)
-  }
-
 
   
 

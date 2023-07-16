@@ -19,10 +19,10 @@ threadcreatedat 线程创建时间
 ホームページのデザインに基づいて、いくつかのテーブルの設計を先に行きました。またAWS内でインスタンスも作成しました。
 
 
-Nekonara_board
-board_id       ID[パーティションキー]
+Nekonara_board2
+board_id       UUID[パーティションキー]
 sub_date       投稿日時[ソートキー]
-type           種類[cat|note|qa]
+board_type     種類[cat|note|qa]
 category       类别[cat:保護｜目撃｜迷子, qa:受付中｜解決, note:null ]
 addr           住所[addr_ken#addr_shi#addr_dtl]json
 cat            ネコ[img#name#type#size#sex#clr#age#attr]json
