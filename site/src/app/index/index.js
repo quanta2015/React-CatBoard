@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect,useState} from 'react';
-import {Input, Table, Space, Pagination, Spin,Carousel} from 'antd'
+import {Input, Table, Space, Pagination, Spin,Carousel,Button} from 'antd'
 import {API_SERVER} from '@/constant/apis'
 import { observer,MobXProviderContext } from 'mobx-react'
+import Resizer from "react-image-file-resizer";
 import { getNewsList,neList,qiList,qeList,qList } from '@/constant/data'
+
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
 import CardQ2 from '@/component/CardQ2'
@@ -31,7 +33,7 @@ const Index = () => {
 
   useEffect(()=>{
     store.queryCats().then(r=>{
-      console.log(r)
+      console.log('取得データ',r)
 
       r.cat_find.map(o=>o.type = 'find' )
       r.cat_lose.map(o=>o.type = 'lose' )
@@ -69,9 +71,40 @@ const Index = () => {
 
   // const newsList = []
 
-
-
-
+    const [name, setName] = useState('')
+    const [thumbnail, setThumbnail] = useState(null);
+    const resizeFile = (file) => {
+      return new Promise((resolve) => {
+        Resizer.imageFileResizer(
+          file,
+          300,
+          200,
+          'PNG',
+          100,
+          0,
+          (uri) => {
+            resolve(uri)
+          },
+          'blob'
+        )
+      })
+    }
+  
+    //for image test
+    const onChange = async (event) => {
+      try {
+        const file = event.target.files[0];
+        const imageBlob = await resizeFile(file);
+        const imageUrl = URL.createObjectURL(imageBlob);
+        
+        console.log('imageBlob',imageBlob)
+        setThumbnail(imageUrl);
+        setName(file.name);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    console.log('image',thumbnail)
 
   const Header = (title)=>(
     <div className={s.header}>
@@ -82,11 +115,11 @@ const Index = () => {
   )
 
   return (
-  
+    <>
     <div className={s.index}>
       <div className={s.hd}>
         <div className={s.lt}>
-          <Carousel >
+          <Carousel autoplay autoplaySpeed={5000}>
             {listS.map((item,i)=>
             <div key={i}>
               <h3 style={contentStyle}>
@@ -96,12 +129,8 @@ const Index = () => {
             )}
           </Carousel>
         </div>
-        <div className={s.rt}>
-          <img src={slide02} />
-          <img src={slide03} />
-        </div>
       </div>
-
+      <div><Button type="primary" className={s.searchButton}>投稿</Button></div>
       <div className={s.bd}>
 
         <section>
@@ -117,11 +146,7 @@ const Index = () => {
         <section>
           {Header('迷子情報')}
           <div>{loseList.map((item,i)=> <Card key={i} {...item} /> )}</div>
-        </section>
 
-        <section>
-          {Header('目撃情報')}
-          <div>{findList.map((item,i)=> <Card key={i} {...item} /> )}</div>
         </section>
 
         <section>
@@ -164,25 +189,19 @@ const Index = () => {
         </section>
 
 
-        <section>
-          {Header('Q&A ランキング')}
-          <div>
-            {qList.map((item,i)=> <CardQ2 key={i} {...item} id={i+1} /> )}
-          </div>
-        </section>
-
-
         <ToTop />
 
         <Footer />
-
-
-
       </div>
-      
     </div>
+    
+    {/* <div>      
+      <input type="file" onChange={onChange} />
+      {thumbnail && <img src={thumbnail} alt={name} />}
+    </div> */}
+    </>
   )
-
 }
+
 
 export default  observer(Index)
