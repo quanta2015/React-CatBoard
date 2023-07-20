@@ -36,7 +36,13 @@ class Store {
     return await this.post(urls.API_QUERY_CATS,params)
   }
 
+  async queryLatest(params) {
+    return await this.post(urls.API_QUERY_LATEST,params)
+  }
   
+  async querySubDate(params) {
+      return await this.post(urls.API_QUERY_LATEST_SUB_DATE,params)
+    }
 
 
 

@@ -76,9 +76,80 @@ const queryBoard =async(board_type,category,Limit=9)=>{
   }
 }
 
+//test for get latest submission
+// const queryLatest = async(Limit=9) => {
+//   const params = {
+//       TableName: "Nekonara_board2",
+//       ScanIndexForward: false,  // To sort the results in descending order
+//       Limit,
+//   };
+
+//   try {
+//       const ret = await client.send(new ScanCommand(params));
+//       console.log(ret);  // To check what is returned from the DynamoDB scan
+
+//       let items = ret.Items.map(item => unmarshall(item));
+//       console.log(items);  // To check the items after unmarshalling
+
+//       items.sort((a, b) => b.sub_date - a.sub_date);
+//       console.log(items);  // To check the items after sorting
+
+//       return items.slice(0, Limit);
+//   } catch (err) {
+//       console.error(err.stack);  // To print out any error messages that occur
+//       return null;
+//   }
+// }
+
+//test for get latest submission
+const getLatestSubDate = async (Limit=1) => {
+  const params = {
+      TableName: "Nekonara_board2",
+      IndexName: "sub_date-index", 
+      ScanIndexForward: false, 
+      Limit,  
+  };
+
+  try {
+    const ret = await client.send(new QueryCommand(params));
+    return ret.Items.map(item => unmarshall(item))[0] 
+  } catch (err) {
+    console.error(err);
+    return null
+  }
+}
+
+const { UpdateCommand } = require("@aws-sdk/client-dynamodb");
+
+//test for 更新图像id
+const updateItem = async ( key, updatedValues) => {
+  const params = {
+    TableName: "Nekonara_board2",
+    Key: key,
+    ExpressionAttributeNames: {},
+    ExpressionAttributeValues: {},
+    UpdateExpression: "SET "
+  };
+
+  let prefix = "";
+  for (let attribute in updatedValues) {
+    params.ExpressionAttributeNames["#" + attribute] = attribute;
+    params.ExpressionAttributeValues[":" + attribute] = updatedValues[attribute];
+    params.UpdateExpression += prefix + "#" + attribute + " = :" + attribute;
+    prefix = ", ";
+  }
+
+  try {
+    const ret = await client.send(new UpdateCommand(params));
+    return ret;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+
 router.post('/queryCat', async (req, res, next) =>{
-
-
   const cat_lose = await queryBoard("cat","迷子")
   const cat_find = await queryBoard("cat","目撃")
   const cat_prot = await queryBoard("cat","保護")
@@ -89,7 +160,29 @@ router.post('/queryCat', async (req, res, next) =>{
   res.status(200).json({code: 200, qa_s, qa_i, note, cat_lose, cat_find, cat_prot  })
 })
 
+router.post('/queryLatest', async (req, res, next) => {
+  const latestItems = await queryLatest();
+  res.status(200).json({code: 200, latestItems });
+})
 
+router.post('/getLatestSubDate', async (req, res, next) => {
+  const latestSubDateItem = await getLatestSubDate();
+  if (latestSubDateItem !== null) {
+    res.status(200).json({code: 200, latestSubDateItem });
+  } else {
+    res.status(500).json({code: 500, message: 'Server error' });
+  }
+})
+
+router.post('/updateCatImage', async (req, res, next) => {
+  const { tableName, key, updatedValues } = req.body;
+  const updateResult = await updateItem(tableName, key, updatedValues);
+  if (updateResult) {
+    res.status(200).json({ code: 200, message: "Successfully updated item" });
+  } else {
+    res.status(500).json({ code: 500, message: "Error updating item" });
+  }
+});
 
 
 

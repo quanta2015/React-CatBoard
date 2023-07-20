@@ -51,6 +51,9 @@ const Index = () => {
       setQasList(r.qa_s)
 
     })
+    store.querySubDate().then(r=>{
+      console.log('取得latestデータ',r)
+    })
   },[])
 
 
@@ -71,40 +74,7 @@ const Index = () => {
 
   // const newsList = []
 
-    const [name, setName] = useState('')
-    const [thumbnail, setThumbnail] = useState(null);
-    const resizeFile = (file) => {
-      return new Promise((resolve) => {
-        Resizer.imageFileResizer(
-          file,
-          300,
-          200,
-          'PNG',
-          100,
-          0,
-          (uri) => {
-            resolve(uri)
-          },
-          'blob'
-        )
-      })
-    }
-  
-    //for image test
-    const onChange = async (event) => {
-      try {
-        const file = event.target.files[0];
-        const imageBlob = await resizeFile(file);
-        const imageUrl = URL.createObjectURL(imageBlob);
-        
-        console.log('imageBlob',imageBlob)
-        setThumbnail(imageUrl);
-        setName(file.name);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    console.log('image',thumbnail)
+  const [name, setName] = useState('')
 
   const Header = (title)=>(
     <div className={s.header}>
@@ -124,6 +94,7 @@ const Index = () => {
             <div key={i}>
               <h3 style={contentStyle}>
                 <img src={slide01} />
+                {/* {<img src={'https://im.ages.io/sqTuKiO5l2'} alt=''></img> } */}
               </h3>
             </div>
             )}
@@ -194,11 +165,6 @@ const Index = () => {
         <Footer />
       </div>
     </div>
-    
-    {/* <div>      
-      <input type="file" onChange={onChange} />
-      {thumbnail && <img src={thumbnail} alt={name} />}
-    </div> */}
     </>
   )
 }
