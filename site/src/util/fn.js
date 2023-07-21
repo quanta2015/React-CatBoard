@@ -51,3 +51,15 @@ export const getKeyField =(e)=>{
   let list =  e.filter(item=> item.key )
   return list[0].dataIndex
 }
+
+
+export const combineAndSortLists = (...lists) => {
+  let combinedList = [].concat(...lists);
+  combinedList.sort((a, b) => new Date(b.sub_date) - new Date(a.sub_date));
+  return combinedList;
+};
+
+export const getLatestRecords = (count, ...lists) => {
+  let sortedCombinedList = combineAndSortLists(...lists);
+  return sortedCombinedList.slice(0, count);
+};

@@ -3,8 +3,11 @@ import React,{useEffect,useState} from 'react';
 import {Input, Table, Space, Pagination, Spin,Carousel,Button} from 'antd'
 import {API_SERVER} from '@/constant/apis'
 import { observer,MobXProviderContext } from 'mobx-react'
-import Resizer from "react-image-file-resizer";
 import { getNewsList,neList,qiList,qeList,qList } from '@/constant/data'
+import { combineAndSortLists,getLatestRecords } from '@/util/fn'
+
+
+
 
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
@@ -51,11 +54,8 @@ const Index = () => {
       setQaiList(r.qa_i)
       setQasList(r.qa_s)
 
-      //Retrieve the latest 9 records
-      let combinedList = [...r.cat_find, ...r.cat_lose, ...r.cat_prot, ...r.note, ...r.qa_i, ...r.qa_s];
-      combinedList.sort((a, b) => new Date(b.sub_date) - new Date(a.sub_date)); // now using `sub_date`
-      let newList = combinedList.slice(0, 9);
-      setNewsList(newList)
+      const latestList = getLatestRecords(9, r.cat_find, r.cat_lose, r.cat_prot, r.note);
+      setNewsList(latestList);
 
     })
   },[])
