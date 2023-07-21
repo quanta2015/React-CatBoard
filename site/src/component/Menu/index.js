@@ -13,8 +13,14 @@ const fun  = ['新規登録','ログアウト','アプリをダウンロード']
 const menu = ['ホーム','迷子情報','保護情報','猫記事','Q&A','お問い合わせ']
 
 const Menu = ({}) => {
-
+  
   const [sel,setSel] = useState(0)
+
+
+  const doSelMenu =(i)=>{
+    setSel(i)
+    
+  }
   
 
   return (
@@ -29,7 +35,7 @@ const Menu = ({}) => {
       <div className={s.list}>
         {menu.map((item,i)=>
           <div className={s.item} key={i}>
-            <span className={sel===i?'sel':''} onClick={()=>setSel(i)}>{item}</span>
+            <span className={sel===i?'sel':''} onClick={()=>doSelMenu(i)}>{item}</span>
           </div>
         )}
       </div>
