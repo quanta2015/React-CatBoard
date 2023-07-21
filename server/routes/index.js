@@ -5,9 +5,12 @@ var dayjs = require('dayjs')
 var dotenv = require('dotenv')
 var express = require('express')
 var jwt = require('jsonwebtoken')
-var formidable = require('formidable')
+// var formidable = require('formidable')
 var router = express.Router()
 // var db = require("../db/db")
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' }); // 设置上传文件的存储路径
+
 const { DynamoDBClient,DynamoDB, QueryCommand,ScanCommand } = require("@aws-sdk/client-dynamodb")
 const { unmarshall} = require("@aws-sdk/util-dynamodb");
 
@@ -16,7 +19,7 @@ dotenv.config()
 var root = path.resolve(__dirname,'../')
 
 
-
+const KEY_IMG = '59ec42222c1208e4fbd4eb1ba5f4526da77a3fc4'
 const opt = {
   region: "us-east-1",
   accessKeyId: 'AKIAY2HDORQUZZPNVB6Y',
@@ -90,7 +93,23 @@ router.post('/queryCat', async (req, res, next) =>{
 })
 
 
+router.post('/uploadImg', upload.single('file'), async (req, res, next) =>{
 
+  const fileData = fs.readFileSync(req.file.path)
+  const headers = {
+    'Content-Type':'application/octet-stream'
+  };
+  const url = `https://api.imageresizer.io/v1/images?key=${KEY_IMG}`
+
+  try {
+    const r = await axios.post(url, fileData, { headers });
+    console.log(r.data);
+    res.status(200).json({code: 200, data: r.data.response});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({code: 500, error: error.message});
+  }
+})
 
 
 
