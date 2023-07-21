@@ -30,6 +30,7 @@ const Index = () => {
   const [noteList, setNoteList] = useState([])
   const [qaiList,  setQaiList] = useState([])
   const [qasList,  setQasList] = useState([])
+  const [newsList, setNewsList] = useState([])
 
   useEffect(()=>{
     store.queryCats().then(r=>{
@@ -50,14 +51,15 @@ const Index = () => {
       setQaiList(r.qa_i)
       setQasList(r.qa_s)
 
-    })
-    store.querySubDate().then(r=>{
-      console.log('取得latestデータ',r)
+      //Retrieve the latest 9 records
+      let combinedList = [...r.cat_find, ...r.cat_lose, ...r.cat_prot, ...r.note, ...r.qa_i, ...r.qa_s];
+      combinedList.sort((a, b) => new Date(b.sub_date) - new Date(a.sub_date)); // now using `sub_date`
+      let newList = combinedList.slice(0, 9);
+      setNewsList(newList)
+
     })
   },[])
 
-
-  
   const contentStyle = {
     margin: 0,
     height: '275px',
@@ -69,11 +71,6 @@ const Index = () => {
 
   const listS = [1,1,1,1]
 
-  const newsList = getNewsList()
-
-
-  // const newsList = []
-
   const [name, setName] = useState('')
 
   const Header = (title)=>(
@@ -83,7 +80,7 @@ const Index = () => {
       <img src={icon_right} />
     </div>
   )
-
+  console.log('newsList',newsList)
   return (
     <>
     <div className={s.index}>
@@ -94,7 +91,6 @@ const Index = () => {
             <div key={i}>
               <h3 style={contentStyle}>
                 <img src={slide01} />
-                {/* {<img src={'https://im.ages.io/sqTuKiO5l2'} alt=''></img> } */}
               </h3>
             </div>
             )}

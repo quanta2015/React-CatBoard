@@ -48,16 +48,6 @@ class Store {
       console.error('File upload error: ', error);
     }
   }
-  async queryLatest(params) {
-    return await this.post(urls.API_QUERY_LATEST,params)
-  }
-  
-  async querySubDate(params) {
-      return await this.post(urls.API_QUERY_LATEST_SUB_DATE,params)
-    }
-
-
-
 
 }
 

@@ -79,49 +79,6 @@ const queryBoard =async(board_type,category,Limit=9)=>{
   }
 }
 
-//test for get latest submission
-// const queryLatest = async(Limit=9) => {
-//   const params = {
-//       TableName: "Nekonara_board2",
-//       ScanIndexForward: false,  // To sort the results in descending order
-//       Limit,
-//   };
-
-//   try {
-//       const ret = await client.send(new ScanCommand(params));
-//       console.log(ret);  // To check what is returned from the DynamoDB scan
-
-//       let items = ret.Items.map(item => unmarshall(item));
-//       console.log(items);  // To check the items after unmarshalling
-
-//       items.sort((a, b) => b.sub_date - a.sub_date);
-//       console.log(items);  // To check the items after sorting
-
-//       return items.slice(0, Limit);
-//   } catch (err) {
-//       console.error(err.stack);  // To print out any error messages that occur
-//       return null;
-//   }
-// }
-
-//test for get latest submission
-const getLatestSubDate = async (Limit=1) => {
-  const params = {
-      TableName: "Nekonara_board2",
-      IndexName: "sub_date-index", 
-      ScanIndexForward: false, 
-      Limit,  
-  };
-
-  try {
-    const ret = await client.send(new QueryCommand(params));
-    return ret.Items.map(item => unmarshall(item))[0] 
-  } catch (err) {
-    console.error(err);
-    return null
-  }
-}
-
 const { UpdateCommand } = require("@aws-sdk/client-dynamodb");
 
 //test for 更新图像id
@@ -163,20 +120,6 @@ router.post('/queryCat', async (req, res, next) =>{
   res.status(200).json({code: 200, qa_s, qa_i, note, cat_lose, cat_find, cat_prot  })
 })
 
-router.post('/queryLatest', async (req, res, next) => {
-  const latestItems = await queryLatest();
-  res.status(200).json({code: 200, latestItems });
-})
-
-router.post('/getLatestSubDate', async (req, res, next) => {
-  const latestSubDateItem = await getLatestSubDate();
-  if (latestSubDateItem !== null) {
-    res.status(200).json({code: 200, latestSubDateItem });
-  } else {
-    res.status(500).json({code: 500, message: 'Server error' });
-  }
-})
-
 router.post('/uploadImg', upload.single('file'), async (req, res, next) =>{
 
   const fileData = fs.readFileSync(req.file.path)
@@ -184,6 +127,7 @@ router.post('/uploadImg', upload.single('file'), async (req, res, next) =>{
     'Content-Type':'application/octet-stream'
   };
   const url = `https://api.imageresizer.io/v1/images?key=${KEY_IMG}`
+
 router.post('/updateCatImage', async (req, res, next) => {
   const { tableName, key, updatedValues } = req.body;
   const updateResult = await updateItem(tableName, key, updatedValues);
