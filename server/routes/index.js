@@ -81,33 +81,6 @@ const queryBoard =async(board_type,category,Limit=9)=>{
 
 const { UpdateCommand } = require("@aws-sdk/client-dynamodb");
 
-//test for 更新图像id
-const updateItem = async ( key, updatedValues) => {
-  const params = {
-    TableName: "Nekonara_board2",
-    Key: key,
-    ExpressionAttributeNames: {},
-    ExpressionAttributeValues: {},
-    UpdateExpression: "SET "
-  };
-
-  let prefix = "";
-  for (let attribute in updatedValues) {
-    params.ExpressionAttributeNames["#" + attribute] = attribute;
-    params.ExpressionAttributeValues[":" + attribute] = updatedValues[attribute];
-    params.UpdateExpression += prefix + "#" + attribute + " = :" + attribute;
-    prefix = ", ";
-  }
-
-  try {
-    const ret = await client.send(new UpdateCommand(params));
-    return ret;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
-
 
 router.post('/queryCat', async (req, res, next) =>{
   const cat_lose = await queryBoard("cat","迷子")

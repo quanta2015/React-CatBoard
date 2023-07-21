@@ -80,7 +80,7 @@ const Index = () => {
       <img src={icon_right} />
     </div>
   )
-  console.log('newsList',newsList)
+
   return (
     <>
     <div className={s.index}>
