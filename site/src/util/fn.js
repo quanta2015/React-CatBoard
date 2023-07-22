@@ -63,3 +63,9 @@ export const getLatestRecords = (count, ...lists) => {
   let sortedCombinedList = combineAndSortLists(...lists);
   return sortedCombinedList.slice(0, count);
 };
+
+
+export const fixBody =(condition)=>{
+  let bodyCls = document.querySelector('body').classList
+  condition?bodyCls.add('fixed'):bodyCls.remove('fixed')
+}

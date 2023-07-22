@@ -1,7 +1,7 @@
 :global {}
 
 .index {
-  width: calc(100% - 185px);
+  width: var(--win-width);
   box-sizing: border-box;
   flex: 1;
   display: flex;
@@ -10,24 +10,24 @@
 
   .hd {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
 
     .lt {
-      margin-top: 20px;
+      // margin-top: 20px;
       width: 820px;
       height: 275px;
     }
   }
 
-  .searchButton{
+  .searchButton {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 10.4px 24.375px;
     gap: 16.25px;
-  
+
     width: 186px;
     height: 65.75px;
     margin: 90px auto;
@@ -46,7 +46,7 @@
     &:hover {
       background-color: #FFAFA3;
     }
-    
+
   }
 
   .bd {

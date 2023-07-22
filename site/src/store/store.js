@@ -2,6 +2,10 @@ import { makeAutoObservable } from 'mobx'
 import { message } from 'antd'
 import {get,post} from '@/util/net.js'
 import * as urls from '@/constant/urls'
+import {fixBody} from '@/util/fn'
+
+
+
 import axios  from 'axios'
 
 class Store {
@@ -10,6 +14,13 @@ class Store {
   }
 
   mobile = false
+  loading = false
+
+
+  setLoad =(loading)=> {
+    fixBody(loading)
+    this.loading = loading
+  }
 
 
   async post(url, params) {

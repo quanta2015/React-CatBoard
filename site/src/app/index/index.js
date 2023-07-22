@@ -27,6 +27,7 @@ import slide03 from '@/img/slide03.png'
 
 const Index = () => {
   const { store } = React.useContext(MobXProviderContext)
+
   const [findList, setFindList] = useState([])
   const [loseList, setLoseList] = useState([])
   const [protList, setProtList] = useState([])
@@ -36,17 +37,19 @@ const Index = () => {
   const [newsList, setNewsList] = useState([])
 
   useEffect(()=>{
+    store.setLoad(true)
     store.queryCats().then(r=>{
       console.log('取得データ',r)
-
-      r.cat_find.map(o=>o.type = 'find' )
-      r.cat_lose.map(o=>o.type = 'lose' )
-      r.cat_prot.map(o=>o.type = 'prot' )
-      r.note.map(o=>o.type = 'note' )
-      r.qa_i.map(o=>o.type = '受付中' )
-      r.qa_s.map(o=>o.type = '解決' )
-
-
+      const {cat_find,cat_lose,cat_prot,note,qa_i,qa_s} = r
+      const newsList = getLatestRecords(9, cat_find, cat_lose, cat_prot, note)
+      cat_find.map(o=>o.type = 'find' )
+      cat_lose.map(o=>o.type = 'lose' )
+      cat_prot.map(o=>o.type = 'prot' )
+      note.map(o=>o.type = 'note' )
+      qa_i.map(o=>o.type = '受付中' )
+      qa_s.map(o=>o.type = '解決' )
+      
+      setNewsList(newsList);
       setFindList(r.cat_find)
       setLoseList(r.cat_lose)
       setProtList(r.cat_prot)
@@ -54,9 +57,7 @@ const Index = () => {
       setQaiList(r.qa_i)
       setQasList(r.qa_s)
 
-      const latestList = getLatestRecords(9, r.cat_find, r.cat_lose, r.cat_prot, r.note);
-      setNewsList(latestList);
-
+      store.setLoad(false) 
     })
   },[])
 
@@ -82,86 +83,91 @@ const Index = () => {
   )
 
   return (
-    <>
-    <div className={s.index}>
-      <div className={s.hd}>
-        <div className={s.lt}>
-          <Carousel autoplay autoplaySpeed={5000}>
-            {listS.map((item,i)=>
-            <div key={i}>
-              <h3 style={contentStyle}>
-                <img src={slide01} />
-              </h3>
+    
+      <div className={s.index}>
+        
+        <div className={s.hd}>
+          <div className={s.lt}>
+            <Carousel >
+              {listS.map((item,i)=>
+              <div key={i}>
+                <h3 style={contentStyle}>
+                  <img src={slide01} />
+                </h3>
+              </div>
+              )}
+            </Carousel>
+          </div>
+          <div className={s.rt}>
+            <img src={slide02} />
+            <img src={slide03} />
+          </div>
+        </div>
+
+        <div className={s.bd}>
+
+          <section>
+            <div>
+              {newsList.map((item,i)=>
+                <Card {...item} key={i}/>
+              )}
             </div>
-            )}
-          </Carousel>
+          </section>
+          
+          <div className={s.adv}>ADVer</div>
+
+          <section>
+            {Header('迷子情報')}
+            <div>{loseList.map((item,i)=> <Card key={i} {...item} /> )}</div>
+
+          </section>
+
+          <section>
+            {Header('保護情報')}
+            <div>{protList.map((item,i)=> <Card key={i} {...item} /> )}</div>
+          </section>
+          
+
+          <div className={s.adv}>ADVer</div>
+
+          <section>
+            {Header('記事')}
+            <div>{noteList.map((item,i)=> <Card key={i} {...item} /> )}</div>
+          </section>
+
+
+          <section>
+            {Header('Q&A')}
+            <div>
+              <div className={s.wrap}>
+                <span className={s.title}>受付中の質問</span>
+                {qaiList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#33831F'} /> )}
+              </div>
+              <div className={s.wrap}>
+                <span className={s.title}>受付中の質問</span>
+                {qasList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#DE5A5A'} fit={'var(--fil-grey)'} /> )}
+              </div>
+            </div>
+          </section>
+
+          <div className={s.adv}>ADVer</div>
+
+
+            
+          <section>
+            {Header('記事 ランキング')}
+            <div>
+              {neList.map((item,i)=> <Card key={i} {...item} id={i+1} /> )}
+            </div>
+          </section>
+
+
+          <ToTop />
+
+          <Footer />
         </div>
       </div>
-      <div><Button type="primary" className={s.searchButton}>投稿</Button></div>
-      <div className={s.bd}>
-
-        <section>
-          <div>
-            {newsList.map((item,i)=>
-              <Card {...item} key={i}/>
-            )}
-          </div>
-        </section>
-        
-        <div className={s.adv}>ADVer</div>
-
-        <section>
-          {Header('迷子情報')}
-          <div>{loseList.map((item,i)=> <Card key={i} {...item} /> )}</div>
-
-        </section>
-
-        <section>
-          {Header('保護情報')}
-          <div>{protList.map((item,i)=> <Card key={i} {...item} /> )}</div>
-        </section>
-        
-
-        <div className={s.adv}>ADVer</div>
-
-        <section>
-          {Header('記事')}
-          <div>{noteList.map((item,i)=> <Card key={i} {...item} /> )}</div>
-        </section>
-
-
-        <section>
-          {Header('Q&A')}
-          <div>
-            <div className={s.wrap}>
-              <span className={s.title}>受付中の質問</span>
-              {qaiList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#33831F'} /> )}
-            </div>
-            <div className={s.wrap}>
-              <span className={s.title}>受付中の質問</span>
-              {qasList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#DE5A5A'} fit={'var(--fil-grey)'} /> )}
-            </div>
-          </div>
-        </section>
-
-        <div className={s.adv}>ADVer</div>
-
-
-          
-        <section>
-          {Header('記事 ランキング')}
-          <div>
-            {neList.map((item,i)=> <Card key={i} {...item} id={i+1} /> )}
-          </div>
-        </section>
-
-
-        <ToTop />
-
-        <Footer />
-      </div>
-    </div>
-    </>
+    
   )
 }
 
