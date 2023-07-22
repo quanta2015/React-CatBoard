@@ -1,7 +1,7 @@
 .menu {
   position: relative;
   width: var(--sys-width);
-  height: 162px;
+  height: var(--menu-height);
   display: flex;
   flex-direction: column;
   padding: 25px;
@@ -14,11 +14,22 @@
   font-family: Inter;
   font-weight: 700;
 
-  img {
-    width: 200px;
-    height: auto;
-    object-fit: cover;
+
+  .logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 400px;
+      height: auto;
+      object-fit: cover;
+      margin-top: -20px;
+    }
   }
+
+
 
   .fn {
     display: flex;
@@ -32,19 +43,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
+      font-size: 14px;
       cursor: pointer;
+      letter-spacing: .1em;
 
       &:last-child {
-        width: 168px;
-        height: 42px;
+        width: 145px;
+        height: 35px;
         flex-shrink: 0;
-        font-size: 14px;
+        font-size: 12px;
         border-radius: 5px;
         background: #26C177;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         border-radius: 5px;
         background: #26C177;
+        letter-spacing: 0;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
       }
 
@@ -56,26 +69,31 @@
 
 
   .list {
-
-    font-size: 30px;
+    font-size: 20px;
     font-family: Inter;
-    font-weight: 800;
+    font-weight: 400;
     display: flex;
 
     .item {
       display: flex;
-      padding: 0 30px;
+      padding: 0 40px;
       cursor: pointer;
 
 
       &+.item {
-        border-left: 5px solid #fff;
+        border-left: 3px solid #fff;
       }
 
       span {
         position: relative;
         text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         line-height: 1;
+        letter-spacing: .2em;
+        transition: .3s;
+
+        &:hover {
+          opacity: .9;
+        }
 
 
         &:global(.sel) {
@@ -84,11 +102,11 @@
           &:after {
             content: '';
             width: 100%;
-            height: 5px;
+            height: 2px;
             background: #fff;
             display: block;
             position: absolute;
-            bottom: -15px;
+            bottom: -10px;
           }
 
         }

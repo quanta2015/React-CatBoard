@@ -31,7 +31,10 @@ const Menu = ({}) => {
         )}
       </div>
 
-      <img src={logo} alt="logo" />
+      <div className={s.logo}>
+        <img src={logo} alt="logo" />
+      </div>
+      
       <div className={s.list}>
         {menu.map((item,i)=>
           <div className={s.item} key={i}>
