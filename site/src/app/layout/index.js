@@ -30,7 +30,7 @@ const Layout = () => {
     <>
       <Menu />
       <div className={s.main}>
-        <Nav />
+        {/* <Nav /> */}
 
         <div className={s.wrap}>
           {loading && 
