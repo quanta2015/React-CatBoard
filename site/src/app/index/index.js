@@ -3,9 +3,8 @@ import React,{useEffect,useState} from 'react';
 import {Input, Table, Space, Pagination, Spin,Carousel,Button} from 'antd'
 import {API_SERVER} from '@/constant/apis'
 import { observer,MobXProviderContext } from 'mobx-react'
-import { getNewsList,neList,qiList,qeList,qList } from '@/constant/data'
+import { neList } from '@/constant/data'
 import { combineAndSortLists,getLatestRecords } from '@/util/fn'
-
 
 
 

@@ -4,15 +4,19 @@ import { inject,observer,MobXProviderContext } from 'mobx-react'
 import Loading from 'react-loading-spinkit'
 import Menu from '@/component/Menu'
 import Nav from '@/component/Nav'
+import FormCat from '@/component/FormCat'
+
 import LoadingPage from '@/component/LoadingPage'
 
 import s from './index.module.less';
 import logo from '@/img/logo.svg'
-import loading from '@/img/loading.png'
+import load from '@/img/loading.png'
+
 
 
 const Layout = () => {
   const { store } = React.useContext(MobXProviderContext)
+  const {loading,edit} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -29,9 +33,11 @@ const Layout = () => {
         <Nav />
 
         <div className={s.wrap}>
-          {store.loading && 
-            <div className={s.load}> <img src={loading} /> </div>
+          {loading && 
+            <div className={s.load}> <img src={load} /> </div>
            }
+
+          { edit && <div className={s.edit}><FormCat /></div>}
           <Outlet />
         </div>
       </div>

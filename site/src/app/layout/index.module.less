@@ -1,9 +1,10 @@
 .main {
   display: flex;
   flex: 1;
-  padding-top: 20px;
-  background: #eee;
+  padding-top: 1px;
+  background: #333;
   width: var(--sys-width);
+
 
   .wrap {
     width: var(--win-width);
@@ -12,22 +13,35 @@
   }
 }
 
-.load {
+.load,
+.edit {
   width: var(--win-width);
   height: calc(100vh - var(--menu-height));
   position: fixed;
-  z-index: 99999;
-  background: rgba(255, 255, 255, .95);
+  z-index: 99;
+  background: rgba(255, 255, 255, 1);
   display: flex;
   justify-content: center;
   align-items: center;
-
+  overflow: hidden;
 
   img {
     width: 100px;
     height: 100px;
 
   }
+}
+
+
+.edit {
+  width: var(--win-width);
+  height: calc(100vh - var(--menu-height));
+  position: fixed;
+  z-index: 99999;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 768px) {
