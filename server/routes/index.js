@@ -54,7 +54,7 @@ const ums = (list)=> list.Items.map(item => unmarshall(item))
 // }
 
 
-const queryBoard =async(board_type,category,Limit=9)=>{
+const queryBoard =async(board_type,category,Limit=3)=>{
   
   const params = {
       TableName: "Nekonara_board2",

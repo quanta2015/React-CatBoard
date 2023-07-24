@@ -6,8 +6,6 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import { neList } from '@/constant/data'
 import { combineAndSortLists,getLatestRecords } from '@/util/fn'
 
-
-
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
 import CardQ2 from '@/component/CardQ2'
@@ -40,7 +38,7 @@ const Index = () => {
     store.queryCats().then(r=>{
       console.log('取得データ',r)
       const {cat_find,cat_lose,cat_prot,note,qa_i,qa_s} = r
-      const newsList = getLatestRecords(9, cat_find, cat_lose, cat_prot, note)
+      const newsList = getLatestRecords(9, cat_lose, cat_prot, note)
       cat_find.map(o=>o.type = 'find' )
       cat_lose.map(o=>o.type = 'lose' )
       cat_prot.map(o=>o.type = 'prot' )
@@ -87,7 +85,7 @@ const Index = () => {
         
         <div className={s.hd}>
           <div className={s.lt}>
-            <Carousel >
+            <Carousel autoplay autoplaySpeed={5000}>
               {listS.map((item,i)=>
               <div key={i}>
                 <h3 style={contentStyle}>
@@ -97,44 +95,42 @@ const Index = () => {
               )}
             </Carousel>
           </div>
-          <div className={s.rt}>
-            <img src={slide02} />
-            <img src={slide03} />
+        </div>
+        <div className={s.rectangle}>
+          <p className={s.text}>愛猫の迷子情報・迷子の猫ちゃんを保護した情報はこちらから投稿できます。</p>
+          <div className={s.buttonContainer}>
+            <button className={`${s.btn} ${s.btn1}`}>迷子情報を投稿</button>
+            <button className={`${s.btn} ${s.btn2}`}>保護情報を投稿</button>
           </div>
         </div>
-
         <div className={s.bd}>
 
           <section>
+          <h1 style={{fontSize: "40px"}}>{'新着情報'}</h1>
             <div>
+
               {newsList.map((item,i)=>
                 <Card {...item} key={i}/>
               )}
             </div>
           </section>
           
-          <div className={s.adv}>ADVer</div>
-
+          <div className={s.adv}></div>
           <section>
             {Header('迷子情報')}
-            <div>{loseList.map((item,i)=> <Card key={i} {...item} /> )}</div>
-
+            <div>{loseList.slice(0, 3).map((item,i)=> <Card key={i} {...item} /> )}</div>
           </section>
-
+          <div className={s.adv}></div>
           <section>
             {Header('保護情報')}
-            <div>{protList.map((item,i)=> <Card key={i} {...item} /> )}</div>
+            <div>{protList.slice(0, 3).map((item,i)=> <Card key={i} {...item} /> )}</div>
           </section>
-          
-
-          <div className={s.adv}>ADVer</div>
-
+          <div className={s.adv}></div>
           <section>
             {Header('記事')}
-            <div>{noteList.map((item,i)=> <Card key={i} {...item} /> )}</div>
+            <div>{noteList.slice(0, 3).map((item,i)=> <Card key={i} {...item} /> )}</div>
           </section>
-
-
+          <div className={s.adv}></div>
           <section>
             {Header('Q&A')}
             <div>
@@ -148,19 +144,7 @@ const Index = () => {
               </div>
             </div>
           </section>
-
-          <div className={s.adv}>ADVer</div>
-
-
-            
-          <section>
-            {Header('記事 ランキング')}
-            <div>
-              {neList.map((item,i)=> <Card key={i} {...item} id={i+1} /> )}
-            </div>
-          </section>
-
-
+          <div className={s.adv}></div>
           <ToTop />
 
           <Footer />

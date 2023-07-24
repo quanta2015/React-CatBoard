@@ -9,8 +9,8 @@ import logo from '@/img/logo.svg'
 
 
 
-const fun  = ['新規登録','ログアウト','アプリをダウンロード']
-const menu = ['ホーム','迷子情報','目撃情報','保護情報','猫記事','Q&A','お問い合わせ']
+const fun  = ['新規登録','ログイン','アプリをダウンロード']
+const menu = ['ホーム','迷子情報','保護情報','ねこ記事','Q&A','お問い合わせ']
 
 const Menu = ({}) => {
   
@@ -19,7 +19,6 @@ const Menu = ({}) => {
 
   const doSelMenu =(i)=>{
     setSel(i)
-    
   }
   
 
