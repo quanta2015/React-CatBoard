@@ -6,10 +6,11 @@ import {PRE_IMG} from '@/constant/urls'
 import s from './index.module.less';
 
 
-import icon_map  from '@/img/icon/map.svg'
+import icon_map from '@/img/icon/map.svg'
 import icon_usr from '@/img/icon/user.svg'
-import icon_cal  from '@/img/icon/calendar.svg'
-
+import icon_cal from '@/img/icon/calendar.svg'
+import icon_lt  from '@/img/icon/left.svg'
+import icon_rt  from '@/img/icon/right.svg'
 
 const Detail = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
@@ -19,9 +20,18 @@ const Detail = ({}) => {
 
 
   const [sel,setSel] = useState(0)
+  const [curImg,setCurImg] = useState(img[sel])
 
   const doClose =()=>{
     store.setShow(false,'detail')
+  }
+
+
+  const doSel =(step)=>{
+    const len = img.length;
+    const cur = (sel + step + len) % len;
+    setSel(cur);
+    setCurImg(img[cur]);
   }
 
 
@@ -53,7 +63,13 @@ const Detail = ({}) => {
 
           <div className={s.bd}>
             <div className={s.img}>
-              <img src={`${PRE_IMG}${cat.img[0]}`} />
+              <img className={s.arrow} src={icon_lt} onClick={()=>doSel(-1)} />
+              <div className={s.list}>
+                {img.map((item,i)=>
+                  <img src={`${PRE_IMG}${curImg}`} key={i} className={i===sel?'act':''} />
+                )}
+              </div>
+              <img className={s.arrow} src={icon_rt} onClick={()=>doSel(1)} />
             </div>
    
    
