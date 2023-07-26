@@ -37,7 +37,7 @@ const Index = () => {
     store.queryCats().then(r=>{
       console.log('取得データ',r)
       const {cat_find,cat_lose,cat_prot,note,qa_i,qa_s} = r
-      const newsList = getLatestRecords(9, cat_lose, cat_prot, note)
+      const newsList = getLatestRecords(9, cat_lose, cat_prot)
       cat_find.map(o=>o.type = 'find' )
       cat_lose.map(o=>o.type = 'lose' )
       cat_prot.map(o=>o.type = 'prot' )
