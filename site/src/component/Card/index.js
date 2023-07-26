@@ -3,6 +3,9 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import Rank from '@/component/Rank'
 import classnames from 'classnames';
 import s from './index.module.less';
+import {PRE_IMG} from '@/constant/urls'
+import {INF_TYPE} from '@/constant/data'
+
 
 import icon_map  from '@/img/icon/map.svg'
 import icon_user  from '@/img/icon/user.svg'
@@ -15,24 +18,29 @@ import icon_play  from '@/img/icon/play.svg'
 import icon_ord   from '@/img/icon/ord.svg'
 
 
-const Card = ({ type,cat,sub_date,sub_user,addr,title,sub,period,view,fav,id }) => {
+const Card = (item) => {
+  const { store } = React.useContext(MobXProviderContext)
+  const { type,cat,sub_date,sub_user,addr,title,sub,period,view,fav,id } = item
   
-  const info = {
-    lose: '迷子',
-    find: '目撃',
-    prot: '保護',
-    note: '記事',
+  
+
+  const doShowDetail =(item)=>{
+    store.setItem(item)
+    store.setShow(true,'detail')
   }
+
+
+
   return (
-    <div className={classnames(s.card,type)} data-type={info[type]}>
+    <div className={classnames(s.card,type)} data-type={INF_TYPE[type]} onClick={()=>doShowDetail(item)}>
       <Rank id={id} />
 
       <div className={s.img}>
-        {cat && cat.image && <img src={`https://im.ages.io/${cat.image}`} alt=''/>}
+        {cat && <img src={`${PRE_IMG}${cat.img[0]}`} alt=''/>}
       </div>
 
       {(type!=='note') &&
-      <div className={s.detail}>
+      <div className={s.detail} >
         <div className={s.row}>
           <img src={icon_map} />
           <span>{addr.addr_ken}{addr.addr_shi}{addr.addr_dtl}</span>
@@ -49,7 +57,7 @@ const Card = ({ type,cat,sub_date,sub_user,addr,title,sub,period,view,fav,id }) 
 
 
       {(type==='note') &&
-      <div className={s.detail}>
+      <div className={s.detail}  >
         <div className={s.row}>
           <h1>{title}</h1>
         </div>

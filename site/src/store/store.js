@@ -14,16 +14,22 @@ class Store {
 
   edit    = false
   mobile  = false
+  detail  = false
   loading = false
   loginRequired = false
 
 
+  item    = {}
 
-  setLoad =(loading)=> {
-    fixBody(loading)
-    this.loading = loading
+
+  setItem = (item) =>{
+    this.item = item
   }
 
+
+  setShow =(status,attr)=> {
+    fixBody(status)
+    this[attr] = status
   setEdit =(edit)=> {
     console.log('edit',edit)
     fixBody(edit)

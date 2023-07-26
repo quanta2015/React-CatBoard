@@ -6,6 +6,16 @@ import cat_prot from '@/img/item/prot.webp'
 import cat_note from '@/img/item/note.png'
 
 
+
+export const INF_TYPE = {
+    lose: '迷子',
+    find: '目撃',
+    prot: '保護',
+    note: '記事',
+  }
+
+
+
 export const usr = {
   name: 'とみさん',
   icon: icon_user,

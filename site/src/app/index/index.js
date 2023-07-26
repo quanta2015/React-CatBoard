@@ -34,7 +34,7 @@ const Index = () => {
   const [newsList, setNewsList] = useState([])
 
   useEffect(()=>{
-    store.setLoad(true)
+    store.setShow(true,'loading')
     store.queryCats().then(r=>{
       console.log('取得データ',r)
       const {cat_find,cat_lose,cat_prot,note,qa_i,qa_s} = r
@@ -54,7 +54,7 @@ const Index = () => {
       setQaiList(r.qa_i)
       setQasList(r.qa_s)
 
-      store.setLoad(false) 
+      store.setShow(false,'loading')
     })
   },[])
 

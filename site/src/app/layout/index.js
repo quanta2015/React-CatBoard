@@ -5,6 +5,7 @@ import Loading from 'react-loading-spinkit'
 import Menu from '@/component/Menu'
 import Nav from '@/component/Nav'
 import FormCat from '@/component/FormCat'
+import Detail from '@/component/Detail'
 import LoginRequired from '@/component/LoginRequired'
 import LoadingPage from '@/component/LoadingPage'
 
@@ -16,15 +17,15 @@ import load from '@/img/loading.png'
 
 const Layout = () => {
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,loginRequired} = store
+  const {loading,edit} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
   const isMobileDevice = mobileDevices.some(device => userAgent.includes(device));
   const isSmallScreen = window.innerWidth < 768;
 	store.mobile = isMobileDevice || isSmallScreen
-  console.log('loginRequired',loginRequired)
-  console.log('edit',edit)
+
+
 
   return (
     <>
@@ -32,10 +33,14 @@ const Layout = () => {
       <div className={s.main}>
 
         <div className={s.wrap}>
-          {loading && 
-            <div className={s.load}> <img src={load} /> </div>
-           }
 
+          {/*等待画面*/}
+          {loading &&  <div className={s.load}> <img src={load} /> </div> }
+
+          {/*发帖画面*/}
+          { detail && <div className={s.detail}><Detail /></div>}
+
+          {/*发帖画面*/}
           { edit && <div className={s.edit}><FormCat /></div>}
           {loginRequired && <div className={s.loginRequired}><LoginRequired /></div>}
           <Outlet />
