@@ -5,7 +5,7 @@ import Loading from 'react-loading-spinkit'
 import Menu from '@/component/Menu'
 import Nav from '@/component/Nav'
 import FormCat from '@/component/FormCat'
-
+import Detail from '@/component/Detail'
 import LoadingPage from '@/component/LoadingPage'
 
 import s from './index.module.less';
@@ -16,7 +16,7 @@ import load from '@/img/loading.png'
 
 const Layout = () => {
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit} = store
+  const {loading,edit,detail} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -24,7 +24,7 @@ const Layout = () => {
   const isSmallScreen = window.innerWidth < 768;
 	store.mobile = isMobileDevice || isSmallScreen
 
-
+  
 
   return (
     <>
@@ -33,10 +33,14 @@ const Layout = () => {
         {/* <Nav /> */}
 
         <div className={s.wrap}>
-          {loading && 
-            <div className={s.load}> <img src={load} /> </div>
-           }
 
+          {/*等待画面*/}
+          {loading &&  <div className={s.load}> <img src={load} /> </div> }
+
+          {/*发帖画面*/}
+          { detail && <div className={s.detail}><Detail /></div>}
+
+          {/*发帖画面*/}
           { edit && <div className={s.edit}><FormCat /></div>}
           <Outlet />
         </div>

@@ -14,18 +14,21 @@ class Store {
 
   edit    = false
   mobile  = false
+  detail  = false
   loading = false
+  
+
+  item    = {}
 
 
-
-  setLoad =(loading)=> {
-    fixBody(loading)
-    this.loading = loading
+  setItem = (item) =>{
+    this.item = item
   }
 
-  setEdit =(edit)=> {
-    fixBody(edit)
-    this.edit = edit
+
+  setShow =(status,attr)=> {
+    fixBody(status)
+    this[attr] = status
   }
 
 
