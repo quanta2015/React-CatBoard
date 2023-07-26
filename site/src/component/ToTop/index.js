@@ -9,7 +9,7 @@ const Footer = ({}) => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"  // 滚动行为设置为平滑
+      behavior: "smooth" 
     });
   }
 

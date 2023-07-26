@@ -79,6 +79,11 @@ const Index = () => {
     </div>
   )
 
+
+  const doNewArticle =(type)=>{
+    store.setShow(true,'edit')
+  }
+
   return (
     
       <div className={s.index}>
@@ -99,8 +104,8 @@ const Index = () => {
         <div className={s.rectangle}>
           <p className={s.text}>愛猫の迷子情報・迷子の猫ちゃんを保護した情報はこちらから投稿できます。</p>
           <div className={s.buttonContainer}>
-            <button className={`${s.btn} ${s.btn1}`}>迷子情報を投稿</button>
-            <button className={`${s.btn} ${s.btn2}`}>保護情報を投稿</button>
+            <button className={`${s.btn} ${s.btn1}`} onClick={()=>doNewArticle('lose')}>迷子情報を投稿</button>
+            <button className={`${s.btn} ${s.btn2}`} onClick={()=>doNewArticle('prot')}>保護情報を投稿</button>
           </div>
         </div>
         <div className={s.bd}>

@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import logo from '@/img/logo.svg'
 
 
-
 const fun  = ['新規登録','ログイン','アプリをダウンロード']
 const menu = [{name:'ホーム',url:'/'},
               {name:'迷子情報',url:'/cat?type=lose'},
@@ -19,6 +18,7 @@ const menu = [{name:'ホーム',url:'/'},
 
 const Menu = ({}) => {
   const navigate = useNavigate();
+  const { store } = React.useContext(MobXProviderContext)
   const [sel,setSel] = useState(0)
 
 
@@ -27,7 +27,7 @@ const Menu = ({}) => {
     navigate(url)
   }
   
-
+  
   return (
     <div className={s.menu}>
       <div className={s.fn}>

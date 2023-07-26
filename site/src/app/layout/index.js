@@ -6,7 +6,7 @@ import Menu from '@/component/Menu'
 import FormCat from '@/component/FormCat'
 import Detail from '@/component/Detail'
 import Login from '@/component/Login'
-
+import LoginRequired from '@/component/LoginRequired'
 import LoadingPage from '@/component/LoadingPage'
 
 import s from './index.module.less';
@@ -17,7 +17,7 @@ import load from '@/img/loading.png'
 
 const Layout = () => {
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,detail,login} = store
+  const {loading,edit,detail,login,loginReq} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -25,7 +25,7 @@ const Layout = () => {
   const isSmallScreen = window.innerWidth < 768;
 	store.mobile = isMobileDevice || isSmallScreen
 
-  
+
 
   return (
     <>
@@ -33,9 +33,6 @@ const Layout = () => {
       <div className={s.main}>
 
         <div className={s.wrap}>
-
-
-
 
           {/*等待画面*/}
           { loading &&  <div className={s.load}> <img src={load} /> </div> }
@@ -49,6 +46,8 @@ const Layout = () => {
 
           {/*发帖画面*/}
           { edit && <div className={s.edit}><FormCat /></div>}
+
+          {loginReq && <div className={s.loginRequired}><LoginRequired /></div>}
           <Outlet />
         </div>
       </div>

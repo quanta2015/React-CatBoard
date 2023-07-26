@@ -12,11 +12,13 @@ class Store {
     makeAutoObservable(this);
   }
 
-  edit    = false
-  mobile  = false
-  detail  = false
-  loading = false
-  
+  user     = null
+  edit     = false
+  mobile   = false
+  detail   = false
+  loading  = false
+  loginReq = false
+
 
   item    = {}
 
