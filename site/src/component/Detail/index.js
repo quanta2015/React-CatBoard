@@ -15,8 +15,8 @@ import icon_rt  from '@/img/icon/right.svg'
 const Detail = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
 
-  const { cat,sub_date,sub_user,addr,title,sub,period,view,fav,id } = store.item
-  const { age,attr,clr,image,img,name,sex,size,type,status } = cat
+  const { cat,type,sub_date,sub_user,addr,title,sub,period,view,fav,id } = store.item
+  const { age,attr,clr,image,img,name,sex,size,status } = cat
 
 
   const [sel,setSel] = useState(0)
@@ -121,7 +121,7 @@ const Detail = ({}) => {
 
           <div className={s.ft}>
             
-            <div className={s.btn}>
+            <div className={classnames(s.btn,type) }>
               メッセージを送る
             </div>
           </div>

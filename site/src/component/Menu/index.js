@@ -10,15 +10,21 @@ import logo from '@/img/logo.svg'
 
 
 const fun  = ['新規登録','ログイン','アプリをダウンロード']
-const menu = ['ホーム','迷子情報','保護情報','ねこ記事','Q&A','お問い合わせ']
+const menu = [{name:'ホーム',url:'/'},
+              {name:'迷子情報',url:'/cat?type=lose'},
+              {name:'保護情報',url:'/cat?type=prot'},
+              {name:'ねこ記事',url:'/note'},
+              {name:'Q&A',url:'/question'},
+              {name:'お問い合わせ',url:'/ask'}]
 
 const Menu = ({}) => {
-  
+  const navigate = useNavigate();
   const [sel,setSel] = useState(0)
 
 
-  const doSelMenu =(i)=>{
+  const doSelMenu =(i,url)=>{
     setSel(i)
+    navigate(url)
   }
   
 
@@ -37,7 +43,7 @@ const Menu = ({}) => {
       <div className={s.list}>
         {menu.map((item,i)=>
           <div className={s.item} key={i}>
-            <span className={sel===i?'sel':''} onClick={()=>doSelMenu(i)}>{item}</span>
+            <span className={sel===i?'sel':''} onClick={()=>doSelMenu(i,item.url)}>{item.name}</span>
           </div>
         )}
       </div>

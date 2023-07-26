@@ -15,10 +15,12 @@ import '@/less/com.less'
 
 configure({enforceActions: 'observed'})
 
-
-let Index  = Loadable({ loader: () => import('./app/index')})
 let Layout = Loadable({ loader: () => import('./app/layout')})
-// let Ware   = Loadable({ loader: () => import('./app/ware')})
+let Index  = Loadable({ loader: () => import('./app/index')})
+// let Cat    = Loadable({ loader: () => import('./app/cat')})
+// let Note   = Loadable({ loader: () => import('./app/note')})
+// let Qa     = Loadable({ loader: () => import('./app/qa')})
+let Ask    = Loadable({ loader: () => import('./app/ask')})
 
 
 
@@ -29,7 +31,14 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/"        element={<Index />} />
+            {/*<Route path="/login"  element={<Login />} />*/}
+            {/*<Route path="/reg"  element={<Reg />} />*/}
+
+            <Route path="/"     element={<Index />} />
+            {/*<Route path="/cat"  element={<Cat />} />*/}
+            {/*<Route path="/note" element={<Note />} />*/}
+            {/*<Route path="/qa"   element={<Qa />} />*/}
+            <Route path="/ask"        element={<Ask />} />
           </Route>
         </Routes>
       </BrowserRouter>

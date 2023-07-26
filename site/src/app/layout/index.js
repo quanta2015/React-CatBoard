@@ -3,9 +3,10 @@ import { Outlet } from 'react-router-dom'
 import { inject,observer,MobXProviderContext } from 'mobx-react'
 import Loading from 'react-loading-spinkit'
 import Menu from '@/component/Menu'
-import Nav from '@/component/Nav'
 import FormCat from '@/component/FormCat'
 import Detail from '@/component/Detail'
+import Login from '@/component/Login'
+
 import LoadingPage from '@/component/LoadingPage'
 
 import s from './index.module.less';
@@ -16,7 +17,7 @@ import load from '@/img/loading.png'
 
 const Layout = () => {
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,detail} = store
+  const {loading,edit,detail,login} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -30,12 +31,18 @@ const Layout = () => {
     <>
       <Menu />
       <div className={s.main}>
-        {/* <Nav /> */}
 
         <div className={s.wrap}>
 
+
+
+
           {/*等待画面*/}
-          {loading &&  <div className={s.load}> <img src={load} /> </div> }
+          { loading &&  <div className={s.load}> <img src={load} /> </div> }
+
+
+          {/*登录画面*/}
+          { login &&  <div className={s.login}> <Login /> </div> }
 
           {/*发帖画面*/}
           { detail && <div className={s.detail}><Detail /></div>}
