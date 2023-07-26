@@ -26,6 +26,7 @@ const Layout = () => {
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
   const isMobileDevice = mobileDevices.some(device => userAgent.includes(device));
   const isSmallScreen = window.innerWidth < 768;
+  const title = '情報'
 	store.mobile = isMobileDevice || isSmallScreen
 
 
@@ -50,7 +51,7 @@ const Layout = () => {
           {/*发帖画面*/}
           { edit && <div className={s.edit}><FormCat /></div>}
 
-          {loginReq && <div className={s.loginRequired}><LoginRequired /></div>}
+          {loginReq && <div className={s.loginRequired}><LoginRequired title={title} /></div>}
           <Outlet />
 
           <ToTop />

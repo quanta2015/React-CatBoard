@@ -9,20 +9,22 @@ import ToTop from '@/component/ToTop'
 import s from './index.module.less';
 
 
-const LoginRequired = () => {
-
+const LoginRequired = ({title}) => {
+  
   return (
     <div className={s.loginReq} >
        <div className={s.wrap}>
           <div className={s.TextRow1}>
-            <p>情報を投稿する前に<br></br>アカウント登録をお願いいたします。</p>
+            <p>{title}を投稿する前に<br></br>アカウント登録をお願いいたします。</p>
           </div>
           <div>
             <button className={s.btn}>新規登録</button>
           </div>
           <div className={s.TextRow3}>
-            <p>投稿内容の編集 / 削除・他のユーザーとの連絡・ねこ記事の保存・Q＆Aに投稿<br></br>のためにアカウントが必要です。</p>
-          </div>
+          <p><span className="underline-text">投稿内容的編集 / 削除</span>・
+          <span className="underline-text">他のユーザーとの連絡・ねこ記事の保存</span>・
+          <span className="underline-text">Q＆Aに投稿</span></p>のためにアカウントが必要です。
+        </div>
           <div className={s.TextRow4}>
             <p>既にアカウントをお持ちの方はこちらからログインしてください</p>
           </div>
