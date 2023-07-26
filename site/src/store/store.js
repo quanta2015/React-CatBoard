@@ -15,6 +15,7 @@ class Store {
   edit    = false
   mobile  = false
   loading = false
+  loginRequired = false
 
 
 
@@ -24,8 +25,15 @@ class Store {
   }
 
   setEdit =(edit)=> {
+    console.log('edit',edit)
     fixBody(edit)
     this.edit = edit
+  }
+
+  setLoginRequired =(loginRequired)=>{
+    console.log('loginRequired',loginRequired)
+    fixBody(loginRequired)
+    this.loginRequired = loginRequired
   }
 
 
