@@ -8,6 +8,9 @@ import Detail from '@/component/Detail'
 import Login from '@/component/Login'
 import LoginRequired from '@/component/LoginRequired'
 import LoadingPage from '@/component/LoadingPage'
+import Footer from '@/component/Footer'
+import ToTop from '@/component/ToTop'
+
 
 import s from './index.module.less';
 import logo from '@/img/logo.svg'
@@ -49,6 +52,10 @@ const Layout = () => {
 
           {loginReq && <div className={s.loginRequired}><LoginRequired /></div>}
           <Outlet />
+
+          <ToTop />
+
+          <Footer />
         </div>
       </div>
     </>

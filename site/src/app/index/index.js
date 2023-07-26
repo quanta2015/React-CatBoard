@@ -9,8 +9,7 @@ import { combineAndSortLists,getLatestRecords } from '@/util/fn'
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
 import CardQ2 from '@/component/CardQ2'
-import Footer from '@/component/Footer'
-import ToTop from '@/component/ToTop'
+
 
 import s from './index.module.less';
 
@@ -150,9 +149,7 @@ const Index = () => {
             </div>
           </section>
           <div className={s.adv}></div>
-          <ToTop />
-
-          <Footer />
+          
         </div>
       </div>
     
