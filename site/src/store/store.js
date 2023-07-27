@@ -24,6 +24,10 @@ class Store {
   item    = {}
 
 
+  setUser = (user) =>{
+    this.user = user
+  }
+
   setItem = (item) =>{
     this.item = item
   }
@@ -37,8 +41,10 @@ class Store {
 
   async post(url, params) {
     const r = await post(url,params)
-    if (r.code === 200) {
+    if (r.code === 0) {
       return r
+    }else if (r.code ===1) {
+      message.error(r.msg)
     }else{
       return null
       message.error(' 网络接口数据出错!')
@@ -59,10 +65,15 @@ class Store {
     return await this.post(urls.API_QUERY_CATS,params)
   }
 
+
+  async login(params) {
+    return await this.post(urls.API_LOGIN,params)
+  }
+
   async uploadImg(params) {
     try {
         const r = await axios.post(urls.API_UPLOAD_IMG, params);
-        if ((r.status ===200)&&(r.data.code ===200)) {
+        if ((r.status ===200)&&(r.data.code ===0)) {
           return r.data.data.id
         }
         return r;

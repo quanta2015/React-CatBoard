@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect,useState} from 'react';
 import { observer,MobXProviderContext } from 'mobx-react'
-import { Form, Button, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker,Checkbox} from 'antd';
+import { Form, Button, Input, message} from 'antd';
 import classnames from 'classnames';
+import { useNavigate } from 'react-router-dom'
 import s from './index.module.less';
 
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
@@ -15,6 +16,7 @@ import facebook from '@/img/icon/facebook.svg'
 
 
 const Login = () => {
+  const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
   const [form] = Form.useForm();
 
@@ -39,13 +41,15 @@ const Login = () => {
   const doLogin =async()=>{
     try {
       const params = await form.validateFields();
+      await store.login(params).then(r=>{
 
-      console.log(params)
-      // const r = await store.login(urls.API_LOGIN, params)
-      // if (r) {
-      //   navigate('/')
-      // }
-
+        if (r.code ===0) {
+          message.info('登录成功！')
+          store.setUser(r.data)
+          navigate('/')
+        }
+      })
+      
     } catch (errorInfo) {
       console.log('Failed:', errorInfo);
     }
@@ -59,7 +63,7 @@ const Login = () => {
 
         <Form.Item 
           label="メールアドレス" 
-          name="user" 
+          name="mail" 
           rules={[{ required: true, message: 'アカウントを入力してください'}]}
           >
           <Input size="large" style={{height: '50px'}} placeholder="アカウント" allowClear prefix={<UserOutlined />} />
@@ -79,27 +83,31 @@ const Login = () => {
   )
 
 
-  const renderBtn =(item,e)=>(
-    <div className={s.btn} onClick={e}>
+  const doShowFrom =()=>{
+    console.log('aaa')
+    setStatus(1)
+  }
+
+
+  const renderBtn =(item,i,e)=>(
+    <div className={s.btn} onClick={doShowFrom} key={i}>
       <img src={item.icon} />
       <span>{item.name}</span>
     </div>
   )
 
-  const doShowFrom =()=>{
-    setStatus(1)
-  }
+
 
   return (
     <div className={s.login}>
       <div className={s.wrap}>
         <h1>{status?loginTitle:mainTitle}</h1>
 
-        {!status? renderBtn(btnList[0],doShowFrom):renderForm() }
+        {!status? renderBtn(btnList[0],0,doShowFrom):renderForm() }
 
 
         {btnList.slice(1).map((item,i)=>
-          renderBtn(item)
+          renderBtn(item,i)
         )}
       </div>
     </div>
