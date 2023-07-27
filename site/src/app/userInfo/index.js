@@ -17,10 +17,7 @@ const UserInfo = () => {
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
   const [fileList, setFileList] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [preview, setPreview] = useState(false);
-  const [previewImg, setPreviewImg] = useState('');
-
+  
 
   const doSave =async()=>{
     try {
@@ -34,38 +31,7 @@ const UserInfo = () => {
     }
   }
 
-  const doPreview = async (file) => {
-    let url = file.url.split('?')[0]
-    setPreviewImg(url);
-    setPreview(true);
-  };
 
-
-  const doUpload =(file)=>{
-    setLoading(true);
-    const formData = new FormData();
-    formData.append('file', file)
-    store.uploadImg(formData).then(r=>{
-      setFileList([{ url: `${PRE_IMG}${r}?width=100` }])
-      setLoading(false);
-    })
-    return false;
-  }
-
-
-  const doRemove =(file)=>{
-    setFileList([])
-  }
-
-  
-
-
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8, fontSize: '12px'}} > アップロード </div>
-    </div>
-  );
 
   return (
     <div className={s.userinfo}>
