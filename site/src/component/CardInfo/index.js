@@ -18,9 +18,9 @@ import icon_play  from '@/img/icon/play.svg'
 import icon_ord   from '@/img/icon/ord.svg'
 
 
-const CardInfo = ({title,list}) => {
+const CardInfo = ({title,list,submit}) => {
   const { store } = React.useContext(MobXProviderContext)
-
+  
   
 
   return (
@@ -30,7 +30,15 @@ const CardInfo = ({title,list}) => {
 
       <div className={s.list}>
         {list.map((item,i)=> 
-          <span >{item}</span>
+          <div className={s.sect} key={i}>
+            {item.icon && <img src={item.icon} />}
+            <p>
+              {item.sect.map((o,j)=>
+                <span key={j}>{o}</span>
+              )}
+            </p>
+          </div>
+          
         )}
       </div>
         
