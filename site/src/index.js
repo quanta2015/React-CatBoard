@@ -23,7 +23,7 @@ let Qa     = Loadable({ loader: () => import('./app/qa')})
 let Ask    = Loadable({ loader: () => import('./app/ask')})
 let Login  = Loadable({ loader: () => import('./app/login')})
 
-
+let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -40,6 +40,9 @@ root.render(
             <Route path="/note" element={<Note />} />
             <Route path="/qa"   element={<Qa />} />
             <Route path="/ask"  element={<Ask />} />
+
+
+            <Route path="/userInfo"  element={<UserInfo />} />
           </Route>
         </Routes>
       </BrowserRouter>

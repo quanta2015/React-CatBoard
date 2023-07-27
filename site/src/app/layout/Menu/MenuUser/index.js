@@ -27,7 +27,7 @@ const MenuUser = ({user}) => {
   const { store } = React.useContext(MobXProviderContext)
 
   
-  const doSelMenu =(i,url)=>{
+  const doSelMenu =(url)=>{
     navigate(url)
   }
   
