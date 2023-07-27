@@ -29,7 +29,7 @@ const MenuUser = ({user}) => {
   
 
   
-  const doSelMenu =(i,url)=>{
+  const doSelMenu =(url)=>{
     navigate(url)
   }
   
