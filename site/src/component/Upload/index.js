@@ -9,7 +9,7 @@ import {PRE_IMG} from '@/constant/urls'
 import s from './index.module.less';
 
 
-const UploadImg = ({file}) => {
+const UploadImg = ({file,img}) => {
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
   const [fileList, setFileList] = useState(file)
@@ -17,6 +17,13 @@ const UploadImg = ({file}) => {
   const [preview, setPreview] = useState(false);
   const [previewImg, setPreviewImg] = useState('');
 
+  const COUNT = 2
+  
+  console.log(file,'fileList')
+
+  useEffect(()=>{
+    setFileList(file)
+  },[file])
 
 
   const doPreview = async (file) => {
@@ -31,7 +38,8 @@ const UploadImg = ({file}) => {
     const formData = new FormData();
     formData.append('file', file)
     store.uploadImg(formData).then(r=>{
-      setFileList([{ url: `${PRE_IMG}${r}?width=100` }])
+      let item = { url: `${PRE_IMG}${r}?width=100` }
+      setFileList([...fileList,item])
       setLoading(false);
     })
     return false;
@@ -39,7 +47,10 @@ const UploadImg = ({file}) => {
 
 
   const doRemove =(file)=>{
-    setFileList([])
+    const index = fileList.indexOf(file);
+    const newFileList = fileList.slice();
+    newFileList.splice(index, 1);
+    setFileList(newFileList);
   }
 
 
@@ -57,9 +68,10 @@ const UploadImg = ({file}) => {
         fileList={fileList}
         onPreview={doPreview}
         onRemove ={doRemove}
+
         beforeUpload ={doUpload}
         >
-        {fileList.length >= 1 ? null :  uploadButton}
+        {fileList.length >= COUNT ? null :  uploadButton}
       </Upload>
 
       <Modal open={preview} footer={null} onCancel={() => setPreview(false)}>
