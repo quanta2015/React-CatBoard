@@ -1,41 +1,67 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React,{useEffect,useState} from 'react';
-import {Input, Table, Space, Pagination, Spin, Form, Button, Row, Col, Select, InputNumber} from 'antd'
-import { observer,MobXProviderContext } from 'mobx-react'
+import React, { useState } from "react";
+import { Form, Input, Button } from "antd";
+import s from "./index.module.less";
 
-import s from './index.module.less';
+const { TextArea } = Input;
 
-const { TextArea } = Input
+const FormMain = ({ setSubmit }) => {
+  const [form] = Form.useForm();
+  const [disabled, setDisabled] = useState(true);
 
-const FormMain = ({setSubmit}) => {
-  const { store } = React.useContext(MobXProviderContext)
-  
+  const doSubmit = () => {
+    setSubmit(true);
+  };
 
-  const doSubmit=()=>{
-    setSubmit(true)
-  }
-
+  const onValuesChange = (changedValues, allValues) => {
+    if (allValues.title && allValues.content) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
 
   return (
-    <div className={s.form}>
-      <div className={s.row}>
-        <label>タイトル :</label>
-        <Input></Input>
-      </div>
-      <div className={s.row}>
-        <label>内容  :</label>
-        <TextArea allowClear style={{height: '300px'}} />
-      </div>
+    <Form
+      className={s.form}
+      form={form}
+      onValuesChange={onValuesChange}
+    >
+      <Form.Item
+        className={s.row}
+        label="タイトル :"
+        name="title"
+        rules={[
+          {
+            required: true,
+            message: "タイトルを入力してください",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
 
-      <div className={s.row}>
-        <div className={s.btn} onClick={doSubmit}>
+      <Form.Item
+        className={s.row}
+        label="内容  :"
+        name="content"
+        rules={[
+          {
+            required: true,
+            message: "内容を入力してください",
+          },
+        ]}
+      >
+        <TextArea allowClear style={{ height: "300px" }} />
+      </Form.Item>
+
+      <Form.Item className={s.row}>
+        <Button className={s.btn} onClick={doSubmit} disabled={disabled}>
           質問を投稿
-        </div>
-      </div>
-    </div>
-    
-  )
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
 
-}
-
-export default  observer(FormMain)
+export default FormMain;
