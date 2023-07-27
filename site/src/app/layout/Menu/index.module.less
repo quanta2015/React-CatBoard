@@ -30,14 +30,37 @@
   }
 
 
+.fn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 12px;
 
-  .fn {
+
+  i {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    right: 20px;
-    top: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: .1em;
+    width: 160px;
+    height: 35px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background: var(--clr-sub);
+    cursor: pointer;
+  }
+
+
+}
+
+
+  .login {
+    display: flex;
 
     span {
       display: flex;
@@ -47,24 +70,75 @@
       cursor: pointer;
       letter-spacing: .1em;
 
-      &:last-child {
-        width: 145px;
-        height: 35px;
-        flex-shrink: 0;
-        font-size: 12px;
-        border-radius: 5px;
-        background: var(--clr-sub);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        border-radius: 5px;
-        background: var(--clr-sub);
-        letter-spacing: 0;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
+
 
       &+span {
         margin-left: 20px;
       }
     }
+  }
+
+
+
+  .user {
+    display: flex;
+
+
+    .item {
+      display: flex;
+      width: 36px;
+      height: 36px;
+      margin: 0 12px;
+      background: #fff;
+      padding: 5px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      cursor: pointer;
+
+
+      img {
+        height: 100%;
+        width: 100%;
+
+      }
+
+      &:hover {
+        .menuUser {
+          opacity: 1;
+        }
+      }
+
+      .menuUser {
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%) translateX(calc(-50% + 18px));
+
+        background: transparent;
+        width: 300px;
+        opacity: 1;
+        color: #333;
+        transition: .5s;
+        z-index: 99999;
+
+        .wrap {
+          margin-top: 10px;
+          background: #fff;
+
+
+          .menuItem {
+            height: 70px;
+
+            &+.menuItem {
+              border-top: 1px solid #eee;
+            }
+          }
+
+        }
+      }
+    }
+
+
+
   }
 
 

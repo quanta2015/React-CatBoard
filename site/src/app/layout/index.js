@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom'
 import { inject,observer,MobXProviderContext } from 'mobx-react'
 import Loading from 'react-loading-spinkit'
-import Menu from '@/component/Menu'
+
+import Menu from './Menu'
 import FormCat from '@/component/FormCat'
 import Detail from '@/component/Detail'
 import Login from '@/component/Login'
 import LoginRequired from '@/component/LoginRequired'
-import LoadingPage from '@/component/LoadingPage'
 import Footer from '@/component/Footer'
 import ToTop from '@/component/ToTop'
 

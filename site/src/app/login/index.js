@@ -47,6 +47,7 @@ const Login = () => {
           message.info('登录成功！')
           store.setUser(r.data)
           navigate('/')
+          console.log('user info:', r.data);
         }
       })
       
