@@ -13,7 +13,7 @@ const menu = [{name:'ホーム',url:'/'},
               {name:'迷子情報',url:'/cat?type=lose'},
               {name:'保護情報',url:'/cat?type=prot'},
               {name:'ねこ記事',url:'/note'},
-              {name:'Q&A',url:'/question'},
+              {name:'Q&A',url:'/qa'},
               {name:'お問い合わせ',url:'/ask'}]
 
 const Menu = ({}) => {
