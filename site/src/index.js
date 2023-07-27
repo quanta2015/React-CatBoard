@@ -17,9 +17,9 @@ configure({enforceActions: 'observed'})
 
 let Layout = Loadable({ loader: () => import('./app/layout')})
 let Index  = Loadable({ loader: () => import('./app/index')})
-// let Cat    = Loadable({ loader: () => import('./app/cat')})
-// let Note   = Loadable({ loader: () => import('./app/note')})
-// let Qa     = Loadable({ loader: () => import('./app/qa')})
+let Cat    = Loadable({ loader: () => import('./app/cat')})
+let Note   = Loadable({ loader: () => import('./app/note')})
+let Qa     = Loadable({ loader: () => import('./app/qa')})
 let Ask    = Loadable({ loader: () => import('./app/ask')})
 
 
@@ -35,10 +35,10 @@ root.render(
             {/*<Route path="/reg"  element={<Reg />} />*/}
 
             <Route path="/"     element={<Index />} />
-            {/*<Route path="/cat"  element={<Cat />} />*/}
-            {/*<Route path="/note" element={<Note />} />*/}
-            {/*<Route path="/qa"   element={<Qa />} />*/}
-            <Route path="/ask"        element={<Ask />} />
+            <Route path="/cat"  element={<Cat />} />
+            <Route path="/note" element={<Note />} />
+            <Route path="/qa"   element={<Qa />} />
+            <Route path="/ask"  element={<Ask />} />
           </Route>
         </Routes>
       </BrowserRouter>
