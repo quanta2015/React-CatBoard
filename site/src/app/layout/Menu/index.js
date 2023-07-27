@@ -6,11 +6,12 @@ import s from './index.module.less';
 import { useNavigate } from 'react-router-dom'
 
 import logo from '@/img/logo.svg'
+import bell from '@/img/icon/bell.svg'
+import chat from '@/img/icon/chat.svg'
 
 
 const fun  = [{name:'新規登録',url:'/reg'},
-              {name:'ログイン',url:'/login'},
-              {name:'アプリをダウンロード',url:'/'}]
+              {name:'ログイン',url:'/login'}]
 
 
 const menu = [{name:'ホーム',url:'/'},
@@ -20,24 +21,60 @@ const menu = [{name:'ホーム',url:'/'},
               {name:'Q&A',url:'/qa'},
               {name:'お問い合わせ',url:'/ask'}]
 
+
 const Menu = ({}) => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
+  
+ 
   const [sel,setSel] = useState(0)
+  const [user,setUser] = useState(store.user)
+
+
+  useEffect(()=>{
+    setUser(store.user)
+  },[store.user])
 
 
   const doSelMenu =(i,url)=>{
     setSel(i)
     navigate(url)
   }
+
+  const renderLogin =()=>(
+    <div className={s.login}>
+      {fun.map((item,i)=>
+        <span key={i} onClick={()=>doSelMenu(i,item.url)}>{item.name}</span>
+      )}
+    </div>
+  )
+
+  console.log(user,'user')
+
+
+  const renderUser =()=>(
+    <div className={s.user}>
+      <div className={s.item}>
+        <img src={chat} />
+      </div>
+      <div className={s.item}>
+        <img src={bell} />
+      </div>
+      <div className={s.item}>
+        <img src={user?.icon} />
+      </div>
+
+    </div>
+  )
   
   
   return (
     <div className={s.menu}>
       <div className={s.fn}>
-        {fun.map((item,i)=>
-          <span key={i} onClick={()=>doSelMenu(i,item.url)}>{item.name}</span>
-        )}
+
+        { user ? renderUser():renderLogin() }
+
+        <i>アプリをダウンロード</i>
       </div>
 
       <div className={s.logo}>
@@ -56,4 +93,4 @@ const Menu = ({}) => {
 
 }
 
-export default inject('store')(observer(Menu))
+export default observer(Menu)

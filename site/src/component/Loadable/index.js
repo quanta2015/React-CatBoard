@@ -1,5 +1,5 @@
 import L from 'react-loadable'
-import LoadingPage from '../LoadingPage'
+import LoadingPage from './LoadingPage'
 
 const Loadable = opt => (
   L({
