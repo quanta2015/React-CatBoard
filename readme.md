@@ -2,18 +2,18 @@
 
 
 ### Process status
-１。ホーム　　　　　　finished
-２。迷子情報　　　　　waiting
-３。保護情報　　　　　waiting
-４。ねご記事　　　　　waiting
-５。Q&A　　　　　　　waiting
-６。お問い合わせ　　　finished
-７。新規登録　　　　　waiting
-８。ログイン　　　　　finished
-９。投稿　　　　　　　working
-１０。メッセージ　　　waiting
-１１。注意　　　　　　waiting
-１１。アカウント情報　waiting
+- ホーム　　　　　finished
+- 迷子情報　　　　waiting   　　
+- 保護情報　　　　waiting
+- ねご記事　　　　waiting
+- Q&A　　　　　　waiting
+- お問い合わせ　　finished
+- 新規登録　　　　waiting
+- ログイン　　　　finished
+- 投稿　　　　　　working
+- メッセージ　　　waiting
+- 注意　　　　　　waiting
+- アカウント情報　waiting
 
 
 
