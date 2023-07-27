@@ -24,7 +24,7 @@ import slide03 from '@/img/slide03.png'
 const Index = () => {
   const { store } = React.useContext(MobXProviderContext)
 
-  const [findList, setFindList] = useState([])
+  // const [findList, setFindList] = useState([])
   const [loseList, setLoseList] = useState([])
   const [protList, setProtList] = useState([])
   const [noteList, setNoteList] = useState([])
@@ -36,9 +36,9 @@ const Index = () => {
     store.setShow(true,'loading')
     store.queryCats().then(r=>{
       console.log('取得データ',r)
-      const {cat_find,cat_lose,cat_prot,note,qa_i,qa_s} = r
+      const {cat_lose,cat_prot,note,qa_i,qa_s} = r
       const newsList = getLatestRecords(9, cat_lose, cat_prot, note)
-      cat_find.map(o=>o.type = 'find' )
+      // cat_find.map(o=>o.type = 'find' )
       cat_lose.map(o=>o.type = 'lose' )
       cat_prot.map(o=>o.type = 'prot' )
       note.map(o=>o.type = 'note' )
@@ -46,7 +46,7 @@ const Index = () => {
       qa_s.map(o=>o.type = '解決' )
       
       setNewsList(newsList);
-      setFindList(r.cat_find)
+      // setFindList(r.cat_find)
       setLoseList(r.cat_lose)
       setProtList(r.cat_prot)
       setNoteList(r.note)

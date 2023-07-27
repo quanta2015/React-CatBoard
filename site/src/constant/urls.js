@@ -6,6 +6,9 @@ export const API_QUERY_CATS    = API_SERVER + '/queryCat'
 export const API_UPLOAD_IMG    = API_SERVER + '/uploadImg'
 
 
+
+
+
 export const PRE_IMG           = 'https://im.ages.io/'
 
 
