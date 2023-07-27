@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {API_SERVER} from '@/constant/apis'
 import s from './index.module.less';
 import { useNavigate } from 'react-router-dom'
+import { Tooltip } from 'antd';
 
 
 import logo from '@/img/logo.svg'
@@ -25,15 +26,13 @@ const MenuUser = ({user}) => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
 
-
-  
-
   
   const doSelMenu =(i,url)=>{
     navigate(url)
   }
   
   return (
+    <React.Fragment>
     <div className={s.menuUser}>
       <div className={s.item}>
         <img src={chat} />
@@ -48,16 +47,30 @@ const MenuUser = ({user}) => {
         <div className={s.menuSub}>
           <div className={s.wrap}>
             {MENU_USER.map((item,i)=>
-              <div className={s.menuItem} onClick={()=>doSelMenu(item.url)} key={i}>
+              <div 
+                className={s.menuItem} 
+                onClick={()=>doSelMenu(item.url)} 
+                key={i}
+              >
                 <img src={item.icon} />
-                <span>{item.name}</span>
+                {i === 0 ? 
+                  <Tooltip title="確認 / 編集 / 削除ができます " placement="bottom">
+                    <span>{item.name}</span>
+                  </Tooltip> :
+                  i === 1 ?
+                  <Tooltip title="確認 / 編集 / 削除ができます " placement="bottom">
+                    <span>{item.name}</span>
+                  </Tooltip> :
+                  <span>{item.name}</span>
+                }
               </div>
-            )}
-          </div>
+              )}
+            </div>
         </div>
       </div>
 
     </div>
+    </React.Fragment>
   )
 
 }
