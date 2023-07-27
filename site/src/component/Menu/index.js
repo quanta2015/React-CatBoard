@@ -8,7 +8,11 @@ import { useNavigate } from 'react-router-dom'
 import logo from '@/img/logo.svg'
 
 
-const fun  = ['新規登録','ログイン','アプリをダウンロード']
+const fun  = [{name:'新規登録',url:'/reg'},
+              {name:'ログイン',url:'/login'},
+              {name:'アプリをダウンロード',url:'/'}]
+
+
 const menu = [{name:'ホーム',url:'/'},
               {name:'迷子情報',url:'/cat?type=lose'},
               {name:'保護情報',url:'/cat?type=prot'},
@@ -32,7 +36,7 @@ const Menu = ({}) => {
     <div className={s.menu}>
       <div className={s.fn}>
         {fun.map((item,i)=>
-          <span key={i}>{item}</span>
+          <span key={i} onClick={()=>doSelMenu(i,item.url)}>{item.name}</span>
         )}
       </div>
 

@@ -21,6 +21,7 @@ let Cat    = Loadable({ loader: () => import('./app/cat')})
 let Note   = Loadable({ loader: () => import('./app/note')})
 let Qa     = Loadable({ loader: () => import('./app/qa')})
 let Ask    = Loadable({ loader: () => import('./app/ask')})
+let Login  = Loadable({ loader: () => import('./app/login')})
 
 
 
@@ -31,7 +32,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            {/*<Route path="/login"  element={<Login />} />*/}
+            <Route path="/login"  element={<Login />} />
             {/*<Route path="/reg"  element={<Reg />} />*/}
 
             <Route path="/"     element={<Index />} />

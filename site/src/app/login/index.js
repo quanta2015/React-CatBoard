@@ -1,73 +1,110 @@
-import React from 'react'
-import { inject,observer,MobXProviderContext } from 'mobx-react'
-import { Form, Input, Button, message } from 'antd'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React,{useEffect,useState} from 'react';
+import { observer,MobXProviderContext } from 'mobx-react'
+import { Form, Button, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker,Checkbox} from 'antd';
+import classnames from 'classnames';
+import s from './index.module.less';
+
 import { UserOutlined,LockOutlined } from '@ant-design/icons';
-import * as urls from '@/constant/urls'
-import { useNavigate } from 'react-router-dom'
-
-import style from './index.module.less'
-
-import logo from '@/img/logo.svg'
-import edu from '@/img/logo.png'
-import mentsys from '@/img/mentsys.png'
+import apple    from '@/img/icon/apple.svg'
+import email    from '@/img/icon/email.svg'
+import google   from '@/img/icon/google.svg'
+import facebook from '@/img/icon/facebook.svg'
 
 
 
 
 const Login = () => {
-  const { store } = React.useContext(MobXProviderContext);
-  const navigate = useNavigate();
+  const { store } = React.useContext(MobXProviderContext)
   const [form] = Form.useForm();
+
+
+  const [status, setStatus] = useState(0)
+
+
+  const mainTitle = 'アカウント登録'
+  const loginTitle = 'ログイン'
+
+  const btnList = [{
+    icon:email,  name:'メールアドレスで登録'
+  },{
+    icon:google, name:'Googleで登録'
+  },{
+    icon:facebook, name:'Facebookで登録'
+  },{
+    icon:apple, name:'Appleで登録'
+  }]
+
 
   const doLogin =async()=>{
     try {
       const params = await form.validateFields();
-      const r = await store.login(urls.API_LOGIN, params)
-      if (r) {
-        navigate('/')
-      }
+
+      console.log(params)
+      // const r = await store.login(urls.API_LOGIN, params)
+      // if (r) {
+      //   navigate('/')
+      // }
 
     } catch (errorInfo) {
       console.log('Failed:', errorInfo);
     }
   }
 
-  return (
-    <div className={style.login}>
-      <div className={style.wrap}>
+
+  const renderForm =()=>(
+    <div className={s.form}>
+
+      <Form form={form} layout='vertical'>
+
+        <Form.Item 
+          label="メールアドレス" 
+          name="user" 
+          rules={[{ required: true, message: 'アカウントを入力してください'}]}
+          >
+          <Input size="large" style={{height: '50px'}} placeholder="アカウント" allowClear prefix={<UserOutlined />} />
+        </Form.Item>
+
+        <Form.Item label="メールアドレス" 
+          name="pwd" 
+          rules={[{ required: true, message: 'パスワードを入力してください'}]}
+          >
+          <Input size="large" style={{height: '50px'}} placeholder="パスワード" allowClear prefix={<LockOutlined />} />
+        </Form.Item>
         
-        <div className={style.logo}>
-          <div className={style.title}>
-            <img src={logo} />
-            <p>
-              <span>信息学院综合导师课外育人管理系统</span>
-              <label>Tutor Extracurricular Education System of Information College</label>
-            </p>
-          </div>
-          <div className={style.edu}>
-            <img src={edu} />
-          </div>
-          
-          
-        </div>
       
-        <Form form={form} className={style.login_frm}>
-          <label>用户登录</label>
-          <Form.Item name="uid" rules={[{ required: true, message: '请输入账号'}]}>
-            <Input size="large" style={{height: '45px'}} placeholder="请输入账号" allowClear prefix={<UserOutlined />} />
-          </Form.Item>
-          <Form.Item name="pwd" rules={[{ required: true, message: '请输入账号'}]}>
-            <Input.Password size="large" style={{height: '45px'}} placeholder="请输入密码" prefix={<LockOutlined />}/>
-          </Form.Item>
-          <p></p>
-          <Form.Item>
-            <Button type="primary" size="large" className="input-btn" block onClick={doLogin}>登 录</Button>
-          </Form.Item>
-        </Form>
+        <div className={classnames(s.btn,'lose')} onClick={doLogin}>ログイン</div>
+      </Form>
+    </div>
+  )
+
+
+  const renderBtn =(item,e)=>(
+    <div className={s.btn} onClick={e}>
+      <img src={item.icon} />
+      <span>{item.name}</span>
+    </div>
+  )
+
+  const doShowFrom =()=>{
+    setStatus(1)
+  }
+
+  return (
+    <div className={s.login}>
+      <div className={s.wrap}>
+        <h1>{status?loginTitle:mainTitle}</h1>
+
+        {!status? renderBtn(btnList[0],doShowFrom):renderForm() }
+
+
+        {btnList.slice(1).map((item,i)=>
+          renderBtn(item)
+        )}
       </div>
     </div>
   )
 
 }
 
-export default observer(Login)
+export default  observer(Login)
