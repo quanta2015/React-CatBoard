@@ -22,6 +22,13 @@ class Store {
 
   item    = {}
 
+  reset =()=>{
+    this.edit     = false
+    this.detail   = false
+    this.loading  = false
+    this.loginReq = false
+  }
+
 
   setUser = (user) =>{
     this.user = user
