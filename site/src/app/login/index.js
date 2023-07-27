@@ -65,12 +65,12 @@ const Login = () => {
         <Form.Item 
           label="メールアドレス" 
           name="mail" 
-          rules={[{ required: true, message: 'アカウントを入力してください'}]}
+          rules={[{ required: true, message: 'メールアドレスを入力してください'}]}
           >
-          <Input size="large" style={{height: '50px'}} placeholder="アカウント" allowClear prefix={<UserOutlined />} />
+          <Input size="large" style={{height: '50px'}} placeholder="メールアドレス" allowClear prefix={<UserOutlined />} />
         </Form.Item>
 
-        <Form.Item label="メールアドレス" 
+        <Form.Item label="パスワード" 
           name="pwd" 
           rules={[{ required: true, message: 'パスワードを入力してください'}]}
           >

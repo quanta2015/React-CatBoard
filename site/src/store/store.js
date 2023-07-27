@@ -12,8 +12,8 @@ class Store {
     makeAutoObservable(this);
   }
 
-  // user     = 'test'
-  user     = null
+  user     = 'test'
+  // user     = null
   edit     = false
   mobile   = false
   detail   = false

@@ -6,8 +6,8 @@
 - 迷子情報　　　　waiting   　　
 - 保護情報　　　　waiting
 - ねご記事　　　　waiting
-- Q&A　　　　　　waiting
-- お問い合わせ　　finished
+- Q&A　　　　　　 finished
+- お問い合わせ　　waiting
 - 新規登録　　　　waiting
 - ログイン　　　　finished
 - 投稿　　　　　　working

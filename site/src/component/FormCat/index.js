@@ -2,13 +2,17 @@ import React,{useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom'
 import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
-import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker,Checkbox} from 'antd';
+import { Button, Form, Input, Radio,Select,Modal,DatePicker,TimePicker,Checkbox,Row,Col} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import s from './index.module.less';
 
 import icon_check  from '@/img/icon/check.svg'
-import icon_warn  from '@/img/icon/warning.svg'
+import warn_lose  from '@/img/icon/warn_lose.svg'
+import warn_prot  from '@/img/icon/warn_prot.svg'
+import Footer from '@/component/Footer'
+import ToTop from '@/component/ToTop'
+import Upload from '@/component/Upload'
 
 const { TextArea } = Input
 
@@ -25,15 +29,17 @@ const info = {
 const _info = Object.entries(info).map(([key, val]) => ({key, val}))
 
 
-const FormCat = ({}) => {
+const FormCat = ({setSubmit,type}) => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
   const [form] = Form.useForm();
 
-
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [checkboxLabels, setCheckboxLabels] = useState(['tets','tet2']);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
+  const [disabled, setDisabled] = useState(true);
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -47,7 +53,9 @@ const FormCat = ({}) => {
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     }])
-
+  const doSubmit = () => {
+    setSubmit(true);
+  };
 
   if (store.user === null) {
     store.setShow(false,'edit')
@@ -55,10 +63,16 @@ const FormCat = ({}) => {
   }
 
   useEffect(()=>{ 
-
-    
-
   },[])
+
+  // useEffect(() => {
+  //   if(form.getFieldValue("checkbox-group")?.length === 3){
+  //     setButtonDisabled(false);
+  //   } else {
+  //     setButtonDisabled(true);
+  //   }
+  // }, [form.getFieldValue("checkbox-group")]);
+
 
   const handlePreview = async (file) => {
     // if (!file.url && !file.preview) {
@@ -83,26 +97,41 @@ const FormCat = ({}) => {
       </div>
     </div>
   );
-  const [checkboxLabels, setCheckboxLabels] = useState(['复选框 1', '复选框 2', '复选框 3']);
 
+ 
+  const onValuesChange = (changedValues, allValues) => {
+    console.log("allValues:", buttonDisabled);
+    setButtonDisabled(
+      !(allValues["checkbox-group"] && allValues["checkbox-group"].length === 3 && allValues.prefecture)
+    );
+  };
 
   return (
     <div className={s.formCat} >
       <div className={s.menu}>
-        <div className={s.title}>迷子情報を投稿する前にご確認ください。</div> 
-        <img src={icon_check} className={s.icon} />
-        <div className={`${s.text} ${s.largeText}`}><strong>警察</strong>に届出をしましたか？</div>
-        <div className={`${s.text} ${s.largeText}`}><strong>保健所・動物愛護センター</strong>に問い合わせましたか？</div>
-        <img src={icon_warn} className={s.icon} />
+        <div className={s.title}>{type}を投稿する前にご確認ください。</div> 
+        {type !== '保護情報' && (
+            <div>
+              <img src={icon_check} className={s.icon} />
+              <div className={`${s.text} ${s.largeText}`}><strong>警察</strong>に届出をしましたか？</div>
+              <div className={`${s.text} ${s.largeText}`}><strong>保健所・動物愛護センター</strong>に問い合わせましたか？</div>
+            </div>
+        )}
+        <img src={type === '保護情報' ? warn_prot : warn_lose} className={s.icon} />
         <div className={s.text}>・電話番号やメールアドレスは入力せず、他のユーザーとの<br></br>連絡はねこならのメッセージ機能をご利用ください。</div>
         <div className={s.text}>・個人情報保護のため個人が特定される情報は入力しないでください。</div>
         <div className={s.text}>・報酬として金品を提示 / 要求しないでください。</div>
         <div className={s.text}>・<a href="/terms" className={s.link}>利用規約</a>に同意の上ご投稿ください。</div>
       </div>
-      <Form form={form} layout='vertical' className={s.form}>
+      <Form 
+        onValuesChange={onValuesChange}
+        form={form} 
+        layout='vertical' 
+        className={s.form}
+      >
         <div className={s.sect}>
           <div className={s.row}>
-            <h1><span>迷子になってしまった場所</span></h1>
+            <h1><span>{type === '保護情報' ? '保護した場所' : '迷子になってしまった場所'}</span></h1>
           </div>
           <div className={s.row}>
             <Form.Item 
@@ -145,13 +174,11 @@ const FormCat = ({}) => {
               <i className={s.sm}>＊公園・学校・駅・お店などの名前を入力してください</i>
             </Form.Item>
           </div>
-
         </div>
         <div className={s.sect}>
           <div className={s.row}>
-            <h1><span>迷子になってしまった日時</span></h1>
+            <h1><span>{type === '保護情報' ? '保護した日時' : '迷子になってしまった日時'}</span></h1>
           </div>
-
           <div className={s.row}>
             <Form.Item 
               label="年月日" 
@@ -165,7 +192,6 @@ const FormCat = ({}) => {
               <DatePicker format="YYYY/MM/DD"/>
             </Form.Item>
           </div>
-
           <div className={s.row}>
             <Form.Item 
               label="時間帯" 
@@ -180,10 +206,10 @@ const FormCat = ({}) => {
             </Form.Item>
           </div>
         </div>
-
         <div className={s.sect}>
           <div className={s.row}>
-            <h1><span>迷子になってしまった猫ちゃんの情報</span></h1>
+            <h1><span></span></h1>
+            <h1><span>{type === '保護情報' ? '保護した猫ちゃんの情報' : '迷子になってしまった猫ちゃんの情報'}</span></h1>
           </div>
 
           <div className={s.row}>
@@ -202,15 +228,36 @@ const FormCat = ({}) => {
             </div>
             <div className={s.col}>
               <Form.Item 
-                label="毛色・柄" 
-                name="color"
+                label="性別" 
+                name="sex"
                 rules={[
                   {
                     required: true,
-                    message: `猫ちゃんの毛色・柄を記入してください`,
+                    message: `性別を選択してください`,
                   },
                 ]}>
-                <Input placeholder="（例）薄い茶色で縞模様" />
+              <Radio.Group value='inline'>
+                {sexList.map((v, i) => (
+                  <Radio value={v} key={i}>{v}</Radio>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+            </div>
+            <div className={s.col}>
+              <Form.Item 
+                label="年齢" 
+                name="age"
+                rules={[
+                  {
+                    required: true,
+                    message: `年齢を選択してください`,
+                  },
+                ]}>
+                <Radio.Group value='inline'>
+                  {ageList.map((v, i) => (
+                    <Radio value={v} key={i}>{v}</Radio>
+                  ))}
+                </Radio.Group>
               </Form.Item>
             </div>
             <div className={s.col}>
@@ -224,6 +271,36 @@ const FormCat = ({}) => {
                   },
                 ]}>
                 <Input placeholder="（例：キジトラ、ベンガル）" />
+              </Form.Item>
+            </div>
+            <div className={s.col}>
+              <Form.Item 
+                label="毛色・柄" 
+                name="color"
+                rules={[
+                  {
+                    required: true,
+                    message: `猫ちゃんの毛色・柄を記入してください`,
+                  },
+                ]}>
+                <Input placeholder="（例）薄い茶色で縞模様" />
+              </Form.Item>
+            </div>
+            <div className={s.col}>
+              <Form.Item 
+                label="大きさ" 
+                name="size"
+                rules={[
+                  {
+                    required: true,
+                    message: `大きさを選択してください`,
+                  },
+                ]}>
+                <Radio.Group value='inline'>
+                  {sizeList.map((v, i) => (
+                    <Radio value={v} key={i}>{v}</Radio>
+                  ))}
+                </Radio.Group>
               </Form.Item>
             </div>
             <div className={s.col}>
@@ -255,64 +332,8 @@ const FormCat = ({}) => {
               </Form.Item>
             </div>
           </div>
-
-          <div className={s.row}>
-          <div className={s.col}>
-            <Form.Item 
-              label="性別" 
-              name="sex"
-              rules={[
-                {
-                  required: true,
-                  message: `性別を選択してください`,
-                },
-              ]}>
-              <Radio.Group value='inline'>
-                {sexList.map((v, i) => (
-                  <Radio value={v} key={i}>{v}</Radio>
-                ))}
-              </Radio.Group>
-            </Form.Item>
+            <div className={s.row}>
           </div>
-
-            <div className={s.col}>
-              <Form.Item 
-                label="年齢" 
-                name="age"
-                rules={[
-                  {
-                    required: true,
-                    message: `年齢を選択してください`,
-                  },
-                ]}>
-                <Radio.Group value='inline'>
-                  {ageList.map((v, i) => (
-                    <Radio value={v} key={i}>{v}</Radio>
-                  ))}
-                </Radio.Group>
-              </Form.Item>
-            </div>
-
-            <div className={s.col}>
-              <Form.Item 
-                label="大きさ" 
-                name="size"
-                rules={[
-                  {
-                    required: true,
-                    message: `大きさを選択してください`,
-                  },
-                ]}>
-                <Radio.Group value='inline'>
-                  {sizeList.map((v, i) => (
-                    <Radio value={v} key={i}>{v}</Radio>
-                  ))}
-                </Radio.Group>
-              </Form.Item>
-            </div>
-          </div>
-
-
           <div className={s.row}>
             <Form.Item 
               label="その他特徴" 
@@ -327,7 +348,7 @@ const FormCat = ({}) => {
           </div>
           <div className={s.row}>
             <Form.Item 
-              label="迷子になってしまった時の状況" 
+              label={type === '保護情報' ? '保護した時の状況' : '迷子になってしまった時の状況'}
               name="attr"
               rules={[
                 {required: false},
@@ -337,11 +358,9 @@ const FormCat = ({}) => {
             </Form.Item>
           </div>
         </div>
-
-
         <div className={s.sect}>
           <div className={s.row}>
-            <Form.Item 
+            {/* <Form.Item 
               label="猫ちゃんの写真アップロード" 
               name="attr"
               rules={[
@@ -367,32 +386,40 @@ const FormCat = ({}) => {
               <i className={s.sm}>＊出来るだけ画質の良い写真を選んでください。</i>
               <i className={s.sm}>＊色んな角度から撮った写真をアップロードしてください。</i>
               <i className={s.sm}>＊迷子になってしまった猫ちゃんの写真のみアップロードしてください。</i>
-            </Form.Item>
+            </Form.Item> */}
+              <Form.Item 
+                label="ユーザーの写真アップロード" 
+                name="attr"
+                rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
+                <Upload file = {fileList} />
+              </Form.Item>
           </div>
-
         </div>
-        <div>
-            <Form.Item
-              name="checkbox-group"
-              rules={[
-                { 
-                  validator: (_, value) =>
-                    value && value.length === checkboxLabels.length ? Promise.resolve() : Promise.reject(new Error(`需要全选: ${checkboxLabels.join(', ')}`)),
-                },
-              ]}
+        <Form.Item name="checkbox-group" className="form-item-container">
+            <Checkbox.Group
+              style={{ display: 'flex', flexDirection: 'column' }}
+              onChange={list => {
+                setButtonDisabled(list.length !== 3);
+              }}
             >
-              <Checkbox.Group>
-                <div className="checkbox-container">
-                  <Checkbox value="A">选项 A</Checkbox>
-                  <Checkbox value="B">选项 B</Checkbox>
-                  <Checkbox value="C">选项 C</Checkbox>
-                </div>
-              </Checkbox.Group>
-            </Form.Item>
-        </div>
+                <Checkbox value="A">記入漏れはない</Checkbox>
+                <Checkbox value="B">記入した情報に誤りはない</Checkbox>
+                <Checkbox value="C">出来るだけ詳細に記入した</Checkbox>
+            </Checkbox.Group>
+        </Form.Item>
+
+        <Form.Item className={s.row}>
+          <Button 
+            className={`${s.btn} ${type === '保護情報' ? s['btn-protect'] : ''}`} 
+            onClick={doSubmit} 
+            disabled={buttonDisabled}>
+            {type}を投稿
+          </Button>
+        </Form.Item>  
       </Form>
       
-      
+      <ToTop />
+      <Footer />
     </div>
   )
 

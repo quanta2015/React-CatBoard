@@ -45,7 +45,7 @@
         display: none;
         color: #333;
         transition: .5s;
-        z-index: 99999;
+        z-index: 1000;
 
         .wrap {
           margin-top: 20px;
@@ -75,7 +75,9 @@
               color: #000;
               text-align: center;
               font-weight: 400;
-              line-height: 24px;
+              line-height: 24px; 
+            }
+            &:hover{
               text-decoration-line: underline;
             }
 
@@ -87,11 +89,10 @@
         }
       }
     }
-
-
-
   }
-
+  .menuUser .ant-tooltip .ant-tooltip-inner {
+    background-color: var(--hover-color-3) !important;
+  }
 
 
   @media screen and (max-width: 768px) {

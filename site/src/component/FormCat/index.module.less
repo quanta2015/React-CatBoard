@@ -66,8 +66,11 @@
   }
 
   .link {
-    color: var(--clr-note);
+    color: var(--clr-nav);
     text-decoration: none;
+  }
+
+  .link:hover {
     text-decoration: underline;
   }
 
@@ -107,19 +110,61 @@
     padding: 20px;
     box-sizing: border-box;
     margin-top: 30px;
+    // display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 
     .row{
-      .ant-form-item-label {
-        font-size: 18px;
+      display: block;
+
+      label {
+        font-size: 15px;
       }
+
+    }
+
+    .form-item-container {
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .btn {
+      display: block; 
+      margin: 60px auto; 
+      width: 480px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      border-radius: 10px;
+      color: var(--clr-white);
+      background: var(--clr-lose);
+    }
+    .btn:disabled {
+      background-color: var(--clr-grey);
+    }
+
+    .btn:not(:disabled):hover {
+      background-color: var(--hover-color-1);
+    }
+
+    .btn-protect {
+      background: var(--clr-prot);
+    }
+    
+    .btn-protect:not(:disabled):hover {
+      background-color: var(--hover-color-4);
     }
 
   }
 
-  .checkbox-container {
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 
