@@ -7,36 +7,50 @@ import { useNavigate } from 'react-router-dom'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import {PRE_IMG} from '@/constant/urls'
 import Upload from '@/component/Upload'
-import FormUsr from '@/component/FormUsr'
+import FormCat from '@/component/FormCat'
+
 import s from './index.module.less';
 
-import icon_user from '@/img/icon/menu-user.svg'
+import icon_cat from '@/img/icon/menu-cat.svg'
 
 
+const clone = (e)=> {
+  return JSON.parse(JSON.stringify(e))
+}
 
-const UserInfo = () => {
+
+const CatInfo = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
-  const [icon, setIcon] = useState([])
-  const { user }=store
+  // let { user } = store
 
-  
-  // user.icon = [{url: user.icon[0]}]
+
+  const [user, setUser] = useState(null)
+
   useEffect(()=>{
-    let url = user.icon[0]
-    console.log(url)
-    setIcon([url])
+
+    if (store.user) {
+      let _user = {
+        cat: JSON.parse(store.user?.cat)
+      }
+      setUser(_user)
+    }
+    
   },[])
+
+
+
+  // let usr = {
+  //   cat: JSON.parse(user.cat)
+  // }
+  console.log(user,'user')
   
   
 
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
-
-      console.log(params)
-
       params.user_id = user.user_id
       params.icon = [params.icon[0].url]
       console.log(params)
@@ -51,26 +65,27 @@ const UserInfo = () => {
   }
 
 
-
   return (
     <div className={s.userinfo}>
       <div className={s.wrap}>
         
         <h1>
-          <img src={icon_user} />
-          <span>アカウント情報</span>
+          <img src={icon_cat} />
+          <span>猫ちゃん情報</span>
         </h1>
 
-
+        {user &&
         <Form form={form} layout='vertical' initialValues={user}>
 
-          <FormUsr form={form} file={user.icon} />
+          <FormCat />
         
           <div className={classnames('btnLg','lose')} onClick={doSave}>情報を変更する</div>
 
 
           <div className={s.del}>アカウントを削除する</div>
-        </Form>
+        </Form>}
+
+        
 
       </div>
     </div>
@@ -78,4 +93,4 @@ const UserInfo = () => {
 
 }
 
-export default  observer(UserInfo)
+export default  observer(CatInfo)

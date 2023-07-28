@@ -26,6 +26,8 @@ let Reg    = Loadable({ loader: () => import('./app/reg')})
 let Login  = Loadable({ loader: () => import('./app/login')})
 
 let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
+let CatInfo = Loadable({ loader: () => import('./app/catInfo')})
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -45,6 +47,7 @@ root.render(
 
 
             <Route path="/userInfo"  element={<UserInfo />} />
+            <Route path="/catInfo"   element={<CatInfo />} />
           </Route>
         </Routes>
       </BrowserRouter>
