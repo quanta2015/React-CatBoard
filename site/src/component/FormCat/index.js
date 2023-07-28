@@ -24,35 +24,35 @@ const FormCat = ({}) => {
         label="名前" 
         name={['cat', 'name']}
         rules={[{ required: true, message: `猫ちゃんの名前を記入してください` }]}>
-        <Input placeholder="例）みー" />
+        <Input placeholder="例）みー" style={{height: '50px'}} />
       </Form.Item>
            
       <Form.Item 
         label="毛色・柄" 
         name={['cat', 'color']}
         rules={[{ required: true, message: `猫ちゃんの毛色・柄を記入してください` }]}>
-        <Input placeholder="（例）薄い茶色で縞模様" />
+        <Input placeholder="（例）薄い茶色で縞模様" style={{height: '50px'}} />
       </Form.Item>
             
       <Form.Item 
         label="猫種" 
         name={['cat', 'type']}
         rules={[{ required: true, message: `猫種を記入してください` }]}>
-        <Input placeholder="（例：キジトラ、ベンガル）" />
+        <Input placeholder="（例：キジトラ、ベンガル）" style={{height: '50px'}} />
       </Form.Item>
             
       <Form.Item 
         label="首輪の有無" 
         name={['cat', 'collar']} 
         rules={[{ required: true, message: `首輪の有無を選択してください` }]}>
-        <Radio.Group options={['有', '無']} />
+        <Radio.Group options={['有', '無']} style={{height: '50px'}} />
       </Form.Item>
             
       <Form.Item 
         label="首輪の色・柄" 
         name={['cat', 'necklace']}
         rules={[{ required: true, message: `首輪の色・柄を記入してください` }]}>
-        <Input placeholder="例）赤の花柄の首輪" />
+        <Input placeholder="例）赤の花柄の首輪" style={{height: '50px'}} />
       </Form.Item>
       <i className={s.sm}>＊首輪をつけている場合は色・柄などを入力してください</i>
            
@@ -90,7 +90,7 @@ const FormCat = ({}) => {
         name={['cat', 'attr']}
         rules={[ {required: false}, ]}>
         <TextArea placeholder="例）目は青いです。尻尾がかぎしっぽです。サクラ耳です。右足に小さい傷跡があります。人見知りで怖がりなので触りに行こうとすると逃げてしまうと思いますが、名前を呼んだら反応してくれると思います。" 
-          allowClear style={{height: '100px'}} />
+          allowClear style={{height: '150px'}} />
       </Form.Item>
       <i className={s.sm}>目の色・耳の形（サクラ耳など）・体型・尻尾の形（かぎしっぽなど）・性格・アレルギー・持病など出来るだけ詳しく<strong>150</strong>文字以内で入力してください</i>
     </>
