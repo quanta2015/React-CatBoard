@@ -19,7 +19,7 @@ const UserInfo = () => {
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
   const [imgs, setImgs] = useState([])
-  const { user } = store
+  let { user } = store
 
 
   useEffect(()=>{
@@ -33,7 +33,7 @@ const UserInfo = () => {
       const params = await form.validateFields();
 
       console.log(params)
-      console.log(imgs)
+      // console.log(imgs)
       // await store.login(params).then(r=>{
 
       // })
@@ -90,8 +90,14 @@ const UserInfo = () => {
           <Form.Item 
             label="ユーザーの写真アップロード" 
             name="icon"
+            valuePropName="icon"
+            // getValueFromEvent={e => e.fileList} 
+            getValueFromEvent={e => {
+              console.log(e,'aaaaaa')
+              return e.fileList
+            }}  
             rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
-            <Upload file = {imgs} setImgs={setImgs} />
+            <Upload file = {imgs} setImgs={setImgs} form={form}  />
           </Form.Item>
         
           <div className={classnames('btnLg','lose')} onClick={doSave}>情報を変更する</div>
