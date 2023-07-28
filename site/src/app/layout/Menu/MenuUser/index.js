@@ -17,8 +17,8 @@ import logout from '@/img/icon/menu-logout.svg'
 
 const MENU_USER = [{name: 'アカウント情報', icon:user, url:'/userInfo'},
                    {name: '猫ちゃん情報', icon:cat, url:'/catInfo'},
-                   {name: '投稿内容 確認 / 編集 / 削除', icon:edit,url:'/edit'},
-                   {name: 'ログアウト', icon:logout,url:'/logout'},]
+                   {name: '投稿内容 確認 / 編集 / 削除', icon:edit, url:'/edit'},
+                   {name: 'ログアウト', icon:logout, url:'/logout'},]
 
 
 const MenuUser = ({user}) => {
@@ -27,7 +27,14 @@ const MenuUser = ({user}) => {
 
 
   const doSelMenu =(url)=>{
-    navigate(url)
+
+    if (url === '/logout') {
+      store.setUser(null)
+      navigate('/')
+    }else{
+      navigate(url)
+    }
+    
   }
   
   return (
