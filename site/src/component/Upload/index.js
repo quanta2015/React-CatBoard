@@ -9,8 +9,8 @@ import {PRE_IMG} from '@/constant/urls'
 import s from './index.module.less';
 
 
-const UploadImg = ({file,img,setImgs}) => {
-  const [form] = Form.useForm();
+const UploadImg = ({file,img,setImgs,form}) => {
+  
   const { store } = React.useContext(MobXProviderContext)
   const [fileList, setFileList] = useState(file)
   const [loading, setLoading] = useState(false)
@@ -40,6 +40,10 @@ const UploadImg = ({file,img,setImgs}) => {
       setFileList([...fileList,item])
       setImgs([...fileList,item])
       setLoading(false);
+
+      form.setFieldsValue({
+        icon: [...fileList,item]
+      });
     })
     return false;
   }
@@ -51,6 +55,10 @@ const UploadImg = ({file,img,setImgs}) => {
     newFileList.splice(index, 1);
     setFileList(newFileList);
     setImgs(newFileList)
+
+    form.setFieldsValue({
+      icon: newFileList
+    });
   }
 
 
@@ -68,7 +76,10 @@ const UploadImg = ({file,img,setImgs}) => {
         fileList={fileList}
         onPreview={doPreview}
         onRemove ={doRemove}
-
+        // onChange={({ fileList }) => {
+        //   setFileList([...fileList])
+        //   setImgs([...fileList])
+        // }}
         beforeUpload ={doUpload}
         >
         {fileList.length >= COUNT ? null :  uploadButton}
