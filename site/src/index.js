@@ -21,6 +21,8 @@ let Cat    = Loadable({ loader: () => import('./app/cat')})
 let Note   = Loadable({ loader: () => import('./app/note')})
 let Qa     = Loadable({ loader: () => import('./app/qa')})
 let Ask    = Loadable({ loader: () => import('./app/ask')})
+
+let Reg    = Loadable({ loader: () => import('./app/reg')})
 let Login  = Loadable({ loader: () => import('./app/login')})
 
 let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
@@ -33,7 +35,7 @@ root.render(
         <Routes>
           <Route element={<Layout />}>
             <Route path="/login"  element={<Login />} />
-            {/*<Route path="/reg"  element={<Reg />} />*/}
+            <Route path="/reg"  element={<Reg />} />
 
             <Route path="/"     element={<Index />} />
             <Route path="/cat"  element={<Cat />} />

@@ -20,7 +20,8 @@ const UploadImg = ({file,img,setImgs,form}) => {
   const COUNT = 1
 
   useEffect(()=>{
-    setFileList(file)
+    let _file =file.map(o=> ({url:o}))
+    setFileList(_file)
   },[file])
 
 
@@ -38,7 +39,7 @@ const UploadImg = ({file,img,setImgs,form}) => {
     store.uploadImg(formData).then(r=>{
       let item = { url: `${PRE_IMG}${r}?width=100` }
       setFileList([...fileList,item])
-      setImgs([...fileList,item])
+      // setImgs([...fileList,item])
       setLoading(false);
 
       form.setFieldsValue({
@@ -54,7 +55,7 @@ const UploadImg = ({file,img,setImgs,form}) => {
     const newFileList = fileList.slice();
     newFileList.splice(index, 1);
     setFileList(newFileList);
-    setImgs(newFileList)
+    // setImgs(newFileList)
 
     form.setFieldsValue({
       icon: newFileList
