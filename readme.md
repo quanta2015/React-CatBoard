@@ -1,5 +1,6 @@
 ＃　猫の掲示板開発
 
+kill -9 $(lsof -t -i:9003)
 
 ### Process status
 - ホーム　　　　　finished
