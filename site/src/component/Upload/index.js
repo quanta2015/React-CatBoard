@@ -9,7 +9,7 @@ import {PRE_IMG} from '@/constant/urls'
 import s from './index.module.less';
 
 
-const UploadImg = ({file,img}) => {
+const UploadImg = ({file,img,setImgs}) => {
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
   const [fileList, setFileList] = useState(file)
@@ -17,9 +17,7 @@ const UploadImg = ({file,img}) => {
   const [preview, setPreview] = useState(false);
   const [previewImg, setPreviewImg] = useState('');
 
-  const COUNT = 2
-  
-  console.log(file,'fileList')
+  const COUNT = 1
 
   useEffect(()=>{
     setFileList(file)
@@ -40,6 +38,7 @@ const UploadImg = ({file,img}) => {
     store.uploadImg(formData).then(r=>{
       let item = { url: `${PRE_IMG}${r}?width=100` }
       setFileList([...fileList,item])
+      setImgs([...fileList,item])
       setLoading(false);
     })
     return false;
@@ -51,6 +50,7 @@ const UploadImg = ({file,img}) => {
     const newFileList = fileList.slice();
     newFileList.splice(index, 1);
     setFileList(newFileList);
+    setImgs(newFileList)
   }
 
 

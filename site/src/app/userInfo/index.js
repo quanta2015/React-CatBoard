@@ -18,12 +18,12 @@ const UserInfo = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
-  const [fileList, setFileList] = useState([])
+  const [imgs, setImgs] = useState([])
   const { user } = store
 
 
   useEffect(()=>{
-    setFileList([{url: user.icon}])
+    setImgs([{url: user.icon}])
   },[])
   
   
@@ -31,6 +31,9 @@ const UserInfo = () => {
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
+
+      console.log(params)
+      console.log(imgs)
       // await store.login(params).then(r=>{
 
       // })
@@ -88,7 +91,7 @@ const UserInfo = () => {
             label="ユーザーの写真アップロード" 
             name="icon"
             rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
-            <Upload file = {fileList} />
+            <Upload file = {imgs} setImgs={setImgs} />
           </Form.Item>
         
           <div className={classnames('btnLg','lose')} onClick={doSave}>情報を変更する</div>
