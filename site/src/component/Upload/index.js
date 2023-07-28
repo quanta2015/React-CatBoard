@@ -20,8 +20,9 @@ const UploadImg = ({file,img,setImgs,form}) => {
   const COUNT = 1
 
   useEffect(()=>{
-    let _file =file.map(o=> ({url:o}))
-    setFileList(_file)
+    let icon = file.map(o=> ({url:o}))
+    setFileList(icon)
+    form.setFieldsValue({icon});
   },[file])
 
 

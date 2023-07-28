@@ -1,48 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect,useState} from 'react';
 import { observer,MobXProviderContext } from 'mobx-react'
-import { Button, Input, Form,  message, Modal} from 'antd';
+import { Button, Input, Form, message} from 'antd';
 import classnames from 'classnames';
-import { useNavigate } from 'react-router-dom'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import {PRE_IMG} from '@/constant/urls'
 import Upload from '@/component/Upload'
-import FormUsr from '@/component/FormUsr'
+import FormCat from '@/component/FormCat'
+
 import s from './index.module.less';
 
-import icon_user from '@/img/icon/menu-user.svg'
+import icon_cat from '@/img/icon/menu-cat.svg'
 
 
 
-const UserInfo = () => {
-  const navigate = useNavigate();
+const CatInfo = () => {
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
-  const [icon, setIcon] = useState([])
-  const { user }=store
 
-  
-  // user.icon = [{url: user.icon[0]}]
+  const [user, setUser] = useState(null)
+
   useEffect(()=>{
-    let url = user.icon[0]
-    console.log(url)
-    setIcon([url])
+    if (store.user) {
+      let _user = {
+        cat: store.user?.cat
+      }
+      setUser(_user)
+    }
   },[])
-  
-  
 
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
-
-      console.log(params)
-
-      params.user_id = user.user_id
-      params.icon = [params.icon[0].url]
-      console.log(params)
-      await store.saveUserInfo(params).then(r=>{
+      const _cat = {...params.cat}
+      const _usr = store.user
+      params.user_id = store.user.user_id
+      // console.log(params)
+      await store.saveCatInfo(params).then(r=>{
         message.info(r.msg)
-        store.setUser(params)
+        _usr.cat = _cat
+        store.setUser(_usr)
       })
       
     } catch (errorInfo) {
@@ -51,26 +47,21 @@ const UserInfo = () => {
   }
 
 
-
   return (
     <div className={s.userinfo}>
       <div className={s.wrap}>
         
         <h1>
-          <img src={icon_user} />
-          <span>アカウント情報</span>
+          <img src={icon_cat} />
+          <span>猫ちゃん情報</span>
         </h1>
 
-
+        {user &&
         <Form form={form} layout='vertical' initialValues={user}>
-
-          <FormUsr form={form} file={user.icon} />
-        
+          <FormCat />
           <div className={classnames('btnLg','lose')} onClick={doSave}>情報を変更する</div>
-
-
           <div className={s.del}>アカウントを削除する</div>
-        </Form>
+        </Form>}
 
       </div>
     </div>
@@ -78,4 +69,4 @@ const UserInfo = () => {
 
 }
 
-export default  observer(UserInfo)
+export default  observer(CatInfo)

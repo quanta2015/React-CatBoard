@@ -31,7 +31,10 @@ const FormUsr = ({file,form}) => {
 
       <Form.Item label="メールアドレス" 
         name="mail" 
-        rules={[{ required: true, message: 'メールアドレスを入力してください'}]}
+        rules={[
+          { type: 'email', message: '有効なメールアドレスを入力してください!' },
+          { required: true, message: 'メールアドレスを入力してください'},
+          ]}
         >
         <Input size="large" style={{height: '50px'}} placeholder="メールアドレス" allowClear />
       </Form.Item>
@@ -47,7 +50,7 @@ const FormUsr = ({file,form}) => {
       <Form.Item 
         label="ユーザーの写真アップロード" 
         name="icon"
-        valuePropName="icon"
+        // valuePropName="icon"
         rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
         <Upload file = {file} form={form}  />
       </Form.Item>
