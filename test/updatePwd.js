@@ -14,18 +14,17 @@ const client = new DynamoDBClient(opt);
 
 
 async function addPwdToAllItems() {
-    const scanCommand = new ScanCommand({ TableName: 'Nekonara_user' });
+    const scanCommand = new ScanCommand({ TableName: 'Nekonara_usr' });
     try {
         const data = await client.send(scanCommand);
         for (let item of data.Items) {
             const updateCommand = new UpdateItemCommand({
-                TableName: 'Nekonara_user',
+                TableName: 'Nekonara_usr',
                 Key: {
                   'user_id': { S: item.user_id.S },
-                  'mail': { S: item.mail.S },
                 },
-                UpdateExpression: 'SET pwd = :p',
-                ExpressionAttributeValues: { ':p': { S: 'aaa' } },
+                UpdateExpression: 'SET icon = :p',
+                ExpressionAttributeValues: { ':p': { L: [item.icon] } },
                 ReturnValues: "UPDATED_NEW"
             });
             try {
