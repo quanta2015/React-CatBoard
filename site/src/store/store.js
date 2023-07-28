@@ -68,9 +68,20 @@ class Store {
     }
   }
 
+
+  async regUser(params) {
+    return await this.post(urls.API_REG_USER,params)
+  }
+
   async queryCats(params) {
     return await this.post(urls.API_QUERY_CATS,params)
   }
+
+
+  async saveUserInfo(params) {
+    return await this.post(urls.API_SAVE_USERINFO,params)
+  }
+
 
 
   async login(params) {
