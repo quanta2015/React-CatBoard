@@ -72,6 +72,12 @@ class Store {
   }
 
 
+  async saveUserInfo(params) {
+    return await this.post(urls.API_SAVE_USERINFO,params)
+  }
+
+
+
   async login(params) {
     return await this.post(urls.API_LOGIN,params)
   }

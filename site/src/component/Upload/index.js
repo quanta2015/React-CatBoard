@@ -76,10 +76,6 @@ const UploadImg = ({file,img,setImgs,form}) => {
         fileList={fileList}
         onPreview={doPreview}
         onRemove ={doRemove}
-        // onChange={({ fileList }) => {
-        //   setFileList([...fileList])
-        //   setImgs([...fileList])
-        // }}
         beforeUpload ={doUpload}
         >
         {fileList.length >= COUNT ? null :  uploadButton}

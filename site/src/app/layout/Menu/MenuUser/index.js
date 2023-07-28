@@ -27,7 +27,7 @@ const MenuUser = ({user}) => {
 
 
   
-
+  console.log(user.icon,'user')
   
   const doSelMenu =(url)=>{
     navigate(url)
@@ -43,7 +43,7 @@ const MenuUser = ({user}) => {
         <img src={bell} />
       </div>
       <div className={s.item}>
-        <img src={user?.icon} />
+        <img src={user?.icon[0]} />
 
         <div className={s.menuSub}>
           <div className={s.wrap}>

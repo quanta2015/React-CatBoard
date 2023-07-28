@@ -21,9 +21,8 @@ const UserInfo = () => {
   const [imgs, setImgs] = useState([])
   let { user } = store
 
-
   useEffect(()=>{
-    setImgs([{url: user.icon}])
+    setImgs([{url:user.icon[0]}])
   },[])
   
   
@@ -31,12 +30,13 @@ const UserInfo = () => {
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
-
-      console.log(params)
-      // console.log(imgs)
-      // await store.login(params).then(r=>{
-
-      // })
+      params.user_id = user.user_id
+      params.icon = [params.icon[0].url]
+      // console.log(params)
+      await store.saveUserInfo(params).then(r=>{
+        message.info(r.msg)
+        store.setUser(params)
+      })
       
     } catch (errorInfo) {
       console.log('Failed:', errorInfo);
@@ -91,16 +91,14 @@ const UserInfo = () => {
             label="ユーザーの写真アップロード" 
             name="icon"
             valuePropName="icon"
-            // getValueFromEvent={e => e.fileList} 
-            getValueFromEvent={e => {
-              console.log(e,'aaaaaa')
-              return e.fileList
-            }}  
             rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
             <Upload file = {imgs} setImgs={setImgs} form={form}  />
           </Form.Item>
         
           <div className={classnames('btnLg','lose')} onClick={doSave}>情報を変更する</div>
+
+
+          <div className={s.del}>アカウントを削除する</div>
         </Form>
 
       </div>
