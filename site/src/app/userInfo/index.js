@@ -3,25 +3,37 @@ import React,{useEffect,useState} from 'react';
 import { observer,MobXProviderContext } from 'mobx-react'
 import { Button, Input, Form,  message, Modal} from 'antd';
 import classnames from 'classnames';
+import { useNavigate } from 'react-router-dom'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import {PRE_IMG} from '@/constant/urls'
 import Upload from '@/component/Upload'
 
 import s from './index.module.less';
 
-import user from '@/img/icon/menu-user.svg'
+import icon_user from '@/img/icon/menu-user.svg'
 
 
 
 const UserInfo = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const { store } = React.useContext(MobXProviderContext)
-  const [fileList, setFileList] = useState([])
+  const [imgs, setImgs] = useState([])
+  const { user } = store
+
+
+  useEffect(()=>{
+    setImgs([{url: user.icon}])
+  },[])
+  
   
 
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
+
+      console.log(params)
+      console.log(imgs)
       // await store.login(params).then(r=>{
 
       // })
@@ -35,37 +47,33 @@ const UserInfo = () => {
 
   return (
     <div className={s.userinfo}>
-
-      
-
       <div className={s.wrap}>
         
-      
         <h1>
-          <img src={user} />
+          <img src={icon_user} />
           <span>アカウント情報</span>
         </h1>
 
 
-        <Form form={form} layout='vertical'>
+        <Form form={form} layout='vertical' initialValues={user}>
 
           <Form.Item 
             label="名前" 
-            name="nick_name" 
+            name="name" 
             rules={[{ required: true, message: '名前を入力してください'}]}
             >
             <Input size="large" style={{height: '50px'}} placeholder="名前" allowClear />
           </Form.Item>
 
           <Form.Item label="ユーザー名" 
-            name="user" 
+            name="user_name" 
             rules={[{ required: true, message: 'ユーザー名を入力してください'}]}
             >
             <Input size="large" style={{height: '50px'}} placeholder="ユーザー名" allowClear />
           </Form.Item>
 
           <Form.Item label="メールアドレス" 
-            name="email" 
+            name="mail" 
             rules={[{ required: true, message: 'メールアドレスを入力してください'}]}
             >
             <Input size="large" style={{height: '50px'}} placeholder="メールアドレス" allowClear />
@@ -81,9 +89,9 @@ const UserInfo = () => {
 
           <Form.Item 
             label="ユーザーの写真アップロード" 
-            name="attr"
+            name="icon"
             rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
-            <Upload file = {fileList} />
+            <Upload file = {imgs} setImgs={setImgs} />
           </Form.Item>
         
           <div className={classnames('btnLg','lose')} onClick={doSave}>情報を変更する</div>

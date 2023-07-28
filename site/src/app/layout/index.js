@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { inject,observer,MobXProviderContext } from 'mobx-react'
 import Loading from 'react-loading-spinkit'
 
 import Menu from './Menu'
 import FormCat from '@/component/FormCat'
 import Detail from '@/component/Detail'
-import Login from '@/component/Login'
 import LoginRequired from '@/component/LoginRequired'
 import Footer from '@/component/Footer'
 import ToTop from '@/component/ToTop'
@@ -19,6 +19,7 @@ import load from '@/img/loading.png'
 
 
 const Layout = () => {
+  const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
   const {loading,edit,detail,login,loginReq} = store
 
@@ -32,6 +33,14 @@ const Layout = () => {
 
 
 
+  useEffect(()=>{
+    if (store.user === null) {
+      navigate('/')
+    }
+  },[])
+
+
+
   return (
     <>
       <Menu />
@@ -41,10 +50,6 @@ const Layout = () => {
 
           {/*等待画面*/}
           { loading &&  <div className={s.load}> <img src={load} /> </div> }
-
-
-          {/*登录画面*/}
-          { login &&  <div className={s.login}> <Login /> </div> }
 
           {/*发帖画面*/}
           { detail && <div className={s.detail}><Detail /></div>}
