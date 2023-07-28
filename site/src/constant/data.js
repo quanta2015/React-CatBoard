@@ -14,6 +14,12 @@ export const INF_TYPE = {
     note: '記事',
   }
 
+export const SUB_TYPE = {
+  lose_sub: '迷子情報',
+  prot_sub: '保護情報',
+  qa_sub: '質問'
+}
+
 
 
 export const usr = {
