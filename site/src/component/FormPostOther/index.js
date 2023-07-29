@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react'
-import { Form, Input,DatePicker} from 'antd';
+import { Form, Input,Checkbox} from 'antd';
 import FormCat from '@/component/FormCat'
 import Upload from '@/component/Upload'
 
@@ -37,6 +37,13 @@ const FormPostOther = ({type,file,form}) => {
         <div>＊色んな角度から撮った写真をアップロードしてください。</div>
         <div>＊迷子になってしまった猫ちゃんの写真のみアップロードしてください。</div>
       </Form.Item>
+      <Form.Item>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Checkbox>記入漏れはない</Checkbox>
+            <Checkbox>記入した情報に誤りはない</Checkbox>
+            <Checkbox>出来るだけ詳細に記入した</Checkbox>
+        </div>
+    </Form.Item>
     </>
   )
 
