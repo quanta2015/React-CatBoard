@@ -78,6 +78,11 @@ class Store {
   }
 
 
+  async queryCats(params) {
+    return await this.post(urls.API_QUERY_CATS,params)
+  }
+
+
   async saveUserInfo(params) {
     return await this.post(urls.API_SAVE_USERINFO,params)
   }

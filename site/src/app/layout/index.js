@@ -3,11 +3,13 @@ import { Outlet } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { inject,observer,MobXProviderContext } from 'mobx-react'
 import Loading from 'react-loading-spinkit'
+import { Form } from 'antd';
 
 import Menu from './Menu'
 import FormCat from '@/component/FormCat'
 import Detail from '@/component/Detail'
 import LoginRequired from '@/component/LoginRequired'
+import Submission from '@/component/Submission'
 import Footer from '@/component/Footer'
 import ToTop from '@/component/ToTop'
 
@@ -26,6 +28,7 @@ const Layout = () => {
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
   const isMobileDevice = mobileDevices.some(device => userAgent.includes(device));
+  const [form] = Form.useForm();
   const isSmallScreen = window.innerWidth < 768;
   const title = '情報'
   const type = '迷子情報'
@@ -55,7 +58,7 @@ const Layout = () => {
           { detail && <div className={s.detail}><Detail /></div>}
 
           {/*发帖画面*/}
-          { edit && <div className={s.edit}><FormCat type={type} /></div>}
+          { edit && <div className={s.edit}><Submission form={form} file={[]}/></div>}
 
           {loginReq && <div className={s.loginRequired}><LoginRequired title={title} /></div>}
           <Outlet />
