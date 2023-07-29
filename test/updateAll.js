@@ -22,6 +22,8 @@ const run = async () => {
   
   // Step 2: Update each item
   for (let item of items) {
+
+    // console.log(item.fav)
     const updateParams = {
       TableName: 'Nekonara_board2',
       Key: {
@@ -30,10 +32,10 @@ const run = async () => {
       },
       UpdateExpression: "SET #bc = :val",
       ExpressionAttributeNames: {
-        "#bc": "board_type#category"
+        "#bc": "favCount"
       },
       ExpressionAttributeValues: {
-        ":val": { S: item.board_type.S + '#' + item.category.S }
+        ":val": { N: item.fav.L.length.toString() }
       },
       ReturnValues: "UPDATED_NEW"
     };

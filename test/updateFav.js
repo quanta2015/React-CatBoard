@@ -5,9 +5,7 @@ const opt = {
   accessKeyId: 'AKIAY2HDORQUZZPNVB6Y',
   secretAccessKey: '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',
 }
-const params = {
-  TableName: "Nekonara_board2"
-};
+
 const client = new DynamoDBClient(opt);
 
 
@@ -17,12 +15,13 @@ async function addPwdToAllItems() {
         const data = await client.send(scanCommand);
         for (let item of data.Items) {
             const updateCommand = new UpdateItemCommand({
-                TableName: 'Nekonara_usr',
+                TableName: 'Nekonara_board2',
                 Key: {
-                  'user_id': { S: item.user_id.S },
+                  'board_id': { S: item.board_id.S },
+                  'sub_date': { S: item.sub_date.S },
                 },
-                UpdateExpression: 'SET icon = :p',
-                ExpressionAttributeValues: { ':p': { L: [item.icon] } },
+                UpdateExpression: 'SET favCount = :p',
+                ExpressionAttributeValues: { ':p': {N:item.fav.length} },
                 ReturnValues: "UPDATED_NEW"
             });
             try {

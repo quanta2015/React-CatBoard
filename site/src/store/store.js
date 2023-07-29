@@ -82,6 +82,12 @@ class Store {
     return await this.post(urls.API_QUERY_CATS,params)
   }
 
+  async queryNote(params) {
+    return await this.post(urls.API_QUERY_NOTE,params)
+  }
+
+
+
 
   async saveUserInfo(params) {
     return await this.post(urls.API_SAVE_USERINFO,params)
