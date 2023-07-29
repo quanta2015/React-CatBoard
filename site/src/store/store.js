@@ -73,8 +73,8 @@ class Store {
     return await this.post(urls.API_REG_USER,params)
   }
 
-  async queryCats(params) {
-    return await this.post(urls.API_QUERY_CATS,params)
+  async queryAll(params) {
+    return await this.post(urls.API_QUERY_ALL,params)
   }
 
 
