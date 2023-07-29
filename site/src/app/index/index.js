@@ -34,7 +34,7 @@ const Index = () => {
 
   useEffect(()=>{
     store.setShow(true,'loading')
-    store.queryCats().then(r=>{
+    store.queryAll().then(r=>{
       console.log('取得データ',r)
       const {cat_lose,cat_prot,note,qa_i,qa_s} = r
       const newsList = getLatestRecords(9, cat_lose, cat_prot, note)
