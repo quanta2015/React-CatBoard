@@ -9,7 +9,7 @@ import Menu from './Menu'
 import FormCat from '@/component/FormCat'
 import Detail from '@/component/Detail'
 import LoginRequired from '@/component/LoginRequired'
-import Submission from '@/component/Submission'
+import FormPost from '@/component/FormPost'
 import Footer from '@/component/Footer'
 import ToTop from '@/component/ToTop'
 
@@ -58,7 +58,7 @@ const Layout = () => {
           { detail && <div className={s.detail}><Detail /></div>}
 
           {/*发帖画面*/}
-          { edit && <div className={s.edit}><Submission form={form} file={[]}/></div>}
+          { edit && <div className={s.edit}><FormPost form={form} file={[]}/></div>}
 
           {loginReq && <div className={s.loginRequired}><LoginRequired title={title} /></div>}
           <Outlet />

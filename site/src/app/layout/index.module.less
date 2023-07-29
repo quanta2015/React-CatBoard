@@ -9,22 +9,25 @@
   align-items: flex-start;
 
   .wrap {
-    width: 1440px;
+    overflow-y: auto;
+    max-height: 100%;
+    overflow-y: auto; 
+    width: 100%; 
+    padding-bottom: 80px;
+    overflow: scroll;
   }
 }
 
 .load,
 .edit {
   width: var(--sys-width);
-  height: calc(100vh - var(--menu-height));
+  height: 750px;
   position: fixed;
   z-index: 99;
   background: var(--clr-white);
-  // background: rgba(255, 255, 255, 1);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 
   img {
     width: 100px;

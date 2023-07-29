@@ -3,8 +3,6 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
 import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import Footer from '@/component/Footer'
-import ToTop from '@/component/ToTop'
 
 import s from './index.module.less';
 
@@ -32,8 +30,6 @@ const LoginRequired = ({title}) => {
             <button className={s.btn}>ログイン</button>
           </div>
         </div> 
-        <ToTop />
-        <Footer />
     </div>
 
   )

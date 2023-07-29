@@ -1,93 +1,80 @@
-import React from 'react';
-import { observer } from 'mobx-react'
-import { Form, Input,DatePicker} from 'antd';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React,{useEffect,useState} from 'react';
+import { observer,MobXProviderContext } from 'mobx-react'
+import { Form, message,Input, Radio,Select,Upload,Modal,DatePicker,TimePicker,Checkbox} from 'antd';
+import FormPostBasic from '@/component/FormPostBasic'
+import FormPostOther from '../FormPostOther';
+import UserConfirm from '../UserConfirm';
 import FormCat from '@/component/FormCat'
-import Upload from '@/component/Upload'
+import { v4 as uuidv4 } from 'uuid';
+import cls from 'classnames';
+import { useNavigate } from 'react-router-dom'
+import {SUB_TYPE} from '@/constant/data'
+import notice from '@/img/icon/warning-g.svg'
+import CardInfo from '@/component/CardInfo'
+import Footer from '@/component/Footer'
+import ToTop from '@/component/ToTop'
 
 import s from './index.module.less';
 
+const FormPost = () => {
+  const { store } = React.useContext(MobXProviderContext)
+  const [form] = Form.useForm();
+  const type = SUB_TYPE.lose_sub
+  const [user,setUser] = useState({})
+  const navigate = useNavigate();
 
-const { TextArea } = Input
+  const initTitle = '質問する前にご確認ください。'
+  const initList = [{
+    icon: notice,
+    sect: ["病気の診断や薬または療法食の処方についてなど\n獣医師の判断が必要な内容は投稿せず受診してください。",
+    "個人情報保護のため個人が特定される情報は投稿しないでください。",
+    "他人を傷つけるような内容（誹謗中傷 / 過度な批判など）や\n他人を不快にさせる内容は投稿しないでください。",
+    "商業目的や広告目的の内容は投稿しないでください。\n犯罪行為などを誘発 / 助長する内容は投稿しないでください。",
+    "投稿が不適切だと判断した場合、削除することがあります。",
+    "利用規約に同意の上ご投稿ください。"]
+  }]
 
-const FormPost = ({type,file,form}) => {
+
+  const doSave =async()=>{
+    try {
+      const params = await form.validateFields();
+      params.user_id =  uuidv4();
+      console.log(params)
+      await store.regUser(params).then(r=>{
+        message.info(r.msg)
+        store.setUser(params)
+        navigate('/')
+        // console.log(r)
+      })
+      
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  }
 
   return (
-    <>
-    <Form.Item 
-        label="都道府県" 
-        name="prefecture"
-        rules={[
-        {
-            required: true,
-            message: `请填写都道府県`,
-        },
-        ]}>
-        <Input placeholder="例）大阪府" />
-    </Form.Item>
-        
-    <Form.Item 
-        label="市町村" 
-        name="city"
-        rules={[
-        {
-            required: true,
-            message: `请填写市町村`,
-        },
-        ]}>
-        <Input placeholder="例）大阪市中央区" />
-        <i className={s.sm}>＊丁目・番地・号は入力しないでください</i>
-    </Form.Item>
+    <div className={s.formpost}>
+      <div className={s.wrap}>
+      <CardInfo list={initList} title={initTitle} />
 
-    <Form.Item 
-        label="付近" 
-        name="vicinity"
-        rules={[
-        {
-            required: true,
-            message: `请填写付近`,
-        },
-        ]}>
-        <Input placeholder="例）大阪城公園" />
-        <i className={s.sm}>＊公園・学校・駅・お店などの名前を入力してください</i>
-    </Form.Item>
-    <Form.Item 
-        label="日期と時間帯" 
-        name="dateTime"
-        rules={[
-            {
-                required: true,
-                message: '请选择日期和时间',
-            },
-        ]}
-    >
-        <DatePicker showTime format="YYYY/MM/DD HH:mm" />
-    </Form.Item>
-    <FormCat />
-    <Form.Item 
-        label="迷子になってしまった時の状況" 
-        name={['cat', 'attr']}
-        rules={[ {required: false}, ]}>
-        <TextArea placeholder="例）窓を開けっぱなしにしてしまっていて、脱走してしまいました。。" 
-        allowClear style={{height: '150px'}} />
-      </Form.Item>
-      <i className={s.sm}><strong>150</strong>文字以内で入力してください</i>
-      <Form.Item 
-        label="猫ちゃんの写真をアップロード" 
-        name="icon"
-        // valuePropName="icon"
-        rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
-        <Upload file = {file} form={form}  />
-        <i className={s.sm}>（サイズは6ＭＢまで。利用可能な拡張子：png gif jpg）画像があるほうが多くの方が見てくれます。</i>
-        <i className={s.sm}>＊必ず１枚は写真をアップロードしてください。</i>
-        <i className={s.sm}>＊人の顔・家の外観などが写っていない写真を選んでください。</i>
-        <i className={s.sm}>＊１枚目には体全体が写っている写真を選んでください。</i>
-        <i className={s.sm}>＊出来るだけ画質の良い写真を選んでください。</i>
-        <i className={s.sm}>＊色んな角度から撮った写真をアップロードしてください。</i>
-        <i className={s.sm}>＊迷子になってしまった猫ちゃんの写真のみアップロードしてください。</i>
-      </Form.Item>
-    </>
+      <Form form={form} layout='vertical' initialValues={user}>
+        <FormPostBasic type={type}/>
+        <FormCat />
+        <FormPostOther form={form} file={[]} />
+
+        <div className={cls('btnLg','lose')} style={{width: '400px', margin: '0 auto'}} onClick={doSave}>迷子情報を投稿</div>
+      </Form>
+      <ToTop />
+      <Footer />    
+      </div>
+
+  
+
+
+    </div>
   )
 
 }
 
-export default observer(FormPost)
+export default  observer(FormPost)

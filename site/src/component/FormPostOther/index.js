@@ -21,29 +21,33 @@ const FormPostOther = ({type,file,form}) => {
         <TextArea placeholder="例）窓を開けっぱなしにしてしまっていて、脱走してしまいました。。" 
         allowClear style={{height: '150px'}} />
         <div><strong>150</strong>文字以内で入力してください</div>
-      </Form.Item>
-
-      <Form.Item 
-        label={<span style={{ fontWeight: 'bold', fontSize: '20px' }}>{'猫ちゃんの写真をアップロード'}</span>}
-        name="icon"
-        // valuePropName="icon"
-        rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
-        <Upload file = {file} form={form}  />
-        <div>（サイズは6ＭＢまで。利用可能な拡張子：png gif jpg）画像があるほうが多くの方が見てくれます。</div>
-        <div>＊必ず１枚は写真をアップロードしてください。</div>
-        <div>＊人の顔・家の外観などが写っていない写真を選んでください。</div>
-        <div>＊１枚目には体全体が写っている写真を選んでください。</div>
-        <div>＊出来るだけ画質の良い写真を選んでください。</div>
-        <div>＊色んな角度から撮った写真をアップロードしてください。</div>
-        <div>＊迷子になってしまった猫ちゃんの写真のみアップロードしてください。</div>
-      </Form.Item>
-      <Form.Item>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Checkbox>記入漏れはない</Checkbox>
-            <Checkbox>記入した情報に誤りはない</Checkbox>
-            <Checkbox>出来るだけ詳細に記入した</Checkbox>
-        </div>
     </Form.Item>
+
+    <Form.Item 
+      label={<span style={{ fontWeight: 'bold', fontSize: '20px' }}>{'猫ちゃんの写真をアップロード'}</span>}
+      name="icon"
+      // valuePropName="icon"
+      rules={[{ required: true, message: `必ず１枚は写真をアップロードしてください` } ]}>
+      <Upload file = {file} form={form}  />
+      <div>（サイズは6ＭＢまで。利用可能な拡張子：png gif jpg）画像があるほうが多くの方が見てくれます。</div>
+      <div>＊必ず１枚は写真をアップロードしてください。</div>
+      <div>＊人の顔・家の外観などが写っていない写真を選んでください。</div>
+      <div>＊１枚目には体全体が写っている写真を選んでください。</div>
+      <div>＊出来るだけ画質の良い写真を選んでください。</div>
+      <div>＊色んな角度から撮った写真をアップロードしてください。</div>
+      <div>＊迷子になってしまった猫ちゃんの写真のみアップロードしてください。</div>
+    </Form.Item>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' ,marginTop:'20px'}}>
+    <Form.Item name="checkbox1" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
+      <Checkbox onChange={() => form.validateFields(['checkbox1'])}>記入漏れはない</Checkbox>
+    </Form.Item>
+    <Form.Item name="checkbox2" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
+      <Checkbox onChange={() => form.validateFields(['checkbox2'])}>記入した情報に誤りはない</Checkbox>
+    </Form.Item>
+    <Form.Item name="checkbox3" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
+      <Checkbox onChange={() => form.validateFields(['checkbox3'])}>出来るだけ詳細に記入した</Checkbox>
+    </Form.Item>
+    </div>
     </>
   )
 
