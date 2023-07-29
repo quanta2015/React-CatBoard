@@ -5,14 +5,13 @@ var dayjs = require('dayjs')
 var dotenv = require('dotenv')
 var express = require('express')
 var jwt = require('jsonwebtoken')
-// var formidable = require('formidable')
+// const { v4: uuidv4 } = require('uuid');
 var router = express.Router()
-// var db = require("../db/db")
 const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' }); // 设置上传文件的存储路径
 
-const { DynamoDBClient,DynamoDB, QueryCommand,ScanCommand } = require("@aws-sdk/client-dynamodb")
-const { unmarshall} = require("@aws-sdk/util-dynamodb");
+const { DynamoDBClient,DynamoDB,UpdateItemCommand, QueryCommand,PutItemCommand,ScanCommand } = require("@aws-sdk/client-dynamodb")
+const { marshall, unmarshall} = require("@aws-sdk/util-dynamodb");
 
 dotenv.config()
 
@@ -28,33 +27,11 @@ const opt = {
 const client = new DynamoDBClient(opt);
 
 
-const ums = (list)=> list.Items.map(item => unmarshall(item))
+const ums = (list)=> list.map(item => unmarshall(item))
 
 
-// const queryBoard =async(board_type,category,Limit=10)=>{
-//   const params = {
-//     TableName: "Nekonara_board2",
-//     IndexName: "type-category-index",
-//     KeyConditionExpression: "board_type = :board_type_value AND category = :category_value",
-//     ExpressionAttributeValues: {
-//       ":board_type_value": { S: board_type },
-//       ":category_value": { S: category }
-//     },
-//     ScanIndexForward: false,
-//     Limit,
-//   };
 
-//   try {
-//     const ret = await client.send(new QueryCommand(params));
-//     return ums(ret)
-//   } catch (err) {
-//     console.error(err);
-//     return null
-//   }
-// }
-
-
-const queryBoard =async(board_type,category,Limit=3)=>{
+const queryBoard =async(board_type,category,Limit=9)=>{
   
   const params = {
       TableName: "Nekonara_board2",
@@ -79,19 +56,100 @@ const queryBoard =async(board_type,category,Limit=3)=>{
   }
 }
 
-const { UpdateCommand } = require("@aws-sdk/client-dynamodb");
-
-
 router.post('/queryCat', async (req, res, next) =>{
+
   const cat_lose = await queryBoard("cat","迷子")
-  const cat_find = await queryBoard("cat","目撃")
   const cat_prot = await queryBoard("cat","保護")
   const note  = await queryBoard("note","NULL")
   const qa_s  = await queryBoard("qa","解決",4)
   const qa_i  = await queryBoard("qa","受付中",4)
 
-  res.status(200).json({code: 200, qa_s, qa_i, note, cat_lose, cat_find, cat_prot  })
+  res.status(200).json({code: 0, qa_s, qa_i, note, cat_lose, cat_prot  })
 })
+
+
+
+
+router.post('/saveUserInfo', async (req, res, next) =>{
+  let { name, user_name, mail, pwd, icon, user_id } = req.body
+  console.log(req.body,'params');
+
+  const params = {
+    TableName: 'Nekonara_usr',
+    Key: {
+      "user_id": { S: user_id }
+    },
+    ExpressionAttributeNames: {
+      "#n": "name",
+      "#u": "user_name",
+      "#m": "mail",
+      "#p": "pwd",
+      "#i": "icon"
+    },
+    ExpressionAttributeValues: {
+      ":n": { S: name },
+      ":u": { S: user_name },
+      ":m": { S: mail },
+      ":p": { S: pwd },
+      ":i": { L: icon.map(url => ({ "S": url })) }
+    },
+    UpdateExpression: "SET #n = :n, #u = :u, #m = :m, #p = :p, #i = :i",
+    ReturnValues: "UPDATED_NEW"
+  };
+
+ 
+  try {
+    const data = await client.send(new UpdateItemCommand(params));
+    res.status(200).json({code: 0, msg:'更新数据成功'});
+  } catch (err) {
+    console.error("Error updating item:", err);
+  }
+  
+})
+
+router.post('/login', async (req, res, next) =>{
+  let { mail,pwd } = req.body
+  // console.log(req.body);
+  const params = {
+      TableName: 'Nekonara_usr',
+      FilterExpression: 'mail = :m and pwd = :p',
+      ExpressionAttributeValues: {
+          ':m': { S: mail },
+          ':p': { S: pwd }
+      },
+  };
+  const command = new ScanCommand(params);
+
+  try {
+    const r = await client.send(command);
+    if (r.Items && r.Items.length > 0) {
+      const data = (ums(r.Items))[0]
+      res.status(200).json({code: 0, data});
+    }else{
+      res.status(200).json({code: 1, msg: '用户不存在或者密码错误！'});
+    }
+  } catch (err) {
+      console.error(err);
+  }
+})
+
+
+router.post('/reg', async (req, res, next) =>{
+  const item = req.body
+  const params = {
+    TableName: "Nekonara_usr",
+    Item: marshall(item)
+  };
+  const command = new PutItemCommand(params);
+
+  try {
+    const r = await client.send(command);
+    res.status(200).json({code: 0, msg:'注册成功！'});
+  } catch (err) {
+    console.error(err);
+  }
+})
+
 
 router.post('/uploadImg', upload.single('file'), async (req, res, next) =>{
 
@@ -101,23 +159,13 @@ router.post('/uploadImg', upload.single('file'), async (req, res, next) =>{
   };
   const url = `https://api.imageresizer.io/v1/images?key=${KEY_IMG}`
 
-router.post('/updateCatImage', async (req, res, next) => {
-  const { tableName, key, updatedValues } = req.body;
-  const updateResult = await updateItem(tableName, key, updatedValues);
-  if (updateResult) {
-    res.status(200).json({ code: 200, message: "Successfully updated item" });
-  } else {
-    res.status(500).json({ code: 500, message: "Error updating item" });
-  }
-});
-
   try {
     const r = await axios.post(url, fileData, { headers });
-    console.log(r.data);
-    res.status(200).json({code: 200, data: r.data.response});
+    // console.log(r.data);
+    res.status(200).json({code: 0, data: r.data.response});
   } catch (error) {
     console.error(error);
-    res.status(500).json({code: 500, error: error.message});
+    res.status(500).json({code: 1, error: error.message});
   }
 })
 
