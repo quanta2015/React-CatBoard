@@ -56,7 +56,8 @@ const queryBoard =async(board_type,category,Limit=9)=>{
   }
 }
 
-router.post('/queryCat', async (req, res, next) =>{
+
+router.post('/queryAll', async (req, res, next) =>{
 
   const cat_lose = await queryBoard("cat","迷子")
   const cat_prot = await queryBoard("cat","保護")
@@ -67,6 +68,103 @@ router.post('/queryCat', async (req, res, next) =>{
   res.status(200).json({code: 0, qa_s, qa_i, note, cat_lose, cat_prot  })
 })
 
+
+const INF_TYPE = {
+  lose: '迷子',
+  find: '目撃',
+  prot: '保護',
+  note: '記事',
+}
+
+
+
+const queryCat = async (board_type, category, area, fr, to, Limit=9) => {
+
+  const params = {
+    TableName: "Nekonara_board2",
+    IndexName: "type-category-date-index",
+    KeyConditionExpression: "#bc = :bc_value",
+    ExpressionAttributeNames: {
+      "#bc": "board_type#category",
+    },
+    ExpressionAttributeValues: {
+      ":bc_value": { S: `${board_type}#${category}` },
+    },
+    ScanIndexForward: false,
+    Limit,
+  };
+
+
+  if (fr && to) {
+    params.KeyConditionExpression += " AND #sub_date BETWEEN :fr AND :to"
+    params.ExpressionAttributeNames["#sub_date"] = "sub_date";
+    params.ExpressionAttributeValues[":fr"] = { S: fr };
+    params.ExpressionAttributeValues[":to"] = { S: to };
+  }
+
+  if (area) {
+    params.FilterExpression = "#addr.addr_ken = :addr_ken",
+    params.ExpressionAttributeNames["#addr"] = "addr";
+    params.ExpressionAttributeValues[":addr_ken"] = { S: area }
+  }
+
+
+  try {
+    const ret = await client.send(new QueryCommand(params));
+    return ret.Items.map(item => unmarshall(item))
+  } catch (err) {
+    console.error(err);
+    return null
+  }
+}
+
+
+router.post('/queryCat', async (req, res, next) =>{
+  let { type,count,area,fr,to } = req.body
+  console.log(area,fr,to,'params')
+  const data = await queryCat("cat",INF_TYPE[type],area,fr,to,count)
+  res.status(200).json({code: 0, data })
+})
+
+
+
+
+const queryFav =async(board_type,category,Limit=3)=>{
+  
+  const params = {
+      TableName: "Nekonara_board2",
+      IndexName: "type-category-fav-index",
+      KeyConditionExpression: "#bc = :bc_value",
+      ExpressionAttributeNames: {
+          "#bc": "board_type#category",
+      },
+      ExpressionAttributeValues: {
+          ":bc_value": { S: `${board_type}#${category}` }
+      },
+      ScanIndexForward: false,
+      Limit,
+  };
+
+  try {
+    const ret = await client.send(new QueryCommand(params));
+    return ret.Items.map(item => unmarshall(item))
+  } catch (err) {
+    console.error(err);
+    return null
+  }
+}
+
+router.post('/queryNote', async (req, res, next) =>{
+
+
+
+  const fav = await queryFav("note","NULL")
+
+
+
+  const data  = await queryBoard("note","NULL")
+  res.status(200).json({code: 0, data, fav })
+})
 
 
 
@@ -101,6 +199,32 @@ router.post('/saveUserInfo', async (req, res, next) =>{
   try {
     const data = await client.send(new UpdateItemCommand(params));
     res.status(200).json({code: 0, msg:'更新数据成功'});
+  } catch (err) {
+    console.error("Error updating item:", err);
+  }
+  
+})
+
+
+
+router.post('/saveCatInfo', async (req, res, next) =>{
+  let { user_id, cat } = req.body
+  console.log(req.body,'params');
+
+  const params = {
+    TableName: "Nekonara_usr",
+    Key: marshall({ user_id }),
+    UpdateExpression: "SET #cat = :cat",
+    ExpressionAttributeNames: { "#cat": "cat" },
+    ExpressionAttributeValues: marshall({ ":cat": cat }),
+    ReturnValues: "ALL_NEW"
+  };
+
+  
+  try {
+    const { Attributes } = await client.send(new UpdateItemCommand(params));
+    res.status(200).json({code: 0, msg:'更新数据成功'});
+    // console.log("Item updated successfully:", unmarshall(Attributes));
   } catch (err) {
     console.error("Error updating item:", err);
   }
