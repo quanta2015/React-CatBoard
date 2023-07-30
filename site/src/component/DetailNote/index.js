@@ -17,7 +17,7 @@ import icon_twwi from '@/img/icon/twwi.svg'
 
 const DetailNote = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
-
+  const { user } = store
   const { cat,type,sub_date,sub_user,addr,content,title,sub,period,view,fav,id } = store.item
   const { age,attr,clr,image,img,name,sex,size,status } = cat
 
@@ -38,12 +38,17 @@ const DetailNote = ({}) => {
   }
 
 
+  console.log(fav,'fav')
+  console.log(user.mail,'fav')
+
+
   return (
     <div className={s.detailNote} >
 
-      <div className={s.main}>
+      <div className={s.main} >
         
         <div className={s.wrap}>
+          <div className={'del'} onClick={doClose}></div>
 
 
           <div className={s.bd}>
@@ -73,6 +78,7 @@ const DetailNote = ({}) => {
               {content}
             </div>
 
+            {store.user &&
             <div className={s.ft}>
               <p>
                 <img src={icon_heart} className={s.fav}/>
@@ -82,7 +88,7 @@ const DetailNote = ({}) => {
                 <img src={icon_list} />
                 <span>マイリストに追加</span>
               </p>
-            </div>
+            </div>}
 
             <div className={s.ft}>
               <h1> SNSでシェア！</h1>

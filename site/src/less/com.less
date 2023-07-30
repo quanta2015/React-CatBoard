@@ -108,6 +108,40 @@ img {
 
 
 
+.del {
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  // border-radius: 50%;
+  background: #333;
+  right: 25px;
+  top: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 99999;
+  color: #fff;
+}
+
+.del:before,
+.del:after {
+  content: ' ';
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  border-left: 2px solid #eee;
+  height: 22px;
+  width: 0;
+}
+
+.del:before {
+  transform: rotate(45deg);
+}
+
+.del:after {
+  transform: rotate(-45deg);
+}
+
+
 @keyframes stroke-dashoffset {
   100% {
     stroke-dashoffset: 0;

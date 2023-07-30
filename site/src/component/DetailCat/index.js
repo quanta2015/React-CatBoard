@@ -39,7 +39,7 @@ const Detail = ({}) => {
     <div className={s.detail} >
 
       <div className={s.main}>
-        <div className={s.close} onClick={doClose}></div>
+        <div className={'del'} onClick={doClose}></div>
 
 
         <div className={s.wrap}>

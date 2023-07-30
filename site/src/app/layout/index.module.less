@@ -13,6 +13,7 @@
   }
 }
 
+.load,
 .note {
   width: var(--sys-width);
   height: 100vh;
@@ -24,9 +25,15 @@
   align-items: center;
   overflow: hidden;
   top: 0;
+
+  &>img {
+    width: 100px;
+    height: 100px;
+
+  }
 }
 
-.load,
+
 .edit {
   width: var(--sys-width);
   height: calc(100vh - var(--menu-height));
@@ -38,11 +45,7 @@
   align-items: center;
   overflow: hidden;
 
-  img {
-    width: 100px;
-    height: 100px;
 
-  }
 }
 
 @media screen and (max-width: 768px) {
