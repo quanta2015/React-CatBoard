@@ -18,9 +18,33 @@ import icon_play  from '@/img/icon/play.svg'
 import icon_ord   from '@/img/icon/ord.svg'
 
 
+
+const formatBold =(s)=>{
+  let parts = s.split('**');
+  for (let i = 1; i < parts.length; i += 2) {
+    parts[i] = `<i class='bold'>${parts[i]}</i>`;
+  }
+  return parts.join('');
+}
+
+const formatLink=(s)=> {
+  const regex = /&&(.+?)\[(.+?)\]&&/g;
+  return s.replace(regex, (match, text, link) => `<a href="${link}">${text}</a>`);
+}
+
+
 const CardInfo = ({title,list,submit}) => {
   const { store } = React.useContext(MobXProviderContext)
+  const [data,setData] = useState([])
   
+  useEffect(()=>{
+    const newList = list.map(item => ({
+      ...item,
+      sect: item.sect.map(o => formatLink(formatBold(o)))
+    }));
+    setData(newList)
+  },[])
+
   
 
   return (
@@ -29,16 +53,15 @@ const CardInfo = ({title,list,submit}) => {
       <h1>{title}</h1>
 
       <div className={s.list}>
-        {list.map((item,i)=> 
+        {data.map((item,i)=> 
           <div className={s.sect} key={i}>
             {item.icon && <img src={item.icon} />}
-            <p>
+            <div className={s.p}>
               {item.sect.map((o,j)=>
-                <span key={j}>{o}</span>
+                <p key={j} dangerouslySetInnerHTML={{ __html: o }} />
               )}
-            </p>
+            </div>
           </div>
-          
         )}
       </div>
         
