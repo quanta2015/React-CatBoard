@@ -9,6 +9,7 @@ export const API_UPLOAD_IMG    = API_SERVER + '/uploadImg'
 export const API_SAVE_USERINFO = API_SERVER + '/saveUserInfo'
 export const API_SAVE_CATINFO  = API_SERVER + '/saveCatInfo'
 export const API_REG_USER      = API_SERVER + '/reg'
+export const API_FAV_NOTE      = API_SERVER + '/favNote'
 
 
 
