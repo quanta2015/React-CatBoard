@@ -4,6 +4,8 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import { Button, Input,Select,DatePicker, Pagination} from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import { INF_TYPE,AREA_LIST } from '@/constant/data'
+import {formatTime} from '@/util/fn'
+
 import Card  from '@/component/Card'
 import cls from 'classnames';
 
@@ -22,8 +24,6 @@ const getPageList = (o,p) => o.filter((o,i)=> (i>=SIZE*(p-1))&&(i<=p*SIZE-1))
 const Note = () => {
   
   const { store } = React.useContext(MobXProviderContext)
-  const [searchParams] = useSearchParams();
-  const type = searchParams.get('type');
 
   const [list,setList] = useState([])
   const [fav,setFav] = useState([])
@@ -34,10 +34,13 @@ const Note = () => {
 
   useEffect(()=>{
     store.setShow(true,'loading')
-    store.queryNote().then(r=>{
+    store.queryNote({count}).then(r=>{
       console.log('取得データ',r)
       setFav(r.fav)
       setList(r.data)
+
+      r.fav.map(o=>o.type='note')
+      r.data.map(o=>o.type='note')
       setPageList(getPageList(r.data,1))
       store.setShow(false,'loading')
     })
@@ -51,15 +54,21 @@ const Note = () => {
   }, [page]);
 
 
+  const doShowDetail =(item)=>{
+    store.setItem(item)
+    store.setShow(true,(item.type==='note')?'note':'detail')
+  }
+
+
 
   const renderNote =(item,i,rank=null) => (
-    <div className={cls(s.noteitem,rank)} key={i}>
+    <div className={cls(s.noteitem,rank)} key={i} onClick={()=>doShowDetail(item)}>
       {rank && <em>{i}</em>}
       <h1>{item.title}</h1>
       <div className={s.desc}>
         <p>
           <img src={icon_clock} />
-          <span>{item.sub_date}</span>
+          <span>{formatTime(item.sub_date)}</span>
         </p>
         <p>
           <img src={icon_eye} />
