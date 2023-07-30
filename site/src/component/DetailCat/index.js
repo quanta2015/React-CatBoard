@@ -23,7 +23,7 @@ const Detail = ({}) => {
   const [curImg,setCurImg] = useState(img[sel])
 
   const doClose =()=>{
-    store.setShow(false,'detail')
+    store.setShow(false,(type==='note')?'note':'detail')
   }
 
 

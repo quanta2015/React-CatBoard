@@ -52,8 +52,9 @@ const Note = () => {
 
 
 
-  const renderNote =(item,i) => (
-    <div className={s.noteitem} key={i}>
+  const renderNote =(item,i,rank=null) => (
+    <div className={cls(s.noteitem,rank)} key={i}>
+      {rank && <em>{i}</em>}
       <h1>{item.title}</h1>
       <div className={s.desc}>
         <p>
@@ -98,7 +99,7 @@ const Note = () => {
             </h1>
             <div className={s.list}>
               {fav.map((item,i)=>
-                renderNote(item,i)
+                renderNote(item,i+1,'rank')
               )}
             </div>
           </div>

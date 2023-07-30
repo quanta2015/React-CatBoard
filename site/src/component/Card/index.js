@@ -26,7 +26,7 @@ const Card = (item) => {
 
   const doShowDetail =(item)=>{
     store.setItem(item)
-    store.setShow(true,'detail')
+    store.setShow(true,(type==='note')?'note':'detail')
   }
 
 
