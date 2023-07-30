@@ -1,8 +1,9 @@
 
 import icon_user from '@/img/UserCircle.png'
-import cat_lost from '@/img/item/lost.webp'
-import cat_find from '@/img/item/find.webp'
-import cat_prot from '@/img/item/prot.webp'
+import warn_lose  from '@/img/icon/warn_lose.svg'
+import warn_prot  from '@/img/icon/warn_prot.svg'
+import warn_qa  from '@/img/icon/warn_qa.svg'
+import icon_check  from '@/img/icon/check.svg'
 import cat_note from '@/img/item/note.png'
 
 
@@ -21,13 +22,13 @@ export const SUB_TYPE = {
   TYPE3: 'qa'
 }
 
-export const CONFIRM_MESSAGE = (icon) => [
+export const CONFIRM_MESSAGE = () => [
   {
     type: 'qa',
     title: '質問を投稿する前にご確認ください。',
     initList: [
       {
-        icon: icon,
+        icon: warn_qa,
         sect: [
           "病気の診断や薬または療法食の処方についてなど\n獣医師の判断が必要な内容は投稿せず受診してください。",
           "個人情報保護のため個人が特定される情報は投稿しないでください。",
@@ -37,6 +38,7 @@ export const CONFIRM_MESSAGE = (icon) => [
           "利用規約に同意の上ご投稿ください。",
         ],
       },
+      
     ],
   },
   {
@@ -44,10 +46,15 @@ export const CONFIRM_MESSAGE = (icon) => [
     title: '迷子情報を投稿する前にご確認ください。',
     initList: [
       {
-        icon: icon,
+        icon: icon_check,
         sect: [
           "**警察**に届出をしましたか？",
           "**保健所・動物愛護センター**に問い合わせましたか？",
+        ],
+      },
+      {
+        icon: warn_lose,
+        sect: [
           "電話番号やメールアドレスは入力せず、他のユーザーとの\n連絡はねこならのメッセージ機能をご利用ください。",
           "個人情報保護のため個人が特定される情報は入力しないでください。",
           "報酬として金品を提示 / 要求しないでください。",
@@ -61,7 +68,7 @@ export const CONFIRM_MESSAGE = (icon) => [
     title: '保護情報を投稿する前にご確認ください。',
     initList: [
       {
-        icon: icon,
+        icon: warn_prot,
         sect: [
           "電話番号やメールアドレスは入力せず、他のユーザーとの\n連絡はねこならのメッセージ機能をご利用ください。",
           "個人情報保護のため個人が特定される情報は入力しないでください。",

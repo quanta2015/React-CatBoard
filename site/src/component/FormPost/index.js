@@ -22,16 +22,24 @@ const FormPost = () => {
   const { store } = React.useContext(MobXProviderContext)
   const {subType} = store
   const [form] = Form.useForm();
-
   const [user,setUser] = useState({})
   const navigate = useNavigate();
-  const [allChecked, setAllChecked] = useState(false); 
-  const [submit,setSubmit] = useState(false)
+
+  const [areAllChecked, setAreAllChecked] = useState(false);
+
+  const checkAllBoxes = async () => {
+    try {
+      const values = await form.validateFields(['checkbox1', 'checkbox2', 'checkbox3']);
+      setAreAllChecked(values.checkbox1 && values.checkbox2 && values.checkbox3);
+    } catch {
+      setAreAllChecked(false);
+    }
+  };
+
+
 
   let icon = subType === SUB_TYPE.TYPE1 ? icon_check : warn_prot;
   let confirmMessage = CONFIRM_MESSAGE(icon).find(item => item.type === subType);
-
-
   let initTitle, initList;
   if (confirmMessage) {
     initTitle = confirmMessage.title;
@@ -43,8 +51,6 @@ const FormPost = () => {
       const params = await form.validateFields();
       params.user_id =  uuidv4();
       console.log(params)
-      const allChecked = params.checkbox1 && params.checkbox2 && params.checkbox3;
-      setAllChecked(allChecked);
 
       await store.regUser(params).then(r=>{
         message.info(r.msg)
@@ -68,15 +74,25 @@ const FormPost = () => {
         <FormCat />
         <FormPostOther type={subType} form={form} file={[]} />
 
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' ,marginTop:'20px'}}>
+          <Form.Item name="checkbox1" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
+            <Checkbox onChange={checkAllBoxes}>記入漏れはない</Checkbox>
+          </Form.Item>
+          <Form.Item name="checkbox2" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
+            <Checkbox onChange={checkAllBoxes}>記入した情報に誤りはない</Checkbox>
+          </Form.Item>
+          <Form.Item name="checkbox3" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
+            <Checkbox onChange={checkAllBoxes}>出来るだけ詳細に記入した</Checkbox>
+          </Form.Item>
+        </div>
 
-
-        <div 
+        <button 
           className={cls('btnLg','lose')} 
-          style={{width: '400px', margin: '0 auto'}} 
           onClick={doSave}
-          disable={true}
+          disabled={!areAllChecked}
         >
-          {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}</div>
+          {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}
+        </button>
       </Form>
       </div>
       <div className="confirm">

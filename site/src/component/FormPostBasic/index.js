@@ -29,7 +29,7 @@ const FormPostBasic = ({type}) => {
             message: `请填写都道府県`,
         },
         ]}>
-        <Input placeholder="例）大阪府" />
+        <Input placeholder="例）大阪府" style={{height: '50px'}} />
     </Form.Item>
         
     <Form.Item 
@@ -41,7 +41,7 @@ const FormPostBasic = ({type}) => {
             message: `请填写市町村`,
         },
         ]}>
-        <Input placeholder="例）大阪市中央区" />
+        <Input placeholder="例）大阪市中央区" style={{height: '50px'}}/>
     </Form.Item>
     <i className={s.sm}>＊丁目・番地・号は入力しないでください</i>
 
@@ -54,7 +54,7 @@ const FormPostBasic = ({type}) => {
             message: `请填写付近`,
         },
         ]}>
-        <Input placeholder="例）大阪城公園" />
+        <Input placeholder="例）大阪城公園" style={{height: '50px'}}/>
     </Form.Item>
     <i className={s.sm}>＊公園・学校・駅・お店などの名前を入力してください</i>
     {type === SUB_TYPE.TYPE1 && 

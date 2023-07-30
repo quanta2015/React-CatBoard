@@ -40,17 +40,6 @@ const FormPostOther = ({type,file,form}) => {
     <div>＊出来るだけ画質の良い写真を選んでください。</div>
     <div>＊色んな角度から撮った写真をアップロードしてください。</div>
       <div>＊迷子になってしまった猫ちゃんの写真のみアップロードしてください。</div>
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' ,marginTop:'20px'}}>
-    <Form.Item name="checkbox1" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
-      <Checkbox onChange={() => form.validateFields(['checkbox1'])}>記入漏れはない</Checkbox>
-    </Form.Item>
-    <Form.Item name="checkbox2" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
-      <Checkbox onChange={() => form.validateFields(['checkbox2'])}>記入した情報に誤りはない</Checkbox>
-    </Form.Item>
-    <Form.Item name="checkbox3" valuePropName="checked" rules={[{ required: true, message: '確認してください' }]}>
-      <Checkbox onChange={() => form.validateFields(['checkbox3'])}>出来るだけ詳細に記入した</Checkbox>
-    </Form.Item>
-    </div>
     </>
   )
 
