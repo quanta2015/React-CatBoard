@@ -97,7 +97,7 @@ export const genFakeData=()=> {
     const clr = ['白', '黒', '茶', '三色'][Math.floor(Math.random() * 4)];
     const age = (Math.floor(Math.random() * 10) + 1).toString();
     const attr = ['活発', '穏やか', '愛嬌がある'][Math.floor(Math.random() * 3)];
-    const cat = { img, name, type: types[Math.floor(Math.random() * types.length)], size, sex, clr, age, attr };
+    const cat = { img, name, type: types[Math.floor(Math.random() * types.length)], size, sex, clr, age, attr,lose_time,g_situation };
 
     const { question, answer } = genRandomCatQA();
 

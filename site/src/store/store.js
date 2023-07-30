@@ -20,6 +20,7 @@ class Store {
   detail   = false
   loading  = false
   loginReq = false
+  subType   = null 
 
 
   item    = {}
@@ -44,6 +45,10 @@ class Store {
   setShow =(status,attr)=> {
     fixBody(status)
     this[attr] = status
+  }
+
+  setSubType = (subType) => {
+    this.subType= subType
   }
 
 

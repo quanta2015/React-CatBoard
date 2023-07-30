@@ -81,6 +81,7 @@ const Index = () => {
 
   const doNewArticle =(type)=>{
     store.setShow(true,'edit')
+    store.setSubType(type)
   }
 
   return (
@@ -99,7 +100,7 @@ const Index = () => {
               )}
             </Carousel>
           </div>
-        </div>
+        </div>　
         <div className={s.rectangle}>
           <p className={s.text}>愛猫の迷子情報・迷子の猫ちゃんを保護した情報はこちらから投稿できます。</p>
           <div className={s.buttonContainer}>

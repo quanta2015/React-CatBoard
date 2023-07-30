@@ -9,38 +9,42 @@ import FormCat from '@/component/FormCat'
 import { v4 as uuidv4 } from 'uuid';
 import cls from 'classnames';
 import { useNavigate } from 'react-router-dom'
-import {SUB_TYPE} from '@/constant/data'
 import notice from '@/img/icon/warning-g.svg'
 import CardInfo from '@/component/CardInfo'
-import Footer from '@/component/Footer'
-import ToTop from '@/component/ToTop'
+import {SUB_TYPE,CONFIRM_MESSAGE} from '@/constant/data'
+import warn_lose  from '@/img/icon/warn_lose.svg'
+import warn_prot  from '@/img/icon/warn_prot.svg'
+import icon_check  from '@/img/icon/check.svg'
 
 import s from './index.module.less';
 
 const FormPost = () => {
   const { store } = React.useContext(MobXProviderContext)
+  const {subType} = store
   const [form] = Form.useForm();
-  const type = SUB_TYPE.lose_sub
+
   const [user,setUser] = useState({})
   const navigate = useNavigate();
+  const [allChecked, setAllChecked] = useState(false); 
 
-  const initTitle = '質問する前にご確認ください。'
-  const initList = [{
-    icon: notice,
-    sect: ["病気の診断や薬または療法食の処方についてなど\n獣医師の判断が必要な内容は投稿せず受診してください。",
-    "個人情報保護のため個人が特定される情報は投稿しないでください。",
-    "他人を傷つけるような内容（誹謗中傷 / 過度な批判など）や\n他人を不快にさせる内容は投稿しないでください。",
-    "商業目的や広告目的の内容は投稿しないでください。\n犯罪行為などを誘発 / 助長する内容は投稿しないでください。",
-    "投稿が不適切だと判断した場合、削除することがあります。",
-    "利用規約に同意の上ご投稿ください。"]
-  }]
+  let icon = subType === SUB_TYPE.TYPE1 ? icon_check : warn_prot;
+  let confirmMessage = CONFIRM_MESSAGE(icon).find(item => item.type === subType);
 
+
+  let initTitle, initList;
+  if (confirmMessage) {
+    initTitle = confirmMessage.title;
+    initList = confirmMessage.initList;
+  }
 
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
       params.user_id =  uuidv4();
       console.log(params)
+      const allChecked = params.checkbox1 && params.checkbox2 && params.checkbox3;
+      setAllChecked(allChecked);
+
       await store.regUser(params).then(r=>{
         message.info(r.msg)
         store.setUser(params)
@@ -59,19 +63,18 @@ const FormPost = () => {
       <CardInfo list={initList} title={initTitle} />
 
       <Form form={form} layout='vertical' initialValues={user}>
-        <FormPostBasic type={type}/>
+        <FormPostBasic type={subType}/>
         <FormCat />
-        <FormPostOther form={form} file={[]} />
+        <FormPostOther type={subType} form={form} file={[]} />
 
-        <div className={cls('btnLg','lose')} style={{width: '400px', margin: '0 auto'}} onClick={doSave}>迷子情報を投稿</div>
+        <div 
+          className={cls('btnLg','lose')} 
+          style={{width: '400px', margin: '0 auto'}} 
+          onClick={allChecked ? doSave : null} 
+        >
+          {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}</div>
       </Form>
-      <ToTop />
-      <Footer />    
       </div>
-
-  
-
-
     </div>
   )
 

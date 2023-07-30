@@ -24,7 +24,7 @@ import load from '@/img/loading.png'
 const Layout = () => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,detail,login,loginReq,note} = store
+  const {loading,edit,detail,login,loginReq,note,subType} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -32,7 +32,7 @@ const Layout = () => {
   const [form] = Form.useForm();
   const isSmallScreen = window.innerWidth < 768;
   const title = '情報'
-  const type = '迷子情報'
+
 	store.mobile = isMobileDevice || isSmallScreen
 
 
@@ -42,8 +42,6 @@ const Layout = () => {
       navigate('/')
     }
   },[])
-
-
 
   return (
     <>
@@ -62,7 +60,7 @@ const Layout = () => {
           { note && <div className={s.note}><DetailNote /></div>}
 
           {/*发帖画面*/}
-          { edit && <div className={s.edit}><FormPost form={form} file={[]}/></div>}
+          { edit && <div className={s.edit}><FormPost form={form} file={[]}/></div>} 
 
           {loginReq && <div className={s.loginRequired}><LoginRequired title={title} /></div>}
           <Outlet />

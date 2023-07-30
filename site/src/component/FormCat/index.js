@@ -90,7 +90,9 @@ const FormCat = ({}) => {
         name={['cat', 'attr']}
         rules={[ {required: false}, ]}>
         <TextArea placeholder="例）目は青いです。尻尾がかぎしっぽです。サクラ耳です。右足に小さい傷跡があります。人見知りで怖がりなので触りに行こうとすると逃げてしまうと思いますが、名前を呼んだら反応してくれると思います。" 
-          allowClear style={{height: '150px'}} />
+          allowClear 
+          style={{height: '150px'}}
+          maxLength={150} />
       <div className={s.sm}>目の色・耳の形（サクラ耳など）・体型・尻尾の形（かぎしっぽなど）・性格・アレルギー・持病など出来るだけ詳しく<strong>150</strong>文字以内で入力してください</div>
       </Form.Item>
     </>
