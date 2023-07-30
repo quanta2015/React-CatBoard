@@ -26,6 +26,7 @@ const FormPost = () => {
   const [user,setUser] = useState({})
   const navigate = useNavigate();
   const [allChecked, setAllChecked] = useState(false); 
+  const [submit,setSubmit] = useState(false)
 
   let icon = subType === SUB_TYPE.TYPE1 ? icon_check : warn_prot;
   let confirmMessage = CONFIRM_MESSAGE(icon).find(item => item.type === subType);
@@ -59,6 +60,8 @@ const FormPost = () => {
 
   return (
     <div className={s.formpost}>
+
+      {!submitted  
       <div className={s.wrap}>
       <CardInfo list={initList} title={initTitle} />
 
@@ -67,13 +70,21 @@ const FormPost = () => {
         <FormCat />
         <FormPostOther type={subType} form={form} file={[]} />
 
+
+
         <div 
           className={cls('btnLg','lose')} 
           style={{width: '400px', margin: '0 auto'}} 
-          onClick={allChecked ? doSave : null} 
+          onClick={doSave}
+          disable={true}
         >
           {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}</div>
       </Form>
+      </div>
+
+      {submitted}
+      <div className="confirm">
+
       </div>
     </div>
   )
