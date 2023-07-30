@@ -60,8 +60,6 @@ const FormPost = () => {
 
   return (
     <div className={s.formpost}>
-
-      {!submitted  
       <div className={s.wrap}>
       <CardInfo list={initList} title={initTitle} />
 
@@ -81,8 +79,6 @@ const FormPost = () => {
           {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}</div>
       </Form>
       </div>
-
-      {submitted}
       <div className="confirm">
 
       </div>
