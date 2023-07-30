@@ -30,14 +30,14 @@
 
       }
 
-      p {
+      .p {
         padding: 20px 0;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
 
-      span {
+      p {
         color: #000;
         text-align: left;
         font-family: Inter;
@@ -48,6 +48,16 @@
         padding-left: 16px;
         position: relative;
         white-space: pre-wrap;
+
+        i {
+          &:global(.bold) {
+            font-weight: bold;
+          }
+        }
+
+        a {
+          color: var(--clr-nav);
+        }
 
         &:before {
           position: absolute;
