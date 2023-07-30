@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
-import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker } from 'antd';
+import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,message } from 'antd';
 import {PRE_IMG} from '@/constant/urls'
 import {formatTime} from '@/util/fn'
 import s from './index.module.less';
@@ -15,19 +15,27 @@ import icon_face from '@/img/icon/facebook.svg'
 import icon_twwi from '@/img/icon/twwi.svg'
 
 
+const caluFav =(user,fav)=> fav.includes(user.mail)
+
+
 const DetailNote = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
   const { user } = store
-  const { cat,type,sub_date,sub_user,addr,content,title,sub,period,view,fav,id } = store.item
+  const { cat,type,sub_date,sub_user,addr,content,title,sub,period,view,fav,id,board_id } = store.item
   const { age,attr,clr,image,img,name,sex,size,status } = cat
 
-
+  const [isFav,setIsFav] = useState(false)
   const [sel,setSel] = useState(0)
   const [curImg,setCurImg] = useState(img[sel])
 
   const doClose =()=>{
     store.setShow(false,(type==='note')?'note':'detail')
   }
+
+  console.log('fav',fav)
+  useEffect(()=>{ 
+    setIsFav(user?caluFav(user,fav):false)
+  },[])
 
 
   const doSel =(step)=>{
@@ -38,8 +46,27 @@ const DetailNote = ({}) => {
   }
 
 
-  console.log(fav,'fav')
-  console.log(user.mail,'fav')
+  const doFav=()=> {
+    let _fav
+    const { mail } = user
+    if (isFav) {
+      _fav = fav.filter(o => o !== mail);
+    }else{
+      _fav = [...fav,mail]
+    }
+    const params ={
+      board_id,
+      sub_date,
+      fav: _fav,
+      favCount: _fav.length,
+    }
+    store.favNote(params).then(r=>{
+      console.log('取得データ',r)
+      message.info(r.msg)
+      setIsFav(!isFav)
+    })
+  }
+
 
 
   return (
@@ -78,10 +105,10 @@ const DetailNote = ({}) => {
               {content}
             </div>
 
-            {store.user &&
+            {user &&
             <div className={s.ft}>
-              <p>
-                <img src={icon_heart} className={s.fav}/>
+              <p onClick={doFav}>
+                <img src={icon_heart} className={isFav?s.fav:''}/>
                 <span>いいねを押す</span>
               </p>
               <p>

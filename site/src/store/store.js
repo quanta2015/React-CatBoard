@@ -93,6 +93,11 @@ class Store {
   }
 
 
+  async favNote(params) {
+    return await this.post(urls.API_FAV_NOTE,params)
+  }
+
+
 
 
   async saveUserInfo(params) {
