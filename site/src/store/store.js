@@ -15,6 +15,7 @@ class Store {
   // user     = 'test'
   user     = null
   edit     = false
+  note     = false
   mobile   = false
   detail   = false
   loading  = false

@@ -112,11 +112,17 @@
         }
 
         .noteitem {
+          position: relative;
           display: flex;
           flex-direction: column;
           padding: 20px;
           cursor: pointer;
           transition: .3s;
+
+
+          &:global(.rank) {
+            padding: 20px 20px 20px 110px;
+          }
 
           &:hover {
             box-shadow: var(--shadow);
@@ -124,6 +130,22 @@
 
           &+.noteitem {
             border-top: 1px solid #ccc;
+          }
+
+          em {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 25px;
+            top: 25px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: var(--clr-nav);
+            color: #fff;
+            font-size: 25px;
+            font-weight: 700;
           }
 
           h1 {
