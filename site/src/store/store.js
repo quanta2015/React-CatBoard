@@ -5,7 +5,7 @@ import * as urls from '@/constant/urls'
 import {fixBody} from '@/util/fn'
 import axios  from 'axios'
 
-
+const USER_KEY = 'NEKONARA_USER'
 
 class Store {
   constructor() {
@@ -35,6 +35,16 @@ class Store {
 
   setUser = (user) =>{
     this.user = user
+    window.localStorage.setItem(USER_KEY, JSON.stringify(user))
+  }
+
+  getUser = ()=>{
+    return JSON.parse(window.localStorage.getItem(USER_KEY))
+  }
+
+  delUser = ()=>{
+    this.user = null
+    window.localStorage.removeItem(USER_KEY)
   }
 
   setItem = (item) =>{

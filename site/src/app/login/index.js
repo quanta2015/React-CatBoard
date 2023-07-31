@@ -21,8 +21,14 @@ const Login = () => {
   const [form] = Form.useForm();
 
 
+  const [mail,setMail] = useState('')
+  const [pwd,setPwd] = useState('')
   const [status, setStatus] = useState(0)
 
+  const init = {
+    mail: store.getUser()?.mail||'',
+    pwd: store.getUser()?.pwd||'',
+  }
 
   const mainTitle = 'アカウント登録'
   const loginTitle = 'ログイン'
@@ -38,11 +44,11 @@ const Login = () => {
   }]
 
 
+
   const doLogin =async()=>{
     try {
       const params = await form.validateFields();
       await store.login(params).then(r=>{
-
         if (r.code ===0) {
           message.info('登录成功！')
           store.setUser(r.data)
@@ -58,9 +64,9 @@ const Login = () => {
 
 
   const renderForm =()=>(
-    <div className={s.form}>
+    <div className={s.form} >
 
-      <Form form={form} layout='vertical'>
+      <Form form={form} layout='vertical' initialValues={init}>
 
         <Form.Item 
           label="メールアドレス" 

@@ -28,14 +28,12 @@ const MenuUser = ({user}) => {
 
 
   const doSelMenu =(url)=>{
-
     if (url === '/logout') {
-      store.setUser(null)
+      store.delUser()
       navigate('/')
     }else{
       navigate(url)
     }
-    
   }
   
   return (

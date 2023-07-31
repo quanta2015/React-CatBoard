@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { inject,observer,MobXProviderContext } from 'mobx-react'
 import Loading from 'react-loading-spinkit'
+import { message} from 'antd'
 import { Form } from 'antd';
 
 import Menu from './Menu'
@@ -38,7 +39,20 @@ const Layout = () => {
 
 
   useEffect(()=>{
-    if (store.user === null) {
+    let userLocal = store.getUser()
+    let userStore = store.user
+    if(userLocal) {
+      try {
+        store.login(userLocal).then(r=>{
+          if (r.code ===0) {
+            message.info('登录成功！')
+            store.setUser(r.data)
+          }
+        })
+      } catch (errorInfo) {
+        console.log('Failed:', errorInfo);
+      }
+    }else if(userStore === null) {
       navigate('/')
     }
   },[])
