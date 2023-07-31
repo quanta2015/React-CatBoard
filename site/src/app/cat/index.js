@@ -6,11 +6,13 @@ import { useSearchParams } from 'react-router-dom';
 import { INF_TYPE,AREA_LIST } from '@/constant/data'
 import Card  from '@/component/Card'
 import cls from 'classnames';
+import dayjs from 'dayjs';
+
 
 import s from './index.module.less';
 
-
-const { RangePicker } = DatePicker;
+const { Option } = Select;
+// const { RangePicker } = DatePicker;
 
 const count = 150
 const SIZE = 15
@@ -63,10 +65,42 @@ const Cat = () => {
     setArea(e)
   }
 
-  const doSelPeriod=(e,d)=>{
-    setFr(d[0])
-    setTo(d[1])
+  const doSelPeriod = (value) => {
+    let fr, to;
+
+    switch (value) {
+      case "today":
+        fr = dayjs().startOf('day');
+        to = dayjs().endOf('day');
+        break;
+      case "3days":
+        fr = dayjs().subtract(3, 'day').startOf('day');
+        to = dayjs().endOf('day');
+        break;
+      case "1week":
+        fr = dayjs().subtract(1, 'week').startOf('day');
+        to = dayjs().endOf('day');
+        break;
+      case "3weeks":
+        fr = dayjs().subtract(3, 'weeks').startOf('day');
+        to = dayjs().endOf('day');
+        break;
+      case "1month":
+        fr = dayjs().subtract(1, 'month').startOf('day');
+        to = dayjs().endOf('day');
+        break;
+      case "before":
+        fr = dayjs().subtract(10, 'year').startOf('day'); // For "before", just return a far enough past date
+        to = dayjs().subtract(1, 'month').endOf('day'); // Until the end of last month
+        break;
+      default:
+        fr = to = null;
+    }
+
+    setFr(fr)
+    setTo(to)
   }
+
 
   const doQuery=()=>{
     setQuery(!query)
@@ -89,7 +123,7 @@ const Cat = () => {
           <div className={s.menu}>
             <Select 
               onChange={doSelArea}
-              placeholder="都道府県を選択してください" 
+              placeholder="都道府県を指定" 
               allowClear 
               style={{'width':'300px'}}
               >
@@ -98,9 +132,21 @@ const Cat = () => {
               ))}
             </Select>
 
-            <RangePicker onChange={doSelPeriod} style={{'width':'300px'}} />
+            <Select 
+              style={{ width: 200 }} 
+              placeholder="日時を指定" 
+              onChange={doSelPeriod}
+              allowClear
+              >
+              <Option value="today">今日</Option>
+              <Option value="3days">３日以内</Option>
+              <Option value="1week">１週間以内</Option>
+              <Option value="3weeks">３週間以内</Option>
+              <Option value="1month">１ヶ月以内</Option>
+              <Option value="before">それ以前</Option>
+            </Select>
 
-            <Button onClick={doQuery}>查询</Button>
+            <Button onClick={doQuery}>検索</Button>
           </div>
 
           <div className={s.list}>
