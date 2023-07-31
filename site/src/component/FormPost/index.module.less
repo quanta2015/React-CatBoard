@@ -9,7 +9,6 @@
     min-height: var(--win-height);
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
 
     .wrap{
       width: 100%;
@@ -22,7 +21,42 @@
       ::-webkit-scrollbar {
         display: none;
     }
+      .btn {
+        background-color: var(--clr-lose); 
+        color: var(--clr-white);  
+        display: flex; 
+        justify-content: center; 
+        align-items: center;  
+        margin: auto;  
+        width: 400px; 
+        height: 50px;  
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 350;
+        font-size: 22px;
+        line-height: 39px;
+        border-radius: 10px; 
+
+        &:disabled {
+          background-color: var(--clr-grey); 
+        }
+
+        &:not(:disabled):hover {
+          background-color: var(--hover-color-1);
+        }
+      }
+      .btn-protect {
+        background: var(--clr-prot);
+      }
+      
+      .btn-protect:not(:disabled):hover {
+        background-color: var(--hover-color-4);
+      }
+
+      
 
     }
+
+    
   }
 

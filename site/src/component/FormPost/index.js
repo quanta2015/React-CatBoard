@@ -87,7 +87,7 @@ const FormPost = () => {
         </div>
 
         <button 
-          className={cls('btnLg','lose')} 
+          className={`${s.btn} ${subType === SUB_TYPE.TYPE2 ? s['btn-protect'] : ''}`} 
           onClick={doSave}
           disabled={!areAllChecked}
         >
