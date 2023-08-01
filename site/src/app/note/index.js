@@ -87,20 +87,17 @@ const Note = () => {
   return (
     <div className={s.note}>
       <div className={s.wrap}>
-        <div className={s.hd} >
+        <div className={s.hd} style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/img/bg02.webp)` }}  >
           <h1>ねこ記事</h1>
-          <span>猫ちゃんに関する記事を掲載しています</span>
+          <p>
+            <span>猫ちゃんに関する記事を掲載しています</span>
+            <Input placeholder="キーワードで検索" />
+          </p>
         </div>
 
 
 
         <div className={s.bd}>
-
-          <div className={s.menu}>
-            <Input placeholder="キーワードで検索" />
-          </div>
-
-
           <div className={s.sect}>
             <h1>
               <span>ランキング</span>
