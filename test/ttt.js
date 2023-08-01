@@ -1,25 +1,27 @@
-import { DynamoDBClient, QueryCommand,UpdateItemCommand,DescribeTableCommand,ScanCommand } from "@aws-sdk/client-dynamodb"
+import { v4 as uuidv4 } from 'uuid';
+import base64url from 'base64url'
+import { customAlphabet } from 'nanoid'
 
-const opt = {
-  region: "us-east-1",
-  accessKeyId: 'AKIAY2HDORQUZZPNVB6Y',
-  secretAccessKey: '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',
+function generateShortUUID() {
+  const uuid = uuidv4(); // 生成UUID v4
+  const encodedUUID = base64url(uuid); // 使用Base64编码UUID
+  return encodedUUID;
 }
-const params = {
-  TableName: "Nekonara_board2"
-};
-const client = new DynamoDBClient(opt);
+
+// 生成短UUID并打印
+const shortUUID = generateShortUUID();
+console.log('短UUID:', shortUUID);
 
 
 
-const run = async () => {
-    try {
-        const data = await client.send(new DescribeTableCommand(params));
-        console.log(JSON.stringify(data, null, 2));
-    } catch (err) {
-        console.error(err);
-    }
-};
 
-run();
 
+function genShortUUID(length = 8) {
+  const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const nanoid = customAlphabet(alphabet, length);
+  return nanoid();
+}
+
+// 生成更短的UUID并打印（长度为8）
+const shortUUID2 = genShortUUID();
+console.log('更短的UUID:', shortUUID2);

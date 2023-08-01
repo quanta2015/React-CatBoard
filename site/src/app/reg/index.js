@@ -30,6 +30,7 @@ const UserInfo = () => {
     try {
       const params = await form.validateFields();
       params.user_id =  uuidv4();
+      params.icon = [params.icon[0].url]
       console.log(params)
       await store.regUser(params).then(r=>{
         message.info(r.msg)

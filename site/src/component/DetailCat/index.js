@@ -16,8 +16,11 @@ import icon_rt  from '@/img/icon/right.svg'
 const Detail = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
 
-  const { cat,type,sub_date,sub_user,addr,title,sub,content,period,view,fav,id } = store.item
+  const { user } = store
+  const { board_id,cat,type,sub_date,sub_user,addr,title,sub,content,period,view,fav,id } = store.item
   const { age,attr,clr,image,img,name,sex,size,status } = cat
+
+  console.log(user.icon[0],'id')
 
 
   const [sel,setSel] = useState(0)
@@ -36,6 +39,12 @@ const Detail = ({}) => {
   }
 
   const doSendMsg =()=>{
+    const params = {
+      board_id,
+      user_fr: user.name,
+      icon_fr: user.icon[0],
+      
+    }
     // console.log('msg')
   }
 
