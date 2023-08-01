@@ -15,6 +15,7 @@ import icon_rt  from '@/img/icon/right.svg'
 const CardDetailCat = ({btnTxt,btnEvent}) => {
   const { store } = React.useContext(MobXProviderContext)
 
+  const { user } = store
   const { cat,type,sub_date,sub_user,addr,title,sub,content,period,view,fav,id } = store.item
   const { age,attr,clr,image,img,name,sex,size,status } = cat
 
@@ -113,9 +114,10 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
 
       </div>
 
+      { user && 
       <div className={s.ft}>
         <div className={classnames(s.btn,type)} onClick={btnEvent}>{btnTxt}</div>
-      </div>
+      </div>}
 　
     </div>
   )

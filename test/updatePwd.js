@@ -5,9 +5,7 @@ const opt = {
   accessKeyId: 'AKIAY2HDORQUZZPNVB6Y',
   secretAccessKey: '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',
 }
-const params = {
-  TableName: "Nekonara_board2"
-};
+
 const client = new DynamoDBClient(opt);
 
 
@@ -21,8 +19,8 @@ async function addPwdToAllItems() {
                 Key: {
                   'user_id': { S: item.user_id.S },
                 },
-                UpdateExpression: 'SET icon = :p',
-                ExpressionAttributeValues: { ':p': { L: [item.icon] } },
+                UpdateExpression: 'SET user_type = :p',
+                ExpressionAttributeValues: { ':p': { S: '1' } },
                 ReturnValues: "UPDATED_NEW"
             });
             try {
