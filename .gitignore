@@ -11,6 +11,8 @@
 
 /test/node_modules
 /test/mqtt/node_modules
+/sql/node_modules
+
 
 
 
