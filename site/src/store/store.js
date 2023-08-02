@@ -19,6 +19,7 @@ class Store {
   mobile   = false
   detail   = false
   loading  = false
+  confirm  = false
   loginReq = false
   subType   = null 
 
@@ -30,6 +31,7 @@ class Store {
     this.detail   = false
     this.loading  = false
     this.loginReq = false
+    this.confirm  = false
   }
 
 

@@ -24,9 +24,14 @@
 // });
 
 //--------------------------------------------------------------------------------
-const fs = require('fs');
-const path = require('path');
-const fetch = require('node-fetch');
+// const fs = require('fs');
+// const path = require('path');
+// const fetch = require('node-fetch');
+
+import fs from 'fs';
+import path from 'path';
+import fetch from 'node-fetch';
+
 
 async function processImages(directory) {
     const imageIds = [];
@@ -41,13 +46,14 @@ async function processImages(directory) {
             };
 
             try {
-                const res = await fetch('https://api.imageresizer.io/v1/images?key=44e63a6283e328ece80264ef00b15a01d6edc48b', {
+                const res = await fetch('https://api.imageresizer.io/v1/images?key=59ec42222c1208e4fbd4eb1ba5f4526da77a3fc4', {
                     method: 'POST',
                     body: imageData,
                     headers: headers
                 });
 
                 const body = await res.json();
+                // console.log(body.response.id)
                 
                 imageIds.push(body.response.id);
                 

@@ -16,7 +16,7 @@ async function processImages(directory) {
             };
 
             try {
-                const res = await fetch('https://api.imageresizer.io/v1/images?key=44e63a6283e328ece80264ef00b15a01d6edc48b', {
+                const res = await fetch('https://api.imageresizer.io/v1/images?key=59ec42222c1208e4fbd4eb1ba5f4526da77a3fc4', {
                     method: 'POST',
                     body: imageData,
                     headers: headers
@@ -38,7 +38,7 @@ const directory = './catphoto';
 
 processImages(directory)
     .then(imageIds => {
-        // console.log(`Image IDs: ${imageIds}`);
+        console.log(`Image IDs: ${imageIds}`);
         updateDynamoDB(imageIds);
     })
     .catch(err => console.error(`Error processing images: ${err}`));
@@ -74,7 +74,7 @@ function updateDynamoDB(imageIds) {
             'board_id': { S: item.board_id.S },
             'sub_date': { S: item.sub_date.S },
           },
-          UpdateExpression: "SET cat.image = :val",
+          UpdateExpression: "SET cat.img = :val",
           ExpressionAttributeValues: {
             ":val": { S: imageId }
           },

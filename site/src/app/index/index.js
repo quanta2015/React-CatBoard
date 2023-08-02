@@ -113,7 +113,6 @@ const Index = () => {
           <section>
           <h1 style={{fontSize: "40px"}}>{'新着情報'}</h1>
             <div>
-
               {newsList.map((item,i)=>
                 <Card {...item} key={i}/>
               )}

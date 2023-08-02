@@ -26,7 +26,7 @@ const FormPostBasic = ({type}) => {
         rules={[
         {
             required: true,
-            message: `请填写都道府県`,
+            message: `都道府県を入力してください。`,
         },
         ]}>
         <Input placeholder="例）大阪府" style={{height: '50px'}} />
@@ -38,7 +38,7 @@ const FormPostBasic = ({type}) => {
         rules={[   
         {
             required: true,
-            message: `请填写市町村`,
+            message: `市町村を入力してください。`,
         },
         ]}>
         <Input placeholder="例）大阪市中央区" style={{height: '50px'}}/>
@@ -51,7 +51,7 @@ const FormPostBasic = ({type}) => {
         rules={[
         {
             required: true,
-            message: `请填写付近`,
+            message: `付近を入力してください。`,
         },
         ]}>
         <Input placeholder="例）大阪城公園" style={{height: '50px'}}/>
@@ -65,12 +65,12 @@ const FormPostBasic = ({type}) => {
     }
 
     <Form.Item 
-        label="日期と時間帯" 
+        label="年月日と時間帯" 
         name={['cat', 'lose_time']}
         rules={[
             {
                 required: true,
-                message: '请选择日期和时间',
+                message: '年月日と時間帯を選択してください',
             },
         ]}
     >

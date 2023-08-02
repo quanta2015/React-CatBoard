@@ -18,14 +18,20 @@ import icon_check  from '@/img/icon/check.svg'
 
 import s from './index.module.less';
 
-const FormPost = () => {
+const FormPost = (item) => {
   const { store } = React.useContext(MobXProviderContext)
   const {subType} = store
   const [form] = Form.useForm();
   const [user,setUser] = useState({})
   const navigate = useNavigate();
+  const { type,cat,sub_date,sub_user,addr,title,sub,period,view,fav,id } = item
+  const [isPopupVisible, setPopupVisible] = useState(false);
 
   const [areAllChecked, setAreAllChecked] = useState(false);
+  const doShowDetail =(item)=>{
+    store.setItem(item)
+    store.setShow(true,(type==='note')?'note':'detail')
+  }
 
   const checkAllBoxes = async () => {
     try {
@@ -35,8 +41,6 @@ const FormPost = () => {
       setAreAllChecked(false);
     }
   };
-
-
 
   let icon = subType === SUB_TYPE.TYPE1 ? icon_check : warn_prot;
   let confirmMessage = CONFIRM_MESSAGE(icon).find(item => item.type === subType);
@@ -64,6 +68,14 @@ const FormPost = () => {
     }
   }
 
+  const Popup = ({ onClose }) => (
+    <div>
+      <h2>这是一个弹窗</h2>
+      <button onClick={onClose}>关闭</button>
+    </div>
+  );
+  
+
   return (
     <div className={s.formpost}>
       <div className={s.wrap}>
@@ -88,11 +100,15 @@ const FormPost = () => {
 
         <button 
           className={`${s.btn} ${subType === SUB_TYPE.TYPE2 ? s['btn-protect'] : ''}`} 
-          onClick={doSave}
+          onClick={() => {
+            doSave();
+            setPopupVisible(true);
+          }}
           disabled={!areAllChecked}
         >
           {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}
         </button>
+        {isPopupVisible && <Popup onClose={() => setPopupVisible(false)} />}
       </Form>
       </div>
       <div className="confirm">

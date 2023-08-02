@@ -11,6 +11,7 @@ import FormCat from '@/component/FormCat'
 import DetailCat from '@/component/DetailCat'
 import DetailNote from '@/component/DetailNote'
 import LoginRequired from '@/component/LoginRequired'
+import CardDetailCat from '@/component/CardDetailCat'
 import FormPost from '@/component/FormPost'
 import Footer from '@/component/Footer'
 import ToTop from '@/component/ToTop'
@@ -25,7 +26,7 @@ import load from '@/img/loading.png'
 const Layout = () => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,detail,login,loginReq,note,subType} = store
+  const {loading,edit,detail,login,loginReq,note,subType,confirm} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -59,7 +60,7 @@ const Layout = () => {
 
   return (
     <>
-      <Menu />
+      <Menu /> 
       <div className={s.main}>
 
         <div className={s.wrap}>
@@ -77,6 +78,9 @@ const Layout = () => {
           { edit && <div className={s.edit}><FormPost form={form} file={[]}/></div>} 
 
           {loginReq && <div className={s.loginRequired}><LoginRequired title={title} /></div>}
+          
+          {/*投稿确认画面*/}
+          {confirm && <div className={s.detail}><CardDetailCat /></div> }
           <Outlet />
 
           <ToTop />
