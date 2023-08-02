@@ -2,6 +2,40 @@
 
 kill -9 $(lsof -t -i:9003)
 
+
+### Install Sever
+```
+sudo apt install curl
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt install nodejs
+nodejs -v
+npm -v
+
+
+
+sudo mysql -u root -p
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'neko-cat-2023-???';
+flush privileges;
+
+use mysql;
+update user set Host='%' where User='root';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'neko-cat-2023-???';
+flush privileges;
+
+```
+
+
+### upload code
+```
+ssh -i ./nekonara.pem ubuntu@18.206.123.202
+
+
+sftp -i ./nekonara.pem ubuntu@18.206.123.202
+cd /usr/local/cat
+lcd /Users/manqingchen/Documents/Japan/CatBoard/site/build
+put -r *
+```
+
 ### Process status
 - ホーム　　　　　finished
 - 迷子情報　　　　waiting   　　
@@ -40,22 +74,25 @@ fav            お気に入りリスト
 # Nekonara_user
 user_id           ユーザーID[パーティションキー]
 mail              メール[ソートキー]
-first_name        名前
-last_name         姓
-nick_name         ニックネーム
+user_name         用户名称
+name              真名
+icon              图标
+pwd               密码
+user_type         用户类型
 
 
 
 # Nekonara_chat
 chat_id           [パーティションキー]
 sub_date          [ソートキー]
-cat_name
+board_id          帖子id
+cat_name          猫名
+cat_img           猫图片
 user_fr           发起用户名
 icon_fr           发起用户图标
 user_to           目的用户名
 icon_to           目的用户图标
 content           { send_date, msg }
-sub_date
 ```
 
 

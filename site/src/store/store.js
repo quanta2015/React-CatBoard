@@ -120,6 +120,10 @@ class Store {
     return await this.post(urls.API_SAVE_CATINFO,params)
   }
 
+  async initChatId(params) {
+    return await this.post(urls.API_INIT_CHAT_ID,params)
+  }
+
 
 
   async login(params) {

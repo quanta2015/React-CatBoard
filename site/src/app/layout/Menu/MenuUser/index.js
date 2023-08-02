@@ -7,25 +7,28 @@ import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'antd';
 
 
-import logo from '@/img/logo.svg'
 import bell from '@/img/icon/bell.svg'
 import chat from '@/img/icon/chat.svg'
 import user from '@/img/icon/menu-user.svg'
 import cat  from '@/img/icon/menu-cat.svg'
 import edit from '@/img/icon/menu-edit.svg'
+import flag from '@/img/icon/menu-flag.svg'
 import logout from '@/img/icon/menu-logout.svg'
 
 
-const MENU_USER = [{name: 'アカウント情報', icon:user, url:'/userInfo'},
-                   {name: '猫ちゃん情報', icon:cat, url:'/catInfo'},
-                   {name: '投稿内容管理', icon:edit, url:'/edit'},
-                   {name: 'ログアウト', icon:logout, url:'/logout'},]
+const MENU_USER = [{name: 'アカウント情報', icon:user, url:'/userInfo', type:1},
+                   // {name: '猫ちゃん情報', icon:cat, url:'/catInfo', type:1},
+                   {name: '投稿内容 確認 / 編集 / 削除', icon:edit, url:'/edit', type:1},
+                   {name: '保存した情報・記事をみる', icon:flag, url:'/edit', type:0},
+                   {name: 'ログアウト', icon:logout,url:'/logout',type:1}, ]
 
 
 const MenuUser = ({user}) => {
+
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
-
+  const type = store.user?parseInt(store.user?.user_type):1
+  const menu = MENU_USER.filter(o=> o.type>=type)
 
   const doSelMenu =(url)=>{
     if (url === '/logout') {
@@ -51,12 +54,8 @@ const MenuUser = ({user}) => {
 
         <div className={s.menuSub}>
           <div className={s.wrap}>
-            {MENU_USER.map((item,i)=>
-              <div 
-                className={s.menuItem} 
-                onClick={()=>doSelMenu(item.url)} 
-                key={i}
-              >
+            {menu.map((item,i)=>
+              <div className={s.menuItem} onClick={()=>doSelMenu(item.url)} key={i}>
                 <img src={item.icon} />
                 {i === 0 ? 
                   <Tooltip title="確認 / 編集 / 削除ができます " placement="bottom">

@@ -7,13 +7,33 @@ import { ConfigProvider } from 'antd'
 import Loadable from '@/component/Loadable'
 import zhCN from 'antd/es/locale/zh_CN'
 import injects from '@/store'
-
+import mqtt from "mqtt";
 
 import '@/less/var.less'
 import '@/less/com.less'
 
-
 configure({enforceActions: 'observed'})
+
+
+
+const client = mqtt.connect('ws://121.40.124.170:1884');
+client.on('connect', () => {
+  console.log('Connected to MQTT broker.');
+
+  client.subscribe('/cat/chat');
+});
+
+client.on('error', (err) => {
+  console.error('Error:', err);
+});
+
+client.on("message", function(top, msg) {
+  console.log(top,msg)
+});
+
+
+
+
 
 let Layout = Loadable({ loader: () => import('./app/layout')})
 let Index  = Loadable({ loader: () => import('./app/index')})
@@ -27,6 +47,12 @@ let Login  = Loadable({ loader: () => import('./app/login')})
 
 let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
 let CatInfo = Loadable({ loader: () => import('./app/catInfo')})
+
+
+
+
+
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
