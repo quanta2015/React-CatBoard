@@ -35,9 +35,10 @@ const UserInfo = () => {
       console.log(params)
       await store.regUser(params).then(r=>{
         message.info(r.msg)
-        store.setUser(params)
-        navigate('/')
-        // console.log(r)
+        if (r.code === 0) {
+          store.setUser(params)
+          navigate('/')
+        }
       })
       
     } catch (errorInfo) {
@@ -65,7 +66,7 @@ const UserInfo = () => {
             <h1>猫ちゃんを飼われている方は下記の内容も入力してください。</h1>
             <span>迷子情報を投稿する際に反映されます。</span>
           </div>
-          <FormCat />
+          {/*<FormCat />*/}
         
           <div className={cls('btnLg','lose')} onClick={doSave}>新規登録する</div>
           <div className={s.desc}>「アカウント登録」をクリックすることで、利用規約・プライバシーポリシー

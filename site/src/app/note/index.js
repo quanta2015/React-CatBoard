@@ -18,7 +18,7 @@ import icon_clock from '@/img/icon/clock.svg'
 const { RangePicker } = DatePicker;
 
 const count = 150
-const SIZE = 5
+const SIZE = 9
 const getPageList = (o,p) => o.filter((o,i)=> (i>=SIZE*(p-1))&&(i<=p*SIZE-1))
 
 const Note = () => {

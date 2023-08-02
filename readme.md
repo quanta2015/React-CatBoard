@@ -18,6 +18,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'neko-cat
 flush privileges;
 
 use mysql;
+select Host,User from user;
 update user set Host='%' where User='root';
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'neko-cat-2023-???';
 flush privileges;
