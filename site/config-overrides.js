@@ -6,6 +6,28 @@ const {
 } = require('customize-cra')
 const path = require('path')
 const addLessLoader = require("customize-cra-less-loader");
+const webpack = require('webpack');
+const Buffer = require('buffer').Buffer;
+
+
+function addCustomizePlugin(config) {
+  config.plugins.push(
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    })
+  );
+  
+  config.plugins.push(
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+  );
+  return config;
+}
+
+
+
+
 
 
 module.exports = override(
@@ -28,4 +50,5 @@ module.exports = override(
     '@constant': path.resolve(__dirname, 'src/constant'),
     '@component': path.resolve(__dirname, 'src/component'),
   }),
+  addCustomizePlugin,
 )

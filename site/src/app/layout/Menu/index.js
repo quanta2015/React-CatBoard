@@ -8,13 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import MenuUser from './MenuUser'
 
 import logo from '@/img/logo.svg'
-import bell from '@/img/icon/bell.svg'
-import chat from '@/img/icon/chat.svg'
-
-import user from '@/img/icon/menu-user.svg'
-import cat  from '@/img/icon/menu-cat.svg'
-import edit from '@/img/icon/menu-edit.svg'
-import logout from '@/img/icon/menu-logout.svg'
 
 const fun  = [{name:'新規登録',url:'/reg'},
               {name:'ログイン',url:'/login'}]
@@ -27,10 +20,7 @@ const MENU_MAIN = [{name:'ホーム',url:'/'},
                    {name:'Q&A',url:'/qa'},
                    {name:'お問い合わせ',url:'/ask'}]
 
-const MENU_USER = [{name: 'アカウント情報', icon:user, url:'/userInfo'},
-                   {name: '猫ちゃん情報', icon:cat, url:'/catInfo'},
-                   {name: '投稿内容 確認 / 編集 / 削除', icon:edit,url:'/edit'},
-                   {name: 'ログアウト', icon:logout,url:'/logout'},]
+
 
 
 const Menu = ({}) => {
@@ -64,16 +54,19 @@ const Menu = ({}) => {
   
   return (
     <div className={s.menu}>
-      <div className={s.fn}>
+      <div className={s.lg}>
+        
+        <div className={s.logo}>
+          <img src={logo} alt="logo" />
+        </div>
 
-        { user ? <MenuUser user={user} />:renderLogin() }
+        <div className={s.fn}>
+          { user ? <MenuUser user={user} />:renderLogin() }
+          <i>アプリをダウンロード</i>
+        </div>
 
-        <i>アプリをダウンロード</i>
       </div>
-
-      <div className={s.logo}>
-        <img src={logo} alt="logo" />
-      </div>
+      
       
       <div className={s.list}>
         {MENU_MAIN.map((item,i)=>
