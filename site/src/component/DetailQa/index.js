@@ -19,7 +19,9 @@ const caluFav =(user,fav)=> fav.includes(user.mail)
 const DetailNote = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
   const { user } = store
-  const { category,type,sub_date,sub_user,addr,content,title,sub,period,view,fav,id,board_id } = store.item
+  const my_id = user.user_id
+  const { category,sub_date,sub_user,sub_user_id,content,title,fav,board_id } = store.item
+  const { cnt, rep } = content
   const clr = (category==='受付中')?'var(--clr-qa)':'#9E9E9E'
   const clrSub = (category==='受付中')?'var(--clr-qa-sub)':'#ccc'  
 
@@ -67,14 +69,14 @@ const DetailNote = ({}) => {
                 <div className={s.icon}>
                   <img src={icon_user} style={{}} />
                 </div>
-                <span>{sub_user.length}</span>
+                <span>{sub_user}</span>
                 <span>{sub_date}</span>
               </div>
             </div>
           </div>
 
           <div className={s.bd}>
-            <div className={s.content}>{content}</div>
+            <div className={s.content}>{cnt}</div>
             <div className={s.desc}>
               <div className={s.iconItem} style={{color:'var(--clr-nav)'}}>
                 <div className={s.icon}>
@@ -89,21 +91,28 @@ const DetailNote = ({}) => {
 
           <div className={s.fn}>
             <span>回答する</span>
-            <span>回答を締め切る</span>
+
+            {my_id === sub_user_id &&  <span>回答を締め切る</span>}
           </div>
 
           <div className={s.rep}>
             <h1>
               <img src={icon_chat} />
               <span>回答</span>
-              2
+              {rep.length}
             </h1>
 
+            { (rep.length===0) && 
+            <div className={s.nothing}>
+              回答されるとこちらに表示されます。
+            </div>}
+
+            { (rep.length>0) && 
             <div className={s.wrap}>
               <p>
                 {/*<img src={} />*/}
               </p>
-            </div>
+            </div>}
           </div>
 
          

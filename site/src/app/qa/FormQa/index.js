@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect,useState} from 'react';
-import {Input, Table, Space, Pagination, Spin, Form, Button, Row, Col, Select, InputNumber} from 'antd'
+import {Input,  message, Form, Button} from 'antd'
 import { observer,MobXProviderContext } from 'mobx-react'
+import { v4 as uuidv4 } from 'uuid';
 import {fixBody} from '@/util/fn'
 import CardInfo from '@/component/CardInfo'
 import {CONFIRM_MSG_QA} from '@/constant/data'
@@ -9,28 +10,47 @@ import s from './index.module.less';
 
 const { TextArea } = Input
 
-const FormMain = ({setShowForm}) => {
+const FormMain = ({setShowForm,setLoad,load}) => {
   const { store } = React.useContext(MobXProviderContext)
-  
+  const { user } = store
+
+  const [title,setTitle] = useState('')
+  const [content,setContent] = useState('')
+
 
   const doSubmit=()=>{
-    // setSubmit(true)
+    let params = {
+      user_id: user.user_id,
+      board_id: uuidv4(),
+      title,
+      content: {cnt: content, rep:[]}
+    }
 
-    fixBody(false)
-    setShowForm(false)
-    // window.scrollTo(0, 0);
+
+    store.addQa(params).then(r=>{
+      message.info(r.msg)
+      console.log(r)
+      fixBody(false)
+      setShowForm(false)
+      setLoad(!load)
+    })
+
+
+
   }
+
+
 
   return (
     <div className={s.formQa}>
       <CardInfo {...CONFIRM_MSG_QA}/>
       <div className={s.row}>
         <label>タイトル :</label>
-        <Input></Input>
+        <Input value={title} onChange={(e)=>setTitle(e.currentTarget.value)}></Input>
       </div>
       <div className={s.row}>
         <label>内容  :</label>
-        <TextArea allowClear style={{height: '400px'}} />
+        <TextArea value={content} onChange={(e)=>setContent(e.currentTarget.value)} allowClear style={{height: '400px'}} />
       </div>
 
       <div className={s.row}>

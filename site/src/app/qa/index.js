@@ -22,6 +22,7 @@ const getPageList = (o,p) => o.filter((o,i)=> (i>=SIZE*(p-1))&&(i<=p*SIZE-1))
 const QA = () => {
   
   const { store } = React.useContext(MobXProviderContext)
+  const { user } = store
 
   const [list,setList] = useState([])
   const [fav,setFav] = useState([])
@@ -30,6 +31,7 @@ const QA = () => {
   const [key,setKey]= useState(null)
   const [queryKey,setQueryKey] = useState(null)
   const [query,setQuery]= useState(false)
+  const [load, setLoad] = useState(false)
 
   const [showform,setShowForm] = useState(false)
 
@@ -43,7 +45,7 @@ const QA = () => {
       setPageList(getPageList(r.data,1))
       store.setShow(false,'loading')
     })
-  },[query])
+  },[query,load])
 
 
 
@@ -102,9 +104,10 @@ const QA = () => {
 
         <div className={s.bd}>
 
+          { user && 
           <div className={s.fn}>
             <span onClick={doShowForm}>質問を投稿</span>
-          </div>
+          </div>}
 
           <div className={s.sect}>
             <h1>
@@ -127,7 +130,7 @@ const QA = () => {
 
       {showform && 
       <div className={s.form}>
-        <FormQa setShowForm={setShowForm} />
+        <FormQa {...{ setShowForm, setLoad, load }} />
       </div>}
     </div>
   )

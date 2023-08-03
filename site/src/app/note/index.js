@@ -89,7 +89,7 @@ const Note = () => {
         </p>
         <p>
           <img src={icon_eye} />
-          <span>{item.view.length} views</span>
+          <span>{item.see.length} views</span>
         </p>
         <p>
           <img src={icon_heart} />

@@ -12,6 +12,7 @@ export const API_SAVE_CATINFO  = API_SERVER + '/saveCatInfo'
 export const API_REG_USER      = API_SERVER + '/reg'
 export const API_FAV_NOTE      = API_SERVER + '/favNote'
 export const API_INIT_CHAT_ID  = API_SERVER + '/initChatId'
+export const API_ADD_QA        = API_SERVER + '/addQa'
 
 
 
