@@ -34,6 +34,7 @@ const Layout = () => {
   const [form] = Form.useForm();
   const isSmallScreen = window.innerWidth < 768;
   const title = '情報'
+  const btnTxt = 'test'
 
 	store.mobile = isMobileDevice || isSmallScreen
 
@@ -80,7 +81,7 @@ const Layout = () => {
           {loginReq && <div className={s.loginRequired}><LoginRequired title={title} /></div>}
           
           {/*投稿确认画面*/}
-          {confirm && <div className={s.detail}><CardDetailCat /></div> }
+          {confirm && <div className={s.detail}><CardDetailCat btnTxt={btnTxt} /></div> } 
           <Outlet />
 
           <ToTop />
