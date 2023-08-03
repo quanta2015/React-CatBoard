@@ -1,0 +1,153 @@
+.cardq {
+  position: relative;
+  display: flex;
+  // background: #fff;
+  padding: 15px;
+  font-family: Inter;
+  font-weight: 700;
+  transition: 0.5s;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  height: 185px;
+
+  &+.cardq {
+    border-top: 1px solid #ccc;
+  }
+
+  &:hover {
+    box-shadow: var(--shadow);
+  }
+
+  .hd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &>label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 75px;
+      height: 30px;
+      color: #FFF;
+      font-size: 15px;
+    }
+
+    &>i {
+      font-weight: 300;
+      font-size: 15px;
+      padding: 20px 0 10px;
+      border-top: 15px solid #fff;
+      width: 100%;
+      text-align: center;
+    }
+
+    &>span {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+    }
+  }
+
+  .bd {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    flex: 1;
+    overflow: hidden;
+
+    .tl {
+      display: flex;
+      align-items: center;
+      height: 30px;
+
+      &>h1 {
+        width: 340px;
+        margin: 0;
+        color: inherit;
+        font-size: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &>i {
+        color: #424242;
+        font-size: 12px;
+        flex: 1;
+        text-align: right;
+      }
+    }
+
+    &>p {
+      margin-top: 20px;
+      color: #000;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.5em;
+      flex: 1 1;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: pre-wrap;
+      max-height: 4.5em;
+    }
+
+    .ft {
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+      justify-content: flex-end;
+
+      &>img {
+        width: 70px;
+        height: 50px;
+      }
+    }
+  }
+
+}
+
+
+.iconItem {
+  display: flex;
+  align-items: center;
+  color: #424242;
+  margin: 0 20px 0;
+  justify-content: center;
+
+  .icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &>span {
+    font-size: 15px;
+    margin-left: 10px;
+    font-weight: 300;
+  }
+
+
+  &:nth-child(2) {
+
+    &>span {
+      font-size: 17px;
+    }
+  }
+
+
+}
+
+
+
+
+@media screen and (max-width: 768px) {}

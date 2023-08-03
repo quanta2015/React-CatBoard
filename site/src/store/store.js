@@ -12,6 +12,7 @@ class Store {
     makeAutoObservable(this);
   }
 
+  qa       = false
   user     = null
   edit     = false
   note     = false
@@ -28,6 +29,7 @@ class Store {
     this.detail   = false
     this.loading  = false
     this.loginReq = false
+    this.qa       = false
   }
 
 
@@ -96,6 +98,12 @@ class Store {
   async queryNote(params) {
     return await this.post(urls.API_QUERY_NOTE,params)
   }
+
+  async queryQA(params) {
+    return await this.post(urls.API_QUERY_QA,params)
+  }
+
+  
 
   async favNote(params) {
     return await this.post(urls.API_FAV_NOTE,params)

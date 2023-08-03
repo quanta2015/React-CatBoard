@@ -9,6 +9,7 @@ import Menu from './Menu'
 import FormCat from '@/component/FormCat'
 import DetailCat from '@/component/DetailCat'
 import DetailNote from '@/component/DetailNote'
+import DetailQa from '@/component/DetailQa'
 import LoginRequired from '@/component/LoginRequired'
 import Footer from '@/component/Footer'
 import ToTop from '@/component/ToTop'
@@ -23,7 +24,7 @@ import load from '@/img/loading.png'
 const Layout = () => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,detail,login,loginReq,note} = store
+  const {loading,edit,detail,login,loginReq,note,qa} = store
 
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
@@ -70,6 +71,10 @@ const Layout = () => {
 
           {/*NOTE详情画面*/}
           { note && <div className={s.note}><DetailNote /></div>}
+
+
+          {/*NOTE详情画面*/}
+          { qa && <div className={s.qa}><DetailQa /></div>}
 
           {/*发帖画面*/}
           { edit && <div className={s.edit}><FormCat /></div>}
