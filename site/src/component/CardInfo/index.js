@@ -33,7 +33,7 @@ const formatLink=(s)=> {
 }
 
 
-const CardInfo = ({title,list,submit}) => {
+const CardInfo = ({list,title}) => {
   const { store } = React.useContext(MobXProviderContext)
   const [data,setData] = useState([])
   

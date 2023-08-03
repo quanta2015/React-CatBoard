@@ -38,6 +38,8 @@ const MenuUser = ({user}) => {
       navigate(url)
     }
   }
+
+  console.log('user',user)
   
   return (
     <React.Fragment>

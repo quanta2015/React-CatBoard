@@ -20,7 +20,7 @@ import icon_ord   from '@/img/icon/ord.svg'
 
 const Card = (item) => {
   const { store } = React.useContext(MobXProviderContext)
-  const { type,cat,sub_date,sub_user,addr,title,sub,period,view,fav,id } = item
+  const { type,cat,sub_date,sub_user,addr,title,sub,period,see,fav,id } = item
   
   
 
@@ -77,7 +77,7 @@ const Card = (item) => {
               <label>閲覧</label> 
               <img src={icon_eye} />
             </p>
-            <i>{view?view.length:0}</i>
+            <i>{see?see.length:0}</i>
           </div>
           
           <div className={s.item}>

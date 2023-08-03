@@ -12,7 +12,7 @@ class Store {
     makeAutoObservable(this);
   }
 
-  // user     = 'test'
+  qa       = false
   user     = null
   edit     = false
   note     = false
@@ -31,6 +31,7 @@ class Store {
     this.detail   = false
     this.loading  = false
     this.loginReq = false
+    this.qa       = false
     this.confirm  = false
   }
 
@@ -104,6 +105,11 @@ class Store {
     return await this.post(urls.API_QUERY_NOTE,params)
   }
 
+  async queryQA(params) {
+    return await this.post(urls.API_QUERY_QA,params)
+  }
+
+  
 
   async favNote(params) {
     return await this.post(urls.API_FAV_NOTE,params)
@@ -116,9 +122,12 @@ class Store {
     return await this.post(urls.API_SAVE_USERINFO,params)
   }
 
-  async saveCatInfo(params) {
-    return await this.post(urls.API_SAVE_CATINFO,params)
+  async addQa(params) {
+    return await this.post(urls.API_ADD_QA,params)
   }
+
+
+
 
   async initChatId(params) {
     return await this.post(urls.API_INIT_CHAT_ID,params)

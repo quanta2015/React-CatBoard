@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { INF_TYPE,AREA_LIST } from '@/constant/data'
 import {formatTime} from '@/util/fn'
 
+
 import Card  from '@/component/Card'
 import cls from 'classnames';
 
@@ -13,7 +14,7 @@ import s from './index.module.less';
 import icon_eye   from '@/img/icon/eye.svg'
 import icon_heart from '@/img/icon/heart.svg'
 import icon_clock from '@/img/icon/clock.svg'
-
+import {SearchOutlined} from '@ant-design/icons'
 
 const { RangePicker } = DatePicker;
 
@@ -29,12 +30,13 @@ const Note = () => {
   const [fav,setFav] = useState([])
   const [pageList,setPageList]= useState([])
   const [page,setPage]= useState(1)
-
-
+  const [key,setKey]= useState(null)
+  const [queryKey,setQueryKey] = useState(null)
+  const [query,setQuery]= useState(false)
 
   useEffect(()=>{
     store.setShow(true,'loading')
-    store.queryNote({count}).then(r=>{
+    store.queryNote({count,key}).then(r=>{
       console.log('取得データ',r)
       setFav(r.fav)
       setList(r.data)
@@ -44,7 +46,7 @@ const Note = () => {
       setPageList(getPageList(r.data,1))
       store.setShow(false,'loading')
     })
-  },[])
+  },[query])
 
 
 
@@ -59,6 +61,21 @@ const Note = () => {
     store.setShow(true,(item.type==='note')?'note':'detail')
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setQuery(!query)
+      setQueryKey(key)
+    }
+  };
+
+
+  const doChgKey =(e)=> {
+    const val = e.target.value
+    if (val==='') {
+      setQuery(false)
+    }
+    setKey(val)
+  }
 
 
   const renderNote =(item,i,rank=null) => (
@@ -72,7 +89,7 @@ const Note = () => {
         </p>
         <p>
           <img src={icon_eye} />
-          <span>{item.view.length} views</span>
+          <span>{item.see.length} views</span>
         </p>
         <p>
           <img src={icon_heart} />
@@ -91,13 +108,23 @@ const Note = () => {
           <h1>ねこ記事</h1>
           <p>
             <span>猫ちゃんに関する記事を掲載しています</span>
-            <Input placeholder="キーワードで検索" />
+            <Input 
+              prefix={<SearchOutlined />} 
+              placeholder="キーワードで検索" 
+              onChange={doChgKey}
+              onKeyDown={handleKeyDown}
+              size="small"
+              style = {{ borderRadius: '20px', color: '#ccc'}}
+              allowClear
+              />
           </p>
         </div>
 
 
 
         <div className={s.bd}>
+
+          { (!query) && 
           <div className={s.sect}>
             <h1>
               <span>ランキング</span>
@@ -108,12 +135,12 @@ const Note = () => {
                 renderNote(item,i+1,'rank')
               )}
             </div>
-          </div>
+          </div>}
 
 
           <div className={s.sect}>
             <h1>
-              <span>記事一覧</span>
+              <span>{!query?'記事一覧':`「${queryKey}」の結果：`}</span>
             </h1>
             <div className={s.list}>
               {pageList.map((item,i)=>

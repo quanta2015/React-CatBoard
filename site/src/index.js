@@ -48,7 +48,7 @@ let Login  = Loadable({ loader: () => import('./app/login')})
 let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
 let CatInfo = Loadable({ loader: () => import('./app/catInfo')})
 
-
+let Rep = Loadable({ loader: () => import('./app/rep')})
 
 
 
@@ -74,6 +74,8 @@ root.render(
 
             <Route path="/userInfo"  element={<UserInfo />} />
             <Route path="/catInfo"   element={<CatInfo />} />
+
+            <Route path="/rep"   element={<Rep />} />
           </Route>
         </Routes>
       </BrowserRouter>

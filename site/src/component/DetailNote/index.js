@@ -21,7 +21,7 @@ const caluFav =(user,fav)=> fav.includes(user.mail)
 const DetailNote = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
   const { user } = store
-  const { cat,type,sub_date,sub_user,addr,content,title,sub,period,view,fav,id,board_id } = store.item
+  const { cat,type,sub_date,sub_user,addr,content,title,sub,period,see,fav,id,board_id } = store.item
   const { age,attr,clr,image,img,name,sex,size,status } = cat
 
   const [isFav,setIsFav] = useState(false)
@@ -93,7 +93,7 @@ const DetailNote = ({}) => {
               </p>
               <p>
                 <img src={icon_eye} />
-                <span>{view.length} views</span>
+                <span>{see.length} views</span>
               </p>
               <p>
                 <img src={icon_heart} />
@@ -102,7 +102,7 @@ const DetailNote = ({}) => {
             </div>
 
             <div className={s.content}>
-              {content}
+              {content.cnt}
             </div>
 
             {user &&

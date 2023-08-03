@@ -10,6 +10,7 @@ import Menu from './Menu'
 import FormCat from '@/component/FormCat'
 import DetailCat from '@/component/DetailCat'
 import DetailNote from '@/component/DetailNote'
+import DetailQa from '@/component/DetailQa'
 import LoginRequired from '@/component/LoginRequired'
 import CardDetailCat from '@/component/CardDetailCat'
 import FormPost from '@/component/FormPost'
@@ -26,8 +27,7 @@ import load from '@/img/loading.png'
 const Layout = () => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
-  const {loading,edit,detail,login,loginReq,note,subType,confirm} = store
-
+  const {loading,edit,detail,login,loginReq,note,qa,subType,confirm} = store
   const userAgent = navigator.userAgent.toLowerCase();
   const mobileDevices = ['android', 'iphone', 'ipad', 'ipod', 'windows phone'];
   const isMobileDevice = mobileDevices.some(device => userAgent.includes(device));
@@ -48,6 +48,7 @@ const Layout = () => {
         store.login(userLocal).then(r=>{
           if (r.code ===0) {
             message.info('登录成功！')
+            console.log(r.data,'setuser')
             store.setUser(r.data)
           }
         })
@@ -74,6 +75,10 @@ const Layout = () => {
 
           {/*NOTE详情画面*/}
           { note && <div className={s.note}><DetailNote /></div>}
+
+
+          {/*NOTE详情画面*/}
+          { qa && <div className={s.qa}><DetailQa /></div>}
 
           {/*发帖画面*/}
           { edit && <div className={s.edit}><FormPost form={form} file={[]}/></div>} 

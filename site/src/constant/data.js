@@ -5,8 +5,7 @@ import warn_prot  from '@/img/icon/warn_prot.svg'
 import warn_qa  from '@/img/icon/warn_qa.svg'
 import icon_check  from '@/img/icon/check.svg'
 import cat_note from '@/img/item/note.png'
-
-
+import warn_qa  from '@/img/icon/warning-g.svg'
 
 export const INF_TYPE = {
   lose: '迷子',
@@ -156,85 +155,28 @@ export const AREA_LIST = [
 ];
 
 
+
 export const usr = {
   name: 'とみさん',
   icon: icon_user,
 }
 
-export const list1 = {
-  title: "あなたへのお知らせ",
-  list: [{
-    title: "【返信】たっちーさんから…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【いいね】つゆさんがあなたの…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【返信】たっちーさんから…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【フォロー】みすずさんがあなた…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【いいね】つゆさんがあなたの…",
-    date: "2022.2.11　11:32",
-  }],
-  btnType:"", 
-  btnTitle:"もっと見る", 
-  icoL: false, 
-  icoR: true,
+export const CONFIRM_MSG_QA = {
+  title: '質問を投稿する前にご確認ください。',
+  list: [
+    {
+      icon: warn_qa,
+      sect: [
+        "病気の診断や薬または療法食の処方についてなど\n獣医師の判断が必要な内容は投稿せず受診してください。",
+        "個人情報保護のため個人が特定される情報は投稿しないでください。",
+        "他人を傷つけるような内容（誹謗中傷 / 過度な批判など）や\n他人を不快にさせる内容は投稿しないでください。",
+        "商業目的や広告目的の内容は投稿しないでください。\n犯罪行為などを誘発 / 助長する内容は投稿しないでください。",
+        "投稿が不適切だと判断した場合、削除することがあります。",
+        "利用規約に同意の上ご投稿ください。",
+      ],
+    },
+  ],
 }
-
-
-export const list2 = {
-  title: "迷い猫を目撃・保護した人へ",
-  list: [],
-  btnType:"plus", 
-  btnTitle:"投稿する", 
-  icoL: true, 
-  icoR: false,
-}
-
-
-export const list3 = {
-  title: "お気に入り記事",
-  list: [{
-    title: "【記事】迷子になった際の…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【記事】どれが高い？ペット保…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【記事】子猫のしつけで大切な…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【記事】動物看護師が勧める…",
-    date: "2022.2.11　11:32",
-  },{
-    title: "【記事】あなたの猫は大丈夫…",
-    date: "2022.2.11　11:32",
-  }],
-  btnType:"", 
-  btnTitle:"もっと見る", 
-  icoL: false, 
-  icoR: true,
-}
-
-
-const ne = {
-  type: 'note',
-  img: cat_note,
-  title: '迷子になった時の対処法',
-  sub:  '~猫の行動から分かる５つの特徴~',
-  date: '2022-2-14　11:12',
-  period: '約５分',
-  read: 42,
-  fav: 13,
-}
-
-export const neList = [ne,ne,ne]
-
-
 
 
 

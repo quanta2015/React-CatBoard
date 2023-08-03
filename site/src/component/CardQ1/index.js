@@ -43,14 +43,14 @@ const CardQ = ({ type,sub_date,sub_user,title,content,fav,clr,fit }) => {
       <div className={s.hd}>
         <label style={{background:clr}}>{type}</label>
         <i>回答</i>
-        <span>{content.length}</span>
+        <span>{content.cnt.length}</span>
       </div>
       <div className={s.bd}>
         <div className={s.tl}>
           <h1>{title}</h1>
           <i>{sub_date.substr(0,10)}</i>
         </div>
-        <p>{content}</p>
+        <p>{content.cnt}</p>
         <div className={s.ft}>
           {RenderItem('ユーザー名',icon_user,sub_user)}
           {RenderItem('気になる',icon_concerned,fav)}

@@ -108,7 +108,7 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
           
           <div className={s.row}>
             <label>保護した時の状況</label>
-            <p>{content}</p>
+            <p>{content.cnt}</p>
           </div>
         </div>
 
