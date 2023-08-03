@@ -50,6 +50,11 @@ const FormPost = (item) => {
     initList = confirmMessage.initList;
   }
 
+  const doNewArticle =(type)=>{　
+    store.setShow(true,'confirm')
+  }
+
+
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
@@ -101,8 +106,9 @@ const FormPost = (item) => {
         <button 
           className={`${s.btn} ${subType === SUB_TYPE.TYPE2 ? s['btn-protect'] : ''}`} 
           onClick={() => {
-            doSave();
+            // doSave();
             setPopupVisible(true);
+            doNewArticle('lose')
           }}
           disabled={!areAllChecked}
         >

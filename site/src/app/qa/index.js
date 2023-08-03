@@ -47,7 +47,7 @@ const Ask = () => {
   
     <div className={s.ask}>
 
-      {(!submit) && 
+      {(!submit) &&
         <>
           <CardInfo list={initList} title={initTitle} />
           <Form setSubmit={setSubmit} />
@@ -56,7 +56,7 @@ const Ask = () => {
 
       {(submit) && 
         <>
-          <CardInfo list={endList} title={endTitle} />
+          <CardInfo list={endList} title={endTitle} />　
         </>
       }
     </div>

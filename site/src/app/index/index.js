@@ -79,7 +79,7 @@ const Index = () => {
   )
 
 
-  const doNewArticle =(type)=>{
+  const doNewArticle =(type)=>{　
     store.setShow(true,'edit')
     store.setSubType(type)
   }
