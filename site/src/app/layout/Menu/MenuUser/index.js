@@ -37,6 +37,8 @@ const MenuUser = ({user}) => {
       navigate(url)
     }
   }
+
+  console.log('user',user)
   
   return (
     <div className={s.menuUser}>

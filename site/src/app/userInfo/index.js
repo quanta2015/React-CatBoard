@@ -22,10 +22,8 @@ const UserInfo = () => {
   const { user }=store
 
   
-  // user.icon = [{url: user.icon[0]}]
   useEffect(()=>{
     let url = user.icon[0]
-    console.log(url)
     setIcon([url])
   },[])
   
@@ -34,15 +32,12 @@ const UserInfo = () => {
   const doSave =async()=>{
     try {
       const params = await form.validateFields();
-
-      console.log(params)
-
       params.user_id = user.user_id
       params.icon = [params.icon[0].url]
-      console.log(params)
+      // console.log(params)
       await store.saveUserInfo(params).then(r=>{
         message.info(r.msg)
-        store.setUser(params)
+        store.setUser(r.data)
       })
       
     } catch (errorInfo) {
