@@ -151,10 +151,17 @@ router.post('/queryQA', async (req, res, next) =>{
   let newData = data.map(item=>{
     item.content.rep = item.content.rep.map(o=>{
       o =  JSON.parse(o);
+      users.forEach(user => {
+        if (o.user_id === user.user_id) {
+          o.sub_user = item.sub_user;
+        }
+      });
       return o;
     });
     return item;
   });
+
+
 
   res.status(200).json({code: 0, data:newData })
 })
