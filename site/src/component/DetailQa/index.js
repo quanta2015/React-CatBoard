@@ -91,7 +91,6 @@ const DetailNote = ({}) => {
 
           <div className={s.fn}>
             <span>回答する</span>
-
             {my_id === sub_user_id &&  <span>回答を締め切る</span>}
           </div>
 
