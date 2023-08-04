@@ -165,12 +165,12 @@ const DetailNote = ({}) => {
             </div>
           </div>}
 
-
+          {(category==='受付中') && 
           <div className={s.frm}>
             <TextArea value={txt} onChange={(e)=>setTxt(e.currentTarget.value)} allowClear style={{height: '200px'}} />
 
             <div className="btnIn" onClick={doReply}>回答する</div>
-          </div>
+          </div>}
 
          
         </div>
