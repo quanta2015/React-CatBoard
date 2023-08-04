@@ -3,7 +3,7 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
 import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,message } from 'antd';
 import {PRE_IMG} from '@/constant/urls'
-import {formatTime} from '@/util/fn'
+import {formatTime,clone } from '@/util/fn'
 import s from './index.module.less';
 
 
@@ -11,7 +11,10 @@ import icon_user  from '@/img/icon/user.svg'
 import icon_eye   from '@/img/icon/eye.svg'
 import icon_eye_r from '@/img/icon/eye-red.svg'
 import icon_chat from '@/img/icon/chat-c.svg'
+import icon_reply from '@/img/icon/reply.svg'
+import icon_forbid from '@/img/icon/forbid.svg'
 
+const { TextArea } = Input
 
 const caluFav =(user,fav)=> fav.includes(user.mail)
 
@@ -20,6 +23,7 @@ const DetailNote = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
   const { user } = store
   const my_id = user.user_id
+  const my_icon = user.icon[0]
   const { category,sub_date,sub_user,sub_user_id,content,title,fav,board_id } = store.item
   const { cnt, rep } = content
   const clr = (category==='受付中')?'var(--clr-qa)':'#9E9E9E'
@@ -27,6 +31,7 @@ const DetailNote = ({}) => {
 
   const [isFav,setIsFav] = useState(false)
   const [sel,setSel] = useState(0)
+  const [txt,setTxt] = useState('')
 
   const doClose =()=>{
     store.setShow(false,'qa')
@@ -35,6 +40,9 @@ const DetailNote = ({}) => {
   useEffect(()=>{ 
     setIsFav(user?caluFav(user,fav):false)
   },[])
+
+  console.log(clone(store.item),'item')
+
 
 
 
@@ -49,6 +57,32 @@ const DetailNote = ({}) => {
   )
 
 
+  const doReply=()=>{
+    let params = {
+      user_id: my_id,
+      user_icon: my_icon,
+      board_id,
+      content: txt,
+      to: sub_user_id,
+      title,
+    }
+
+    store.setShow(true,'loading')
+    store.replyQa(params).then(r=>{
+
+      console.log(r)
+      message.info(r.msg)
+      store.setShow(false,'loading')
+      setTxt('')
+      store.setItem(r.data)
+      // console.log(r)
+      // fixBody(false)
+      // setShowForm(false)
+      // setLoad(!load)
+    })
+  }
+
+
 
   return (
     <div className={s.detailQa} >
@@ -57,6 +91,9 @@ const DetailNote = ({}) => {
         
         <div className={s.wrap}>
           <div className={'del'} onClick={doClose}></div>
+
+          {my_id === sub_user_id &&  
+            <div className={s.stop}>締め切る</div>}
 
 
           <div className={s.hd}>
@@ -90,10 +127,11 @@ const DetailNote = ({}) => {
 
 
           <div className={s.fn}>
-            <span>回答する</span>
-            {my_id === sub_user_id &&  <span>回答を締め切る</span>}
+            
           </div>
 
+
+          { (rep.length>0) && 
           <div className={s.rep}>
             <h1>
               <img src={icon_chat} />
@@ -101,17 +139,37 @@ const DetailNote = ({}) => {
               {rep.length}
             </h1>
 
-            { (rep.length===0) && 
-            <div className={s.nothing}>
-              回答されるとこちらに表示されます。
-            </div>}
-
-            { (rep.length>0) && 
             <div className={s.wrap}>
-              <p>
-                {/*<img src={} />*/}
-              </p>
-            </div>}
+              {rep.map((item,i)=>
+              <div className={s.repItem} key={i}>
+                <h2>
+                  <img src={item.user_icon} />
+                  <span>{item.user_id}</span>
+                </h2>
+                <p>{item.content}</p>
+                <div className={s.desc}>
+                  <span>{item.sub_date}</span>
+
+                  
+                  <div className={s.btn}>
+                    <img src={icon_reply} />
+                    返信
+                  </div>
+                  <div className={s.btn}>
+                    <img src={icon_forbid} />
+                    举报
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+          </div>}
+
+
+          <div className={s.frm}>
+            <TextArea value={txt} onChange={(e)=>setTxt(e.currentTarget.value)} allowClear style={{height: '200px'}} />
+
+            <div className="btnIn" onClick={doReply}>回答する</div>
           </div>
 
          

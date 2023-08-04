@@ -145,7 +145,18 @@ router.post('/queryQA', async (req, res, next) =>{
   const sql1 = `CALL PROC_QUERY(?)`
   const users = await getUsers(res)
   const data = await initName(users,toJson(await callP(sql1, {sql}, res)))
-  res.status(200).json({code: 0, data })
+
+  
+
+  let newData = data.map(item=>{
+    item.content.rep = item.content.rep.map(o=>{
+      o =  JSON.parse(o);
+      return o;
+    });
+    return item;
+  });
+
+  res.status(200).json({code: 0, data:newData })
 })
 
 
@@ -186,6 +197,33 @@ router.post('/addQa', async (req, res, next) =>{
   // r[0].icon = JSON.parse(r[0].icon)
   res.status(200).json({code: 0, msg:'添加QA成功！'})
 })
+
+
+router.post('/replyQa', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_REPLY_QA(?)`
+  let r = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+
+  console.log(r)
+  // let data = JSON.parse(r[0])
+
+  let data = r.map(item=>{
+    item.content = JSON.parse(item.content)
+    item.content.rep = item.content.rep.map(o=>{
+      o =  JSON.parse(o);
+      return o;
+    });
+    return item;
+  });
+
+
+  console.log(data)
+  res.status(200).json({code: 0, data: data[0], msg:'回复QA成功！'})
+})
+
+
 
 
 
