@@ -26,20 +26,19 @@ const FormMain = ({setShowForm,setLoad,load}) => {
       content: {cnt: content, rep:[]}
     }
 
-
     store.addQa(params).then(r=>{
       message.info(r.msg)
-      console.log(r)
+      // console.log(r)
       fixBody(false)
       setShowForm(false)
       setLoad(!load)
     })
-
-
-
   }
 
-
+  const doCancel=()=>{
+    setShowForm(false)
+    fixBody(false)
+  }
 
   return (
     <div className={s.formQa}>
@@ -56,6 +55,9 @@ const FormMain = ({setShowForm,setLoad,load}) => {
       <div className={s.row}>
         <div className={s.btn} onClick={doSubmit}>
           投稿する質問内容を確認
+        </div>
+        <div className={s.close} onClick={doCancel}>
+          キャンセル
         </div>
       </div>
     </div>

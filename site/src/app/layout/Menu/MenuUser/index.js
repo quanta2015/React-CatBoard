@@ -38,7 +38,7 @@ const MenuUser = ({user}) => {
     }
   }
 
-  console.log('user',user)
+  // console.log('user',user)
   
   return (
     <div className={s.menuUser}>

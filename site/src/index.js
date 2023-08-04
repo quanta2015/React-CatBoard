@@ -11,6 +11,7 @@ import mqtt from "mqtt";
 
 import '@/less/var.less'
 import '@/less/com.less'
+import '@/less/fn.less'
 
 configure({enforceActions: 'observed'})
 

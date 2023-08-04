@@ -118,6 +118,9 @@ class Store {
     return await this.post(urls.API_ADD_QA,params)
   }
 
+  async replyQa(params) {
+    return await this.post(urls.API_REPLY_QA,params)
+  }
 
 
 
