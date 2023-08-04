@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 04/08/2023 19:15:38
+ Date: 04/08/2023 22:10:55
 */
 
 SET NAMES utf8mb4;
@@ -281,7 +281,7 @@ INSERT INTO `tab_board` VALUES (236, '0461b6c1-884c-461f-9b57-4580b8be2269', 'no
 INSERT INTO `tab_board` VALUES (237, 'a9138cc6-eca0-446b-9a48-519c9572214c', 'cat', '目撃', '2022-07-17 14:20:00', '08fb6042-6763-47cd-8b2c-f40e93609522', '{\"addr_dtl\": \"中央区2-3-4\", \"addr_ken\": \"大阪府\", \"addr_shi\": \"大阪市\"}', '{\"age\": \"1歳\", \"clr\": \"白\", \"img\": [\"y9ZvKiN7l2\"], \"sex\": \"メス\", \"attr\": \"元気な\", \"name\": \"タマコ\", \"size\": \"中型\", \"type\": \"雑種\", \"image\": \"y9ZvKiN7l2\", \"sub_date\": \"2003-09-28 05:16:04\"}', '大阪市中央区で白猫を目撃', '{\"cnt\": \"大阪市中央区で白猫を目撃しました。元気な性格で、飼い主が心配です。\", \"rep\": []}', '[\"田中\", \"渡辺\"]', 12, '[\"佐藤\", \"鈴木\"]');
 INSERT INTO `tab_board` VALUES (238, '7b708020-1254-4fee-bea4-335fa7006fb6', 'cat', '目撃', '2022-07-13 14:30:00', '0ef1c10e-ef4e-4508-895c-867e00485595', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"北海道\", \"addr_shi\": \"横浜市\"}', '{\"age\": \"9\", \"clr\": \"三色\", \"img\": [\"KoDBJiN7l2\"], \"sex\": \"オス\", \"attr\": \"活発\", \"name\": \"猫4\", \"size\": \"大型\", \"type\": \"長毛種\", \"image\": \"picYIiN7l2\", \"sub_date\": \"2013-04-21 19:55:55\"}', '猫が外に出たがります。外に出すべきですか？', '{\"cnt\": \"猫を外に出すべきかどうかは、猫の性格や環境によって異なります。一般的には、屋内飼育が安全で健康的な選択です。外に出す場合は、リスクや安全対策を考慮し、猫を見守ることが重要です。\", \"rep\": []}', '[\"山本 光司\"]', 12, '[\"中村 由美子\"]');
 INSERT INTO `tab_board` VALUES (239, '9bf972a0-efc7-4e88-b509-30458256c7d3', 'note', 'NULL', '2022-10-08 23:28:21', '0ef1c10e-ef4e-4508-895c-867e00485595', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"神奈川県\", \"addr_shi\": \"札幌市\"}', '{\"age\": \"2\", \"clr\": \"茶\", \"img\": [\"YDwhLiN7l2\"], \"sex\": \"メス\", \"attr\": \"愛嬌がある\", \"name\": \"猫3\", \"size\": \"小型\", \"type\": \"アメリカンショートヘア\", \"image\": \"XDwhLiN7l2\", \"sub_date\": \"2008-06-09 13:27:42\"}', 'うちの猫が体重が増えています。どうやってダイエットをサポートできますか？', '{\"cnt\": \"猫のダイエットは健康な体重管理のために重要です。定期的な運動や適切な食事管理が必要です。獣医師と相談しながら、適切なダイエットプランを立てることをおすすめします。\", \"rep\": []}', '[\"鈴木 太郎\", \"加藤 花子\"]', 12, '[\"山本 次郎\", \"渡邉 花子\", \"山本 亜美\"]');
-INSERT INTO `tab_board` VALUES (240, '8c92b348-7801-4790-8164-2cba10836650', 'qa', '受付中', '2022/03/25 16:14:46', '08fb6042-6763-47cd-8b2c-f40e93609522', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"北海道\", \"addr_shi\": \"京都市\"}', '{\"age\": \"9\", \"clr\": \"三色\", \"img\": [\"LuZ8KiN7l2\"], \"sex\": \"オス\", \"attr\": \"穏やか\", \"name\": \"猫6\", \"size\": \"中型\", \"type\": \"長毛種\", \"image\": \"5fiqLiN7l2\", \"sub_date\": \"2008-06-23 12:52:59\", \"lose_time\": \"2023/07/19 09:43:37\", \"g_situation\": \"脱走\"}', '猫が外に出たがります。外に出すべきですか？', '{\"cnt\": \"猫を外に出すべきかどうかは、猫の性格や環境によって異なります。一般的には、屋内飼育が安全で健康的な選択です。外に出す場合は、リスクや安全対策を考慮し、猫を見守ることが重要です。\", \"rep\": []}', '[\"鈴木 由美子\", \"佐藤 雅美\", \"渡邉 次郎\", \"加藤 麻衣\", \"渡邉 康介\"]', 12, '[\"渡邉 花子\"]');
+INSERT INTO `tab_board` VALUES (240, '8c92b348-7801-4790-8164-2cba10836650', 'qa', '受付中', '2022/03/25 16:14:46', '08fb6042-6763-47cd-8b2c-f40e93609522', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"北海道\", \"addr_shi\": \"京都市\"}', '{\"age\": \"9\", \"clr\": \"三色\", \"img\": [\"LuZ8KiN7l2\"], \"sex\": \"オス\", \"attr\": \"穏やか\", \"name\": \"猫6\", \"size\": \"中型\", \"type\": \"長毛種\", \"image\": \"5fiqLiN7l2\", \"sub_date\": \"2008-06-23 12:52:59\", \"lose_time\": \"2023/07/19 09:43:37\", \"g_situation\": \"脱走\"}', '猫が外に出たがります。外に出すべきですか？', '{\"cnt\": \"猫を外に出すべきかどうかは、猫の性格や環境によって異なります。一般的には、屋内飼育が安全で健康的な選択です。外に出す場合は、リスクや安全対策を考慮し、猫を見守ることが重要です。\", \"rep\": [\"{\\\"content\\\": \\\"こんばんは❗️確かに新しい環境が原因かもしれません。\\\\nうちも２匹の猫を飼っていますが、見慣れない場所へつれていくと急に警戒心が強\\\\nくなり、落ち着かない様子でいることが多いです。そういう時は、不安を払拭され\\\\nてあげるのが効果的です。実際うちでは、5,6分そばにいて頭を撫でてあげるとだい\\\\nぶ猫たちの緊張も解け、凶暴さが和らぎます。家庭によって不安の和らげ方は違う\\\\nと思うので、マロンパイさんの猫ちゃんが最も喜ぶやり方を模索してあげると良い\\\\nかもです。\\\", \\\"user_id\\\": \\\"08fb6042-6763-47cd-8b2c-f40e93609522\\\", \\\"sub_date\\\": \\\"2023-08-04 22:01:25\\\", \\\"user_icon\\\": \\\"https://im.ages.io/QoSfKiN7l2?width=100\\\"}\"]}', '[\"鈴木 由美子\", \"佐藤 雅美\", \"渡邉 次郎\", \"加藤 麻衣\", \"渡邉 康介\"]', 12, '[\"渡邉 花子\"]');
 INSERT INTO `tab_board` VALUES (241, 'd05303f3-9b90-4346-9141-35edff4d280d', 'cat', '保護', '2020/06/21 22:49:08', '08fb6042-6763-47cd-8b2c-f40e93609522', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"東京都\", \"addr_shi\": \"新宿区\"}', '{\"age\": \"4\", \"clr\": \"黒\", \"img\": [\"OiXtJiN7l2\"], \"sex\": \"オス\", \"attr\": \"活発\", \"name\": \"猫9\", \"size\": \"小型\", \"type\": \"短毛種\", \"image\": \"L99NKiN7l2\", \"sub_date\": \"2007-03-20 12:36:40\", \"lose_time\": \"2020/07/20 09:24:00\", \"g_situation\": \"脱走\"}', 'うちの猫が体重が増えています。どうやってダイエットをサポートできますか？', '{\"cnt\": \"猫のダイエットは健康な体重管理のために重要です。定期的な運動や適切な食事管理が必要です。獣医師と相談しながら、適切なダイエットプランを立てることをおすすめします。\", \"rep\": []}', '[\"中村 康介\", \"高橋 健太\", \"佐藤 光司\", \"高橋 光司\"]', 12, '[\"伊藤 麻衣\", \"鈴木 太郎\"]');
 INSERT INTO `tab_board` VALUES (242, '34d7d55d-f99d-4dc4-aca6-c446f9e4a5d4', 'note', '', '2020/11/25 01:05:49', '08fb6042-6763-47cd-8b2c-f40e93609522', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"京都府\", \"addr_shi\": \"京都市\"}', '{\"age\": \"3\", \"clr\": \"黒\", \"img\": [\"B9FRJiN7l2\"], \"sex\": \"メス\", \"attr\": \"愛嬌がある\", \"name\": \"猫10\", \"size\": \"小型\", \"type\": \"アメリカンショートヘア\", \"image\": \"OiXtJiN7l2\", \"sub_date\": \"2009-01-12 08:47:46\", \"lose_time\": \"2020/10/06 02:57:38\", \"g_situation\": \"窓開く\"}', '猫が激しく噛みつくことがあります。どうすればいいですか？', '{\"cnt\": \"猫が激しく噛みつく行動はさまざまな理由が考えられます。痛み、不安、興奮などが影響することがあります。獣医師と相談し、猫の健康状態や行動について確認することが重要です。\", \"rep\": []}', '[\"鈴木 花子\"]', 12, '[\"山本 雅美\", \"鈴木 雅美\"]');
 INSERT INTO `tab_board` VALUES (243, 'e45337f6-17b1-44e1-a845-59d5bbebf47f', 'cat', '保護', '2022-04-14 03:32:04', '14248606-d04a-474f-93f2-b94e17fddfd9', '{\"addr_dtl\": \"住所詳細\", \"addr_ken\": \"神奈川県\", \"addr_shi\": \"大阪市\"}', '{\"age\": \"3\", \"clr\": \"茶\", \"img\": [\"KuZ8KiN7l2\"], \"sex\": \"メス\", \"attr\": \"活発\", \"name\": \"猫10\", \"size\": \"小型\", \"type\": \"短毛種\", \"image\": \"IFj7KiN7l2\", \"sub_date\": \"2008-05-21 08:33:38\"}', '猫砂を新しく変えても、うちの猫は受け入れてくれません。どうすればいいですか？', '{\"cnt\": \"猫は新しい環境に慣れるまで時間がかかることがあります。少しずつ新しい猫砂と旧猫砂を混ぜて使用したり、猫が好む猫砂を試したりすることで、猫が新しい猫砂を受け入れるようになるかもしれません。\", \"rep\": []}', '[\"高橋 太郎\", \"高橋 由美子\", \"渡邉 麻衣\", \"佐藤 雅美\", \"渡邉 健太\"]', 12, '[\"加藤 亜美\", \"佐藤 花子\", \"山本 光司\", \"田中 光司\"]');
@@ -302,7 +302,7 @@ INSERT INTO `tab_board` VALUES (511, '70bfaa07-eb36-4a86-a7aa-04c9cf93df26', 'qa
 INSERT INTO `tab_board` VALUES (512, '1345c123-81e6-4bc4-b33a-fb03a3d04d91', 'qa', '受付中', '2022-08-03 20:49:01', '08fb6042-6763-47cd-8b2c-f40e93609522', NULL, NULL, 'bbbbbbbbb', '{\"cnt\": \"\\\"aeeeeeeeee\\\"\", \"rep\": []}', '[]', 0, '[]');
 INSERT INTO `tab_board` VALUES (513, '037cbe91-4597-4cd2-b044-47250e58c35a', 'qa', '受付中', '2022-08-03 20:49:57', '08fb6042-6763-47cd-8b2c-f40e93609522', NULL, NULL, 'rrrrrrrrrr', '{\"cnt\": \"\\\"tttttttt\\\"\", \"rep\": []}', '[]', 0, '[]');
 INSERT INTO `tab_board` VALUES (517, 'e3779a1c-37b7-41a9-98f6-8f49956fefa5', 'qa', '受付中', '2023-08-03 21:16:08', '08fb6042-6763-47cd-8b2c-f40e93609522', NULL, NULL, 'wewefaw', '{\"cnt\": \"dddddddd\", \"rep\": []}', '[]', 0, '[]');
-INSERT INTO `tab_board` VALUES (518, '13119222-ddba-449b-ae8a-9d5311acfb99', 'qa', '受付中', '2023-08-03 22:56:05', '08fb6042-6763-47cd-8b2c-f40e93609522', NULL, NULL, 'wef', '{\"cnt\": \"awfawfe\", \"rep\": []}', '[]', 0, '[]');
+INSERT INTO `tab_board` VALUES (518, '13119222-ddba-449b-ae8a-9d5311acfb99', 'qa', '受付中', '2023-08-03 22:56:05', '08fb6042-6763-47cd-8b2c-f40e93609522', NULL, NULL, 'wef', '{\"cnt\": \"awfawfe\", \"rep\": [\"{\\\"content\\\": \\\"aaa\\\", \\\"user_id\\\": \\\"08fb6042-6763-47cd-8b2c-f40e93609522\\\", \\\"sub_date\\\": \\\"2023-08-04 21:34:46\\\", \\\"user_icon\\\": \\\"https://im.ages.io/QoSfKiN7l2?width=100\\\"}\", \"{\\\"content\\\": \\\"wefawfewaf\\\", \\\"user_id\\\": \\\"08fb6042-6763-47cd-8b2c-f40e93609522\\\", \\\"sub_date\\\": \\\"2023-08-04 21:35:40\\\", \\\"user_icon\\\": \\\"https://im.ages.io/QoSfKiN7l2?width=100\\\"}\", \"{\\\"content\\\": \\\"こんばんは❗️確かに新しい環境が原因かもしれません。 うちも２匹の猫を飼っていますが、見慣れない場所へつれていくと急に警戒心が強 くなり、落ち着かない様子でいることが多いです。そういう時は、不安を払拭され てあげるのが効果的です。実際うちでは、5,6分そばにいて頭を撫でてあげるとだい ぶ猫たちの緊張も解け、凶暴さが和らぎます。家庭によって不安の和らげ方は違う と思うので、マロンパイさんの猫ちゃんが最も喜ぶやり方を模索してあげると良い かもです。\\\", \\\"user_id\\\": \\\"08fb6042-6763-47cd-8b2c-f40e93609522\\\", \\\"sub_date\\\": \\\"2023-08-04 21:46:27\\\", \\\"user_icon\\\": \\\"https://im.ages.io/QoSfKiN7l2?width=100\\\"}\", \"{\\\"content\\\": \\\"こんばんは❗️確かに新しい環境が原因かもしれません。\\\\nうちも２匹の猫を飼っていますが、見慣れない場所へつれていくと急に警戒心が強\\\\nくなり、落ち着かない様子でいることが多いです。そういう時は、不安を払拭され\\\\nてあげるのが効果的です。実際うちでは、5,6分そばにいて頭を撫でてあげるとだい\\\\nぶ猫たちの緊張も解け、凶暴さが和らぎます。家庭によって不安の和らげ方は違う\\\\nと思うので、マロンパイさんの猫ちゃんが最も喜ぶやり方を模索してあげると良い\\\\nかもです。\\\", \\\"user_id\\\": \\\"08fb6042-6763-47cd-8b2c-f40e93609522\\\", \\\"sub_date\\\": \\\"2023-08-04 21:49:38\\\", \\\"user_icon\\\": \\\"https://im.ages.io/QoSfKiN7l2?width=100\\\"}\"]}', '[]', 0, '[]');
 COMMIT;
 
 -- ----------------------------
@@ -323,6 +323,21 @@ CREATE TABLE `tab_chat` (
   `content` json DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Table structure for tab_msg
+-- ----------------------------
+DROP TABLE IF EXISTS `tab_msg`;
+CREATE TABLE `tab_msg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fr` varchar(40) DEFAULT NULL,
+  `to` varchar(40) DEFAULT NULL,
+  `icon` varchar(100) DEFAULT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `sub_date` varchar(20) DEFAULT NULL,
+  `read` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tab_user
@@ -531,6 +546,51 @@ BEGIN
         -- 返回插入的用户记录
         SELECT * FROM tab_user WHERE id = lastId;
     END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for PROC_REPLY_QA
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `PROC_REPLY_QA`;
+delimiter ;;
+CREATE PROCEDURE `cat`.`PROC_REPLY_QA`(IN `data` varchar(20000))
+BEGIN
+	DECLARE _user_id VARCHAR(40);
+	DECLARE _user_icon VARCHAR(200);
+	DECLARE _board_id VARCHAR(40);
+	DECLARE _title VARCHAR(200);
+	DECLARE _sub_date VARCHAR(20);
+	DECLARE _content VARCHAR(1000);
+	DECLARE _to VARCHAR(40);
+	
+	-- 解析 JSON 数据
+	SET _user_id = JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_id'));
+	SET _user_icon = JSON_UNQUOTE(JSON_EXTRACT(data, '$.user_icon'));
+	SET _board_id = JSON_UNQUOTE(JSON_EXTRACT(data, '$.board_id'));
+	SET _title = JSON_UNQUOTE(JSON_EXTRACT(data, '$.title'));
+	SET _content = JSON_UNQUOTE(JSON_EXTRACT(data, '$.content'));
+	SET _to = JSON_EXTRACT(data, '$.to');
+	
+	SET _sub_date = NOW();
+	
+--   CALL DEBUG_MSG(_content);
+  -- 创建一个新的 rep 对象
+  SET @new_rep = JSON_OBJECT(
+    'user_id', _user_id,
+    'user_icon', _user_icon,
+    'sub_date', _sub_date,
+    'content', _content
+  );
+  
+  -- 将新的 rep 对象添加到 content 字段的 rep 数组中
+  UPDATE tab_board 
+  SET content = JSON_ARRAY_APPEND(content, '$.rep', @new_rep)
+  WHERE board_id = _board_id;
+  
+	select * from tab_board WHERE board_id = _board_id;
+	
 END
 ;;
 delimiter ;

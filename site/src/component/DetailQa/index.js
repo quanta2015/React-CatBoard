@@ -144,7 +144,7 @@ const DetailNote = ({}) => {
               <div className={s.repItem} key={i}>
                 <h2>
                   <img src={item.user_icon} />
-                  <span>{item.user_id}</span>
+                  <span>{item.sub_user}</span>
                 </h2>
                 <p>{item.content}</p>
                 <div className={s.desc}>
