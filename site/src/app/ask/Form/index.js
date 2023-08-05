@@ -5,9 +5,7 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
 import s from './index.module.less';
 
-const FormMain = ({ setSubmit }) => {
-  const [form] = Form.useForm();
-  const [disabled, setDisabled] = useState(true);
+const { TextArea } = Input
 
 const FormMain = ({setSubmit}) => {
   const { store } = React.useContext(MobXProviderContext)
@@ -70,4 +68,4 @@ const FormMain = ({setSubmit}) => {
 
 }
 
-export default FormMain;
+export default  observer(FormMain)
