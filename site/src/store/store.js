@@ -21,6 +21,8 @@ class Store {
   loading  = false
   loginReq = false
 
+  refresh  = false
+
 
   item    = {}
 
@@ -49,6 +51,10 @@ class Store {
 
   setItem = (item) =>{
     this.item = item
+  }
+
+  setRefresh = () =>{
+    this.refresh = !this.refresh
   }
 
 
@@ -121,6 +127,17 @@ class Store {
   async replyQa(params) {
     return await this.post(urls.API_REPLY_QA,params)
   }
+
+
+  async loadMsg(params) {
+    return await this.post(urls.API_LOAD_MSG,params)
+  }
+
+
+  async saveContent(params) {
+    return await this.post(urls.API_SAVE_CONTENT,params)
+  }
+
 
 
 

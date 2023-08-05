@@ -14,6 +14,9 @@ export const API_FAV_NOTE      = API_SERVER + '/favNote'
 export const API_INIT_CHAT_ID  = API_SERVER + '/initChatId'
 export const API_ADD_QA        = API_SERVER + '/addQa'
 export const API_REPLY_QA      = API_SERVER + '/replyQa'
+export const API_LOAD_MSG      = API_SERVER + '/loadMsg'
+export const API_SAVE_CONTENT  = API_SERVER + '/saveContent'
+
 
 
 

@@ -48,7 +48,7 @@
         bottom: 0;
         transform: translateY(100%) translateX(calc(-50% + 18px));
         background: transparent;
-        width: 300px;
+        // width: 300px;
         display: none;
         color: #333;
         transition: .5s;
@@ -60,6 +60,7 @@
 
 
           .menuItem {
+            width: 300px;
             height: 70px;
             display: flex;
             align-items: center;
@@ -95,6 +96,48 @@
               border-top: 2px solid #eee;
             }
           }
+
+          .msgItem {
+            width: 400px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 15px;
+            transition: .3s;
+
+
+            img {
+              height: 40px;
+              width: 40px;
+              border-radius: 0;
+              padding: 0;
+              border-radius: 50%;
+              border: 1px solid #999;
+            }
+
+            p {
+              display: flex;
+              flex-direction: column;
+              margin-left: 10px;
+              font-weight: 300;
+
+              em {
+                font-weight: bold;
+              }
+
+              span:nth-child(2) {
+                text-decoration: underline;
+                cursor: pointer;
+
+                &:hover {
+                  opacity: .6;
+                }
+              }
+            }
+
+          }
+
 
         }
       }
