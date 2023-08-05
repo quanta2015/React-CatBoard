@@ -4,8 +4,8 @@ let API_SERVER = 'http://localhost'
 
 
 if (mode === 'development') {
-  API_SERVER = 'http://mqcai.top:9003'
-  // API_SERVER = 'http://localhost'
+  // API_SERVER = 'http://mqcai.top:9003'
+  API_SERVER = 'http://localhost:9001'
 }
 
 if (mode === 'production') {

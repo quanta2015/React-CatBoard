@@ -128,6 +128,10 @@ class Store {
     return await this.post(urls.API_SAVE_USERINFO,params)
   }
 
+  async saveCatInfo(params) {
+    return await this.post(urls.API_SAVE_CATINFO,params)
+  }
+
   async addQa(params) {
     return await this.post(urls.API_ADD_QA,params)
   }

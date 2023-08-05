@@ -242,6 +242,14 @@ router.post('/saveUserInfo', async (req, res, next) =>{
   res.status(200).json({code: 0, data:r[0], msg:'修改信息成功'})
 })
 
+router.post('/saveCatInfo', async (req, res, next) =>{
+  const params = req.body
+  let sql = `CALL PROC_SAVE_CAT(?)`
+  let r = await callP(sql, params, res)
+  r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, data:r[0], msg:'修改信息成功'})
+})
+
 
 router.post('/loadMsg', async (req, res, next) =>{
   const params = req.body

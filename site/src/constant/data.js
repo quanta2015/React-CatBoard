@@ -5,7 +5,7 @@ import warn_prot  from '@/img/icon/warn_prot.svg'
 import warn_qa  from '@/img/icon/warn_qa.svg'
 import icon_check  from '@/img/icon/check.svg'
 import cat_note from '@/img/item/note.png'
-import warn_qa  from '@/img/icon/warning-g.svg'
+// import warn_qa  from '@/img/icon/warning-g.svg'
 
 export const INF_TYPE = {
   lose: '迷子',
