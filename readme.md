@@ -3,6 +3,46 @@
 kill -9 $(lsof -t -i:9003)
 
 
+### data struct
+```
+{
+    "code": 0,
+    "data": {
+        "id": 518,
+        "board_id": "13119222-ddba-449b-ae8a-9d5311acfb99",
+        "board_type": "qa",
+        "category": "受付中",
+        "sub_date": "2023-08-03 22:56:05",
+        "sub_user": "李阳",
+        "addr": null,
+        "cat": null,
+        "title": "wef",
+        "content": {
+            "cnt": "awfawfe",
+            "rep": [
+                {
+                    "content": "aaa",
+                    "user_id": "14248606-d04a-474f-93f2-b94e17fddfd9",
+                    "sub_date": "2023-08-05 11:31:40",
+                    "user_icon": "https://im.ages.io/FleNKiN7l2?width=100",
+                    "sub_user": "李阳",
+                    rep: [
+
+                    ]
+                }
+            ]
+        },
+        "fav": [],
+        "favCount": 0,
+        "see": "[]",
+        "sub_user_id": "08fb6042-6763-47cd-8b2c-f40e93609522",
+        "sub_icon": "["
+    },
+    "msg": "回复QA成功！"
+}
+```
+
+
 ### Install Sever
 ```
 sudo apt install curl
