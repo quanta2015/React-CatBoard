@@ -1,3 +1,4 @@
+import React from 'react';
 import { makeAutoObservable } from 'mobx'
 import { message } from 'antd'
 import {get,post} from '@/util/net.js'
@@ -5,13 +6,23 @@ import * as urls from '@/constant/urls'
 import {fixBody} from '@/util/fn'
 import axios  from 'axios'
 
+
+
 const USER_KEY = 'NEKONARA_USER'
+
+
+
+
+
 
 class Store {
   constructor() {
     makeAutoObservable(this);
+
   }
 
+
+  client   = null
   qa       = false
   user     = null
   edit     = false
@@ -20,11 +31,10 @@ class Store {
   detail   = false
   loading  = false
   loginReq = false
-
   refresh  = false
 
-
-  item    = {}
+  msgs     = []
+  item     = {}
 
   reset =()=>{
     this.edit     = false
@@ -32,6 +42,11 @@ class Store {
     this.loading  = false
     this.loginReq = false
     this.qa       = false
+  }
+
+
+  setMsgs =(msgs)=>{
+    this.msgs = msgs
   }
 
 

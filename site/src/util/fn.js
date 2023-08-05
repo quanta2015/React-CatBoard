@@ -8,10 +8,20 @@
 // }
 
 import dayjs from 'dayjs'
-
+import * as urls from '@/constant/urls'
 
 export const clone=(o)=>  JSON.parse(JSON.stringify(o))
 
+
+export const publishMsg =(msg,client)=> {
+  client.publish(urls.TOPIC, msg, (err) => {
+    if (err) {
+      console.error('PUB MSG ERROR:', err);
+    }else{
+      // console.log('PUB MSG SUCC:', msg);
+    }
+  });
+}
 
 export const now=()=> dayjs().format('YYYY-MM-DD HH:mm:ss')
 

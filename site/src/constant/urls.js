@@ -23,8 +23,7 @@ export const API_READ_MSG      = API_SERVER + '/readMsg'
 
 
 
-
-
+export const TOPIC             = '/cat/chat'
 export const PRE_IMG           = 'https://im.ages.io/'
 
 

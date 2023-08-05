@@ -5,6 +5,10 @@ import cat_find from '@/img/item/find.webp'
 import cat_prot from '@/img/item/prot.webp'
 import cat_note from '@/img/item/note.png'
 import warn_qa  from '@/img/icon/warning-g.svg'
+import user from '@/img/icon/menu-user.svg'
+import edit from '@/img/icon/menu-edit.svg'
+import flag from '@/img/icon/menu-flag.svg'
+import logout from '@/img/icon/menu-logout.svg'
 
 export const INF_TYPE = {
   lose: '迷子',
@@ -26,6 +30,15 @@ export const AREA_LIST = [
   '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県',
   '鹿児島県', '沖縄県'
 ];
+
+
+export const MENU_USER = [
+    {name: 'アカウント情報', icon:user, url:'/userInfo', type:1},
+    {name: '投稿内容 確認 / 編集 / 削除', icon:edit, url:'/edit', type:1},
+    {name: '保存した情報・記事をみる', icon:flag, url:'/edit', type:0},
+    {name: 'ログアウト', icon:logout,url:'/logout',type:1}, 
+  ]
+
 
 
 
