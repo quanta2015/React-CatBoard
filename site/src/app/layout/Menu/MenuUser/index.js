@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {API_SERVER} from '@/constant/apis'
 import s from './index.module.less';
 import { useNavigate } from 'react-router-dom'
+import {formatTime} from '@/util/fn'
 import { Tooltip } from 'antd';
 
 
@@ -90,7 +91,7 @@ const MenuUser = ({user}) => {
                   <span>{formatMsg(item)}</span>
                   <span>{item.title}</span>
                 </p>
-                
+                <em>{formatTime(item.sub_date)}</em>
               </div>
             )}
           </div>
