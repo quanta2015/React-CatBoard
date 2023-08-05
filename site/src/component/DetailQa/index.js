@@ -125,12 +125,10 @@ const DetailNote = ({}) => {
   }
 
   const doClosePost =async()=>{
-
-    const params ={
-      board_id
-    }
-    store.closePost(params).then(r=>{
-      console.log(r.data)
+    store.setShow(true,'loading')
+    store.closePost({board_id}).then(r=>{
+      // console.log(r.data)
+      store.setShow(false,'loading')
       message.info(r.msg)
       store.setItem(r.data)
       setReply(r.data.content.rep)

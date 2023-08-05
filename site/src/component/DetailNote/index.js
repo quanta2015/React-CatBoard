@@ -21,7 +21,9 @@ const caluFav =(user,fav)=> fav.includes(user.mail)
 const DetailNote = ({}) => {
   const { store } = React.useContext(MobXProviderContext)
   const { user } = store
-  const { cat,type,sub_date,sub_user,addr,content,title,sub,period,see,fav,id,board_id } = store.item
+  const my_id = user.user_id
+  const my_icon = user.icon[0]
+  const { cat,type,sub_date,sub_user,sub_user_id,content,title,see,fav,board_id } = store.item
   const { age,attr,clr,image,img,name,sex,size,status } = cat
 
   const [isFav,setIsFav] = useState(false)
@@ -29,10 +31,10 @@ const DetailNote = ({}) => {
   const [curImg,setCurImg] = useState(img[sel])
 
   const doClose =()=>{
-    store.setShow(false,(type==='note')?'note':'detail')
+    store.setShow(false,'note')
   }
 
-  console.log('fav',fav)
+  console.log('sub_user_id',sub_user_id)
   useEffect(()=>{ 
     setIsFav(user?caluFav(user,fav):false)
   },[])
@@ -59,6 +61,12 @@ const DetailNote = ({}) => {
       sub_date,
       fav: _fav,
       favCount: _fav.length,
+      fr: my_id,
+      to: sub_user_id,
+      icon: my_icon,
+      type: 'いいね',
+      isFav: isFav?1:0,
+      title,
     }
     store.favNote(params).then(r=>{
       console.log('取得データ',r)

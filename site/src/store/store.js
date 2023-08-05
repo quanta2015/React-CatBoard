@@ -142,6 +142,10 @@ class Store {
     return await this.post(urls.API_CLOSE_POST,params)
   }
 
+  async readMsg(params) {
+    return await this.post(urls.API_READ_MSG,params)
+  }
+
 
 
 
