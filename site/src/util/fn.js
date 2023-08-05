@@ -1,13 +1,19 @@
-export const clone=(obj)=> {
-    let copy = Array.isArray(obj) ? [] : {};
-    for (let key in obj) {
-        let value = obj[key];
-        copy[key] = (typeof value === 'object' && value !== null) ? clone(value) : value;
-    }
-    return copy;
-}
+// export const clone=(obj)=> {
+//     let copy = Array.isArray(obj) ? [] : {};
+//     for (let key in obj) {
+//         let value = obj[key];
+//         copy[key] = (typeof value === 'object' && value !== null) ? clone(value) : value;
+//     }
+//     return copy;
+// }
+
+import dayjs from 'dayjs'
 
 
+export const clone=(o)=>  JSON.parse(JSON.stringify(o))
+
+
+export const now=()=> dayjs().format('YYYY-MM-DD HH:mm:ss')
 
 export const isN=(e)=>{
   return  ((e===null)||(e==='')||(e===undefined))?true:false

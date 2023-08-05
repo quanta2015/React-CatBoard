@@ -30,6 +30,8 @@ const MenuUser = ({user}) => {
   const type = store.user?parseInt(store.user?.user_type):1
   const menu = MENU_USER.filter(o=> o.type>=type)
 
+  const [msgs,setMsgs] = useState([])
+
   const doSelMenu =(url)=>{
     if (url === '/logout') {
       store.delUser()
@@ -39,7 +41,32 @@ const MenuUser = ({user}) => {
     }
   }
 
-  // console.log('user',user)
+
+  useEffect(()=>{
+    const params = {
+      user_id: user.user_id
+    }
+    store.loadMsg(params).then(r=>{
+      if (r.code ===0) {
+        console.log('msg data:',r.data)
+        setMsgs(r.data)
+      }
+    })
+  },[])
+
+  const formatMsg =(item,msg='')=>{
+    switch(item.type) {
+      case '回答': msg = ['質問','回答'];break;
+      case '返信': msg = ['質問','返信'];break;
+      case 'いいね': msg = ['回答','いいね'];break;
+    }
+    return (
+      <>
+        <em>{item.user_name}</em>
+        <i>さんがあなたの{msg[0]}に<em>{msg[1]}</em>しました。</i>
+      </>
+    )
+  }
   
   return (
     <React.Fragment>
@@ -50,6 +77,24 @@ const MenuUser = ({user}) => {
       </div>
       <div className={s.item}>
         <img src={bell} />
+
+        {(msgs.length>0) && <i className={s.sp}></i> }
+
+        {(msgs.length>0) && 
+        <div className={s.menuSub}>
+          <div className={s.wrap}>
+            {msgs.map((item,i)=>
+              <div className={s.msgItem} onClick={()=>doSelMenu(item.url)} key={i}>
+                <img src={item.icon} />
+                <p>
+                  <span>{formatMsg(item)}</span>
+                  <span>{item.title}</span>
+                </p>
+                
+              </div>
+            )}
+          </div>
+        </div>}
       </div>
       <div className={s.item}>
         <img src={user?.icon[0]} />

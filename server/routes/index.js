@@ -128,6 +128,30 @@ router.post('/queryNote', async (req, res, next) =>{
 })
 
 
+const formatReply =(list,users)=>{
+  return list.map(item=>{
+    item.content.rep = item.content.rep.map(o=>{
+      o =  JSON.parse(o);
+      users.forEach(user => {
+        if (o.user_id === user.user_id) {
+          o.sub_user = item.sub_user;
+        }
+      });
+      return o;
+    });
+    return item;
+  });
+}
+
+
+const repName =(item,users)=>{
+  users.forEach(user => {
+    if (item.user_id === user.user_id) {
+      item.sub_user = user.user_name;
+    }
+  });
+  return item
+}
 
 router.post('/queryQA', async (req, res, next) =>{
   const {count,key} = req.body
@@ -145,25 +169,69 @@ router.post('/queryQA', async (req, res, next) =>{
   const sql1 = `CALL PROC_QUERY(?)`
   const users = await getUsers(res)
   const data = await initName(users,toJson(await callP(sql1, {sql}, res)))
+  // const newData = formatReply(data,users)
 
-  
 
-  let newData = data.map(item=>{
-    item.content.rep = item.content.rep.map(o=>{
-      o =  JSON.parse(o);
-      users.forEach(user => {
-        if (o.user_id === user.user_id) {
-          o.sub_user = item.sub_user;
-        }
-      });
+  // data.map(item=>{
+  //   let {rep} = item.content
+  //   rep.map(o=>{
+  //     o = repName(o)
+
+  //     o.rep.map(q=>{
+  //       q = repName(q)
+  //     })
+  //   })
+  // })
+
+
+  data.map(item=>{
+    let {rep} = item.content;
+    rep = rep.map(o=>{
+      o = repName(o,users);
+
+      if (o.rep) {
+        o.rep = o.rep.map(q=> repName(q,users));
+      }
+      
       return o;
     });
+
+    item.content.rep = rep;
     return item;
   });
 
 
+  res.status(200).json({code: 0, data })
+})
 
-  res.status(200).json({code: 0, data:newData })
+
+// router.post('/replyQa', async (req, res, next) =>{
+//   const params = req.body
+//   console.log(params)
+//   let sql = `CALL PROC_REPLY_QA(?)`
+
+//   const users = await getUsers(res)
+//   const data = await initName(users,toJson(await callP(sql, params, res)))
+//   const newData = formatReply(data,users)
+
+//   // console.log(newData[0])
+//   res.status(200).json({code: 0, data: newData[0], msg:'回复QA成功！'})
+// })
+
+
+
+
+router.post('/saveContent', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_SAVE_CONTENT(?)`
+
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+
+
+
+  res.status(200).json({code: 0,data: data[0], msg:'修改content成功！'})
 })
 
 
@@ -195,6 +263,16 @@ router.post('/saveUserInfo', async (req, res, next) =>{
 })
 
 
+router.post('/loadMsg', async (req, res, next) =>{
+  const params = req.body
+  let sql = `CALL PROC_LOAD_MSG(?)`
+  let r = await callP(sql, params, res)
+  res.status(200).json({code: 0, data:r, msg:'修改信息成功'})
+})
+
+
+
+
 
 router.post('/addQa', async (req, res, next) =>{
   const params = req.body
@@ -206,29 +284,8 @@ router.post('/addQa', async (req, res, next) =>{
 })
 
 
-router.post('/replyQa', async (req, res, next) =>{
-  const params = req.body
-  console.log(params)
-  let sql = `CALL PROC_REPLY_QA(?)`
-  let r = await callP(sql, params, res)
-  // r[0].icon = JSON.parse(r[0].icon)
-
-  console.log(r)
-  // let data = JSON.parse(r[0])
-
-  let data = r.map(item=>{
-    item.content = JSON.parse(item.content)
-    item.content.rep = item.content.rep.map(o=>{
-      o =  JSON.parse(o);
-      return o;
-    });
-    return item;
-  });
 
 
-  console.log(data)
-  res.status(200).json({code: 0, data: data[0], msg:'回复QA成功！'})
-})
 
 
 

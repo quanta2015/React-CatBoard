@@ -22,7 +22,7 @@ const getPageList = (o,p) => o.filter((o,i)=> (i>=SIZE*(p-1))&&(i<=p*SIZE-1))
 const QA = () => {
   
   const { store } = React.useContext(MobXProviderContext)
-  const { user } = store
+  const { user,refresh } = store
 
   const [list,setList] = useState([])
   const [fav,setFav] = useState([])
@@ -45,7 +45,7 @@ const QA = () => {
       setPageList(getPageList(r.data,1))
       store.setShow(false,'loading')
     })
-  },[query,load])
+  },[query,load,refresh])
 
 
 
