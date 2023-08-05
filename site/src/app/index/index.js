@@ -4,11 +4,11 @@ import {Input, Table, Space, Pagination, Spin,Carousel,Button} from 'antd'
 import {API_SERVER} from '@/constant/apis'
 import { observer,MobXProviderContext } from 'mobx-react'
 import { neList } from '@/constant/data'
-import { combineAndSortLists,getLatestRecords } from '@/util/fn'
+import { combineAndSortLists } from '@/util/fn'
 
 import Card  from '@/component/Card'
 import CardQ1 from '@/component/CardQ1'
-import CardQ2 from '@/component/CardQ2'
+import CardQ3 from '@/component/CardQ3'
 
 
 import s from './index.module.less';
@@ -24,29 +24,26 @@ import slide03 from '@/img/slide03.png'
 const Index = () => {
   const { store } = React.useContext(MobXProviderContext)
 
-  // const [findList, setFindList] = useState([])
   const [loseList, setLoseList] = useState([])
   const [protList, setProtList] = useState([])
   const [noteList, setNoteList] = useState([])
   const [qaiList,  setQaiList] = useState([])
   const [qasList,  setQasList] = useState([])
-  const [newsList, setNewsList] = useState([])
+  const [catList,  setCatList] = useState([])
 
   useEffect(()=>{
     store.setShow(true,'loading')
     store.queryAll().then(r=>{
       console.log('取得データ',r)
-      const {cat_lose,cat_prot,note,qa_i,qa_s} = r
-      const newsList = getLatestRecords(9, cat_lose, cat_prot)
-      // cat_find.map(o=>o.type = 'find' )
+      const {cat_lose,cat_prot,note,qa_i,qa_s,cat} = r
+      cat.map(o=> o.type = o.category==='保護'?'prot':'lose')
       cat_lose.map(o=>o.type = 'lose' )
       cat_prot.map(o=>o.type = 'prot' )
       note.map(o=>o.type = 'note' )
       qa_i.map(o=>o.type = '受付中' )
       qa_s.map(o=>o.type = '解決' )
       
-      setNewsList(newsList);
-      // setFindList(r.cat_find)
+      setCatList(cat);
       setLoseList(r.cat_lose)
       setProtList(r.cat_prot)
       setNoteList(r.note)
@@ -113,7 +110,7 @@ const Index = () => {
           <section>
           <h1 style={{fontSize: "40px"}}>{'新着情報'}</h1>
             <div>
-              {newsList.map((item,i)=>
+              {catList.map((item,i)=>
                 <Card {...item} key={i}/>
               )}
             </div>
@@ -140,11 +137,11 @@ const Index = () => {
             <div>
               <div className={s.wrap}>
                 <span className={s.title}>受付中の質問</span>
-                {qaiList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#33831F'} /> )}
+                {qaiList.map((item,i)=> <CardQ3 key={i} {...item} clr={'#33831F'} /> )}
               </div>
               <div className={s.wrap}>
                 <span className={s.title}>受付中の質問</span>
-                {qasList.map((item,i)=> <CardQ1 key={i} {...item} clr={'#DE5A5A'} fit={'var(--fil-grey)'} /> )}
+                {qasList.map((item,i)=> <CardQ3 key={i} {...item} clr={'#DE5A5A'} fit={'var(--fil-grey)'} /> )}
               </div>
             </div>
           </section>
