@@ -59,18 +59,6 @@ export const getKeyField =(e)=>{
 }
 
 
-export const combineAndSortLists = (...lists) => {
-  let combinedList = [].concat(...lists);
-  combinedList.sort((a, b) => new Date(b.sub_date) - new Date(a.sub_date));
-  return combinedList;
-};
-
-export const getLatestRecords = (count, ...lists) => {
-  let sortedCombinedList = combineAndSortLists(...lists);
-  return sortedCombinedList.slice(0, count);
-};
-
-
 export const fixBody =(condition)=>{
   let bodyCls = document.querySelector('body').classList
 
