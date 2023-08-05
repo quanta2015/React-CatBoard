@@ -4,7 +4,7 @@ import cls from 'classnames';
 
 import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,message } from 'antd';
 import {PRE_IMG} from '@/constant/urls'
-import {formatTime,clone,now } from '@/util/fn'
+import {formatTime,clone,now,publishMsg } from '@/util/fn'
 import s from './index.module.less';
 
 
@@ -43,10 +43,7 @@ const DetailNote = ({}) => {
     setIsFav(user?caluFav(user,fav):false)
   },[])
 
-  console.log(clone(rep),'rep')
-
-
-
+  // console.log(clone(rep),'rep')
 
   const RenderItem =(icon,info,txt,style)=>(
     <div className={s.iconItem} style={{color:clr}}>
@@ -84,7 +81,12 @@ const DetailNote = ({}) => {
     }
     store.setShow(true,'loading')
     await store.saveContent(params).then(r=>{
-      // console.log(r)
+      
+      const msg = JSON.stringify(r.data) 
+      publishMsg(msg,store.client)
+      console.log(msg,'msg')
+
+
       message.info(r.msg)
       store.setShow(false,'loading')
       setTxt('')

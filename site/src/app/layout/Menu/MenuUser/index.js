@@ -1,27 +1,24 @@
 import React,{useState,useEffect} from 'react';
 import { inject,observer,MobXProviderContext } from 'mobx-react'
+import { useNavigate } from 'react-router-dom'
+import { message,notification } from 'antd'
 import classnames from 'classnames';
 import {API_SERVER} from '@/constant/apis'
+import {MENU_USER} from '@/constant/data'
+import {formatTime,clone} from '@/util/fn'
+import mqtt from "mqtt";
+import {MQTT_SERVER} from '@/constant/apis'
+import * as urls from '@/constant/urls'
 import s from './index.module.less';
-import { useNavigate } from 'react-router-dom'
-import {formatTime} from '@/util/fn'
+
 import { Tooltip } from 'antd';
 
 
 import bell from '@/img/icon/bell.svg'
 import chat from '@/img/icon/chat.svg'
-import user from '@/img/icon/menu-user.svg'
-import cat  from '@/img/icon/menu-cat.svg'
-import edit from '@/img/icon/menu-edit.svg'
-import flag from '@/img/icon/menu-flag.svg'
-import logout from '@/img/icon/menu-logout.svg'
 
 
-const MENU_USER = [{name: 'アカウント情報', icon:user, url:'/userInfo', type:1},
-                   // {name: '猫ちゃん情報', icon:cat, url:'/catInfo', type:1},
-                   {name: '投稿内容 確認 / 編集 / 削除', icon:edit, url:'/edit', type:1},
-                   {name: '保存した情報・記事をみる', icon:flag, url:'/edit', type:0},
-                   {name: 'ログアウト', icon:logout,url:'/logout',type:1}, ]
+
 
 
 const MenuUser = ({user}) => {
@@ -30,8 +27,77 @@ const MenuUser = ({user}) => {
   const { store } = React.useContext(MobXProviderContext)
   const type = store.user?parseInt(store.user?.user_type):1
   const menu = MENU_USER.filter(o=> o.type>=type)
-
   const [msgs,setMsgs] = useState([])
+
+
+  useEffect(() => {
+    const client = mqtt.connect(MQTT_SERVER);
+    store.client = client
+    const onConnect = () => {
+      console.log('Connected to MQTT SERVER.');
+      client.subscribe(urls.TOPIC);
+    };
+
+    client.on('error', (err) => {
+      console.error('Error:', err);
+    });
+
+    const onMessage = (top, msg) => {
+      let _msg = JSON.parse(msg.toString());
+      const { user_id } = store.user;
+
+      if (_msg.to === user_id) {
+        let m = clone(store.msgs)
+        const exist = m.some(item => item.mid === _msg.mid);
+
+        if (!exist) {
+          m.push(_msg)
+          store.setMsgs([...m])
+          message.info('您有新的短消息')
+        }
+      }
+    };
+
+    client.on('connect', onConnect);
+    client.on('message', onMessage);
+
+    // 清除事件监听器
+    return () => {
+      client.off('connect', onConnect);
+      client.off('message', onMessage);
+    };
+  }, []); 
+
+
+  // var client = mqtt.connect(MQTT_SERVER);
+  // store.client = client
+  // client.on('connect', () => {
+  //   console.log('Connected to MQTT SERVER.');
+  //   client.subscribe(urls.TOPIC);
+  // });
+
+  // client.on('error', (err) => {
+  //   console.error('Error:', err);
+  // });
+
+  // client.on("message", function(top, msg) {
+  //   let _msg = JSON.parse(msg.toString())
+  //   const { user_id } = store.user
+
+  //   if (_msg.to === user_id) {
+  //     console.log('msg rec',_msg)
+  //     console.log('msgs',msgs)
+  //     const exist = msgs.some(item => item.to === _msg.to);
+
+  //     if (!exist) {
+  //       msgs.push(_msg)
+  //       setMsgs([...msgs])
+  //     }
+  //   }
+  // });
+
+
+
 
   const doSelMenu =(url)=>{
     if (url === '/logout') {
@@ -50,7 +116,8 @@ const MenuUser = ({user}) => {
     store.loadMsg(params).then(r=>{
       if (r.code ===0) {
         console.log('msg data:',r.data)
-        setMsgs(r.data)
+        // setMsgs(r.data)
+        store.setMsgs(r.data)
       }
     })
   },[])
@@ -75,7 +142,8 @@ const MenuUser = ({user}) => {
     const { user_id } =  user
     const { mid } = item
     store.readMsg({mid,user_id}).then(r=>{
-      setMsgs(r.data)
+      store.setMsgs(r.data)
+
       store.setItem(item)
 
       if (item.msg_type === "いいね") {
@@ -83,7 +151,6 @@ const MenuUser = ({user}) => {
       }else{
         store.setShow(true,'qa')
       }
-      
     })
   }
   
@@ -97,12 +164,12 @@ const MenuUser = ({user}) => {
       <div className={s.item}>
         <img src={bell} />
 
-        {(msgs.length>0) && <i className={s.sp}></i> }
+        {(store.msgs.length>0) && <i className={s.sp}></i> }
 
-        {(msgs.length>0) && 
+        {(store.msgs.length>0) && 
         <div className={s.menuSub}>
           <div className={s.wrap}>
-            {msgs.map((item,i)=>
+            {store.msgs.map((item,i)=>
               <div className={s.msgItem} onClick={()=>doSelMenu(item.url)} key={i}>
                 <img src={item.fr_icon} />
                 <p>

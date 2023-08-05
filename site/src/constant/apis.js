@@ -13,3 +13,4 @@ if (mode === 'production') {
 }
 
 export { API_SERVER }
+export const MQTT_SERVER  = 'ws://121.40.124.170:1884'

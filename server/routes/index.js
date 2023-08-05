@@ -64,15 +64,17 @@ const getUsers = async (res)=>{
 router.post('/queryAll', async (req, res, next) =>{
   
   const sql1 = `CALL PROC_QUERY_BOARD(?)`
+  const sql2 = `CALL PROC_QUERY_CAT(?)`
   const users = await getUsers(res)
 
+  const cat      = await initName(users,toJson(await callP(sql2, { bt:"cat", li:12, od:"sub_date" }, res)))
   const cat_lose = await initName(users,toJson(await callP(sql1, { bt:"cat", ca:"迷子", li:3, od:"sub_date" }, res)))
   const cat_prot = await initName(users,toJson(await callP(sql1, { bt:"cat", ca:"保護", li:3, od:"sub_date" }, res)))
   const note     = await initName(users,toJson(await callP(sql1, { bt:"note", ca:"NULL", li:3, od:"sub_date" }, res)))
   const qa_s     = await initName(users,toJson(await callP(sql1, { bt:"qa", ca:"解決", li:4, od:"sub_date" }, res)))
   const qa_i     = await initName(users,toJson(await callP(sql1, { bt:"qa", ca:"受付中", li:4, od:"sub_date" }, res)))
 
-  res.status(200).json({code: 0, qa_s, qa_i, note, cat_lose, cat_prot })
+  res.status(200).json({code: 0, qa_s, qa_i, note, cat, cat_lose, cat_prot })
 })
 
 
@@ -219,8 +221,11 @@ router.post('/favNote', async (req, res, next) =>{
   let params = req.body
   console.log(params)
   const sql = `CALL PROC_UPDATE_BOARD_FAV(?)`
-  const data = await callP(sql, params, res)
-  res.status(200).json({code: 0, msg:'更新成功！' })
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+  // const data = await callP(sql, params, res)
+
+  res.status(200).json({code: 0,data, msg:'更新成功！' })
 })
 
 

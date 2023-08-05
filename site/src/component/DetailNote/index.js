@@ -3,7 +3,7 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
 import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,message } from 'antd';
 import {PRE_IMG} from '@/constant/urls'
-import {formatTime} from '@/util/fn'
+import {formatTime,publishMsg,clone} from '@/util/fn'
 import s from './index.module.less';
 
 
@@ -34,7 +34,6 @@ const DetailNote = ({}) => {
     store.setShow(false,'note')
   }
 
-  console.log('sub_user_id',sub_user_id)
   useEffect(()=>{ 
     setIsFav(user?caluFav(user,fav):false)
   },[])
@@ -69,7 +68,12 @@ const DetailNote = ({}) => {
       title,
     }
     store.favNote(params).then(r=>{
-      console.log('取得データ',r)
+      // console.log('favData',r)
+
+      if (!isFav) {
+        const msg = JSON.stringify(r.data[0]) 
+        publishMsg(msg,store.client)
+      }
       message.info(r.msg)
       setIsFav(!isFav)
     })
