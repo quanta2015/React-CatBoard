@@ -124,6 +124,20 @@ const DetailNote = ({}) => {
     await saveContent(list,'返信',item.user_id)
   }
 
+  const doClosePost =async()=>{
+
+    const params ={
+      board_id
+    }
+    store.closePost(params).then(r=>{
+      console.log(r.data)
+      message.info(r.msg)
+      store.setItem(r.data)
+      setReply(r.data.content.rep)
+      store.setRefresh()
+    })
+
+  }
 
   return (
     <div className={s.detailQa} >
@@ -133,8 +147,8 @@ const DetailNote = ({}) => {
         <div className={s.wrap}>
           <div className={'del'} onClick={doClose}></div>
 
-          {my_id === sub_user_id &&  
-            <div className={s.stop}>締め切る</div>}
+          {my_id === sub_user_id && category==='受付中' &&
+            <div className={s.stop} onClick={doClosePost}>締め切る</div>}
 
 
           <div className={s.hd}>

@@ -49,7 +49,7 @@ const Ask = () => {
 
       {(!submit) && 
         <>
-          <CardInfo list={initList} title={initTitle} />
+          
           <Form setSubmit={setSubmit} />
         </>
       }

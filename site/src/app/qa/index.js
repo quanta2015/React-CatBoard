@@ -96,7 +96,7 @@ const QA = () => {
               onChange={doChgKey}
               onKeyDown={handleKeyDown}
               size="small"
-              style = {{ borderRadius: '25px', color: '#ccc', alignSelf: 'flex-end', width: '300px', padding: '10px', boxSizing:'border-box'}}
+              style = {{ borderRadius: '25px', color: '#ccc', alignSelf: 'flex-end', width: '300px', padding: '10px 25px', boxSizing:'border-box'}}
               allowClear
               />
           </p>

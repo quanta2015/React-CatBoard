@@ -138,6 +138,10 @@ class Store {
     return await this.post(urls.API_SAVE_CONTENT,params)
   }
 
+  async closePost(params) {
+    return await this.post(urls.API_CLOSE_POST,params)
+  }
+
 
 
 

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {API_SERVER} from '@/constant/apis'
 import s from './index.module.less';
 import { useNavigate } from 'react-router-dom'
-
+import {formatTime} from '@/util/fn'
 
 import bell from '@/img/icon/bell.svg'
 import chat from '@/img/icon/chat.svg'
@@ -88,7 +88,7 @@ const MenuUser = ({user}) => {
                   <span>{formatMsg(item)}</span>
                   <span>{item.title}</span>
                 </p>
-                
+                <em>{formatTime(item.sub_date)}</em>
               </div>
             )}
           </div>
