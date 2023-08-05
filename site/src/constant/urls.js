@@ -17,6 +17,7 @@ export const API_REPLY_QA      = API_SERVER + '/replyQa'
 export const API_LOAD_MSG      = API_SERVER + '/loadMsg'
 export const API_SAVE_CONTENT  = API_SERVER + '/saveContent'
 export const API_CLOSE_POST    = API_SERVER + '/closePost'
+export const API_READ_MSG      = API_SERVER + '/readMsg'
 
 
 

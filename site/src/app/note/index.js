@@ -58,7 +58,7 @@ const Note = () => {
 
   const doShowDetail =(item)=>{
     store.setItem(item)
-    store.setShow(true,(item.type==='note')?'note':'detail')
+    store.setShow(true,'note')
   }
 
   const handleKeyDown = (e) => {

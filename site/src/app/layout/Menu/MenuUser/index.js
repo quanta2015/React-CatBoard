@@ -56,7 +56,7 @@ const MenuUser = ({user}) => {
   },[])
 
   const formatMsg =(item,msg='')=>{
-    switch(item.type) {
+    switch(item.msg_type) {
       case '回答': msg = ['質問','回答'];break;
       case '返信': msg = ['質問','返信'];break;
       case 'いいね': msg = ['回答','いいね'];break;
@@ -67,6 +67,24 @@ const MenuUser = ({user}) => {
         <i>さんがあなたの{msg[0]}に<em>{msg[1]}</em>しました。</i>
       </>
     )
+  }
+
+
+  const doShowMsg =(item)=>{
+    // console.log(item,'msg')
+    const { user_id } =  user
+    const { mid } = item
+    store.readMsg({mid,user_id}).then(r=>{
+      setMsgs(r.data)
+      store.setItem(item)
+
+      if (item.msg_type === "いいね") {
+        store.setShow(true,'note')
+      }else{
+        store.setShow(true,'qa')
+      }
+      
+    })
   }
   
   return (
@@ -86,12 +104,12 @@ const MenuUser = ({user}) => {
           <div className={s.wrap}>
             {msgs.map((item,i)=>
               <div className={s.msgItem} onClick={()=>doSelMenu(item.url)} key={i}>
-                <img src={item.icon} />
+                <img src={item.fr_icon} />
                 <p>
                   <span>{formatMsg(item)}</span>
-                  <span>{item.title}</span>
+                  <span onClick={()=>doShowMsg(item)}>{item.msg_title}</span>
                 </p>
-                <em>{formatTime(item.sub_date)}</em>
+                <em>{formatTime(item.msg_date)}</em>
               </div>
             )}
           </div>

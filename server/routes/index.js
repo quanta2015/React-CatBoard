@@ -120,10 +120,11 @@ router.post('/queryNote', async (req, res, next) =>{
   const sql1 = `CALL PROC_QUERY(?)`
   const sql2 = `CALL PROC_QUERY_BOARD(?)`
 
-  console.log(sql)
+  // console.log(sql)
+  const users = await getUsers(res)
 
-  const data = await toJson(await callP(sql1, {sql}, res))
-  const fav = await toJson(await callP(sql2, { bt:"note", ca:"NULL", li:3, od:"favCount" }, res))
+  const data = await initName(users,toJson(await callP(sql1, {sql}, res)))
+  const fav = await initName(users,toJson(await callP(sql2, { bt:"note", ca:"NULL", li:3, od:"favCount" }, res)))
   res.status(200).json({code: 0, data, fav })
 })
 
@@ -172,30 +173,15 @@ router.post('/queryQA', async (req, res, next) =>{
   // const newData = formatReply(data,users)
 
 
-  // data.map(item=>{
-  //   let {rep} = item.content
-  //   rep.map(o=>{
-  //     o = repName(o)
-
-  //     o.rep.map(q=>{
-  //       q = repName(q)
-  //     })
-  //   })
-  // })
-
-
   data.map(item=>{
     let {rep} = item.content;
     rep = rep.map(o=>{
       o = repName(o,users);
-
       if (o.rep) {
         o.rep = o.rep.map(q=> repName(q,users));
       }
-      
       return o;
     });
-
     item.content.rep = rep;
     return item;
   });
@@ -205,39 +191,33 @@ router.post('/queryQA', async (req, res, next) =>{
 })
 
 
-// router.post('/replyQa', async (req, res, next) =>{
-//   const params = req.body
-//   console.log(params)
-//   let sql = `CALL PROC_REPLY_QA(?)`
-
-//   const users = await getUsers(res)
-//   const data = await initName(users,toJson(await callP(sql, params, res)))
-//   const newData = formatReply(data,users)
-
-//   // console.log(newData[0])
-//   res.status(200).json({code: 0, data: newData[0], msg:'回复QA成功！'})
-// })
-
-
-
-
 router.post('/saveContent', async (req, res, next) =>{
   const params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_SAVE_CONTENT(?)`
 
   const users = await getUsers(res)
   const data = await initName(users,toJson(await callP(sql, params, res)))
 
-
-
   res.status(200).json({code: 0,data: data[0], msg:'修改content成功！'})
+})
+
+
+router.post('/closePost', async (req, res, next) =>{
+  const params = req.body
+
+  // console.log(params)
+  let sql = `CALL PROC_CLOSE_POST(?)`
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+
+  res.status(200).json({code: 0, data:data[0], msg:'帖子关闭成功'})
 })
 
 
 router.post('/favNote', async (req, res, next) =>{
   let params = req.body
-  // console.log(params)
+  console.log(params)
   const sql = `CALL PROC_UPDATE_BOARD_FAV(?)`
   const data = await callP(sql, params, res)
   res.status(200).json({code: 0, msg:'更新成功！' })
@@ -266,10 +246,23 @@ router.post('/saveUserInfo', async (req, res, next) =>{
 router.post('/loadMsg', async (req, res, next) =>{
   const params = req.body
   let sql = `CALL PROC_LOAD_MSG(?)`
-  let r = await callP(sql, params, res)
-  res.status(200).json({code: 0, data:r, msg:'修改信息成功'})
+
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+
+  res.status(200).json({code: 0, data, msg:'获取消息成功'})
 })
 
+
+router.post('/readMsg', async (req, res, next) =>{
+  const params = req.body
+  let sql = `CALL PROC_READ_MSG(?)`
+  console.log(params)
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+
+  res.status(200).json({code: 0, data, msg:'获取消息成功'})
+})
 
 
 
