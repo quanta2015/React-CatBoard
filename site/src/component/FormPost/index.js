@@ -11,7 +11,7 @@ import cls from 'classnames';
 import { useNavigate } from 'react-router-dom'
 import notice from '@/img/icon/warning-g.svg'
 import CardInfo from '@/component/CardInfo'
-import {SUB_TYPE,CONFIRM_MESSAGE} from '@/constant/data'
+import {SUB_TYPE,CONFIRM_MESSAGE,INF_TYPE} from '@/constant/data'
 import warn_lose  from '@/img/icon/warn_lose.svg'
 import warn_prot  from '@/img/icon/warn_prot.svg'
 import icon_check  from '@/img/icon/check.svg'
@@ -20,11 +20,13 @@ import s from './index.module.less';
 
 const FormPost = (item) => {
   const { store } = React.useContext(MobXProviderContext)
+  const { user } = store
   const {subType} = store
   const [form] = Form.useForm();
-  const [user,setUser] = useState({})
+  // const [user,setUser] = useState({})
+  const my_id = user.user_id
   const navigate = useNavigate();
-  const { type,cat,sub_date,sub_user,addr,title,sub,period,view,fav,id } = item
+  const { type,cat,sub_date,sub_user,addr,board_id,title,sub,period,view,fav,id } = store.item
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   const [areAllChecked, setAreAllChecked] = useState(false);
@@ -57,15 +59,33 @@ const FormPost = (item) => {
 
   const doSave =async()=>{
     try {
-      const params = await form.validateFields();
-      params.user_id =  uuidv4();
-      console.log(params)
+      const catForm = await form.validateFields();
+      let addr = {
+        addr_dtl: catForm.addr_dtl,
+        addr_ken: catForm.addr_ken,
+        addr_shi: catForm.addr_shi
+      }
+      console.log('catForm',catForm)
+      // params.board_id =  uuidv4();
 
-      await store.regUser(params).then(r=>{
+      const params = {
+        board_id,
+        board_type:subType,
+        category:INF_TYPE[subType],
+        sub_date,
+        sub_user:my_id,
+        addr:addr,
+        cat:catForm.cat
+      }
+      
+      console.log(params)
+      store.setShow(true,'loading')
+      await store.saveCatInfo(params).then(r=>{
+      // console.log(r)
         message.info(r.msg)
         store.setUser(params)
         navigate('/')
-        // console.log(r)
+        store.setRefresh()
       })
       
     } catch (errorInfo) {
@@ -73,20 +93,12 @@ const FormPost = (item) => {
     }
   }
 
-  const Popup = ({ onClose }) => (
-    <div>
-      <h2>这是一个弹窗</h2>
-      <button onClick={onClose}>关闭</button>
-    </div>
-  );
-  
-
   return (
     <div className={s.formpost}>
       <div className={s.wrap}>
       <CardInfo list={initList} title={initTitle} />
 
-      <Form form={form} layout='vertical' initialValues={user}>
+      <Form form={form} layout='vertical'>
         <FormPostBasic type={subType}/>
         <FormCat />
         <FormPostOther type={subType} form={form} file={[]} />
@@ -106,15 +118,12 @@ const FormPost = (item) => {
         <button 
           className={`${s.btn} ${subType === SUB_TYPE.TYPE2 ? s['btn-protect'] : ''}`} 
           onClick={() => {
-            // doSave();
-            setPopupVisible(true);
-            doNewArticle('lose')
+            doSave();
           }}
           disabled={!areAllChecked}
         >
           {subType === SUB_TYPE.TYPE1 ? '投稿する迷子情報を確認' : '投稿する保護情報を確認'}
         </button>
-        {isPopupVisible && <Popup onClose={() => setPopupVisible(false)} />}
       </Form>
       </div>
       <div className="confirm">

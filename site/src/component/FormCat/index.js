@@ -93,8 +93,8 @@ const FormCat = ({}) => {
           allowClear 
           style={{height: '150px'}}
           maxLength={150} />
-      <div className={s.sm}>目の色・耳の形（サクラ耳など）・体型・尻尾の形（かぎしっぽなど）・性格・アレルギー・持病など出来るだけ詳しく<strong>150</strong>文字以内で入力してください</div>
       </Form.Item>
+      <div className={s.sm}>目の色・耳の形（サクラ耳など）・体型・尻尾の形（かぎしっぽなど）・性格・アレルギー・持病など出来るだけ詳しく<strong>150</strong>文字以内で入力してください</div>
     </>
   )
 
