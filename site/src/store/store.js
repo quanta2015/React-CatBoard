@@ -31,6 +31,9 @@ class Store {
   loginReq = false
   refresh  = false
 
+  chat     = [[],[]]
+  chatItem = null
+
   msgs     = []
   item     = {}
 
@@ -42,6 +45,9 @@ class Store {
     this.qa       = false
   }
 
+
+  setChat =(chat)=>{ this.chat = chat }
+  setChatItem =(chatItem)=>{ this.chatItem = chatItem }
 
   setMsgs =(msgs)=>{
     this.msgs = msgs

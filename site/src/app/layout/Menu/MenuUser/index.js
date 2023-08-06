@@ -55,8 +55,26 @@ const MenuUser = ({user}) => {
     }
 
 
-    const procChatMsg =(msg)=>{
-      console.log(msg)
+    const procChatMsg =(m)=>{
+      const { id, msg} = m
+
+      if (store.chatItem.id === id) {
+        const chatItem = clone(store.chatItem)
+        chatItem.content.push(msg)
+        store.setChatItem(chatItem)
+      }
+      // store.chatItem
+      // store.chat[0].map(o=>{
+      //   if (o.id===id) {
+      //     o.content.push(msg)
+      //   }
+      // })
+      // store.chat[1].map(o=>{
+      //   if (o.id===id) {
+      //     o.content.push(msg)
+      //   }
+      // })
+      // store.setChat([...chat])
     }
 
     const onMessage = (top, msg) => {

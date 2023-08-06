@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useRef} from 'react';
 import { useNavigate } from 'react-router-dom'
 import { observer,MobXProviderContext } from 'mobx-react'
 import { Button, Input, Form, message} from 'antd';
-import { now,publishMsg } from '@/util/fn';
+import { now,publishMsg,clone } from '@/util/fn';
 import cls from 'classnames';
 import {PRE_IMG} from '@/constant/urls'
 
@@ -16,14 +16,15 @@ import up from '@/img/icon/up.svg'
 const tabs = ['自分の投稿','他の投稿']
 
 const Chat = () => {
+  const ref = useRef(null);
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
   const { user } = store
   const [msg,setMsg] = useState('')
   const [sel,setSel] = useState(0)
   const [cid,setCid] = useState(-1)
-  const [chat,setChat] = useState([[],[]]) 
-  const [item,setItem] = useState(null) 
+  // const [chat,setChat] = useState([[],[]]) 
+  // const [item,setItem] = useState(null) 
   // const [chat,setChat] = useState([]) 
 
 
@@ -38,7 +39,7 @@ const Chat = () => {
       }
       store.queryChat(params).then(r=>{
         console.log('取得データ',r)
-        setChat(r.chat)
+        store.setChat(r.chat)
       })
     }
     
@@ -47,12 +48,12 @@ const Chat = () => {
   const doSelTab =(i)=>{
     setSel(i)
     setCid(-1)
-    setItem(null)
+    store.setChatItem(null)
   }
 
-  const doSelChat =(i,item)=>{
+  const doSelChat =(i,obj)=>{
     setCid(i)
-    setItem(item)
+    store.setChatItem(obj)
   }
 
   const doSendMsg=()=>{
@@ -64,25 +65,26 @@ const Chat = () => {
     }
 
     if (msg!=='') {
-      const { content,...rest } = item
+      const { content,...rest } = clone(store.chatItem)
       const newMsg = { src, msg, sub_date: now() }
       content.push(newMsg)
       const params = { ...rest, content };
       // console.log('params',params)
+      setMsg('')
       store.saveChat(params).then(r=>{
         console.log('取得データ',r)
         const chatMsg = JSON.stringify({
-          id: item.id,
+          id: store.chatItem.id,
           msg_type: 'chat',
           msg: newMsg,
         })
         publishMsg(chatMsg,store.client)
-        setMsg('')
       })
     }else{
       message.info('请输入发送消息！')
     }
   }
+
 
 
   const handleKeyDown = (e) => {
@@ -97,6 +99,15 @@ const Chat = () => {
   }
 
 
+  useEffect(() => {
+    if (ref.current) {
+      console.log('scccc')
+      const element = ref.current;
+      element.scrollTop = element.scrollHeight;
+    }
+  }, [store.chatItem]); 
+
+
 
   return (
     <div className={s.chat}>
@@ -108,7 +119,7 @@ const Chat = () => {
               )}
           </div>
           <div className={s.list}>
-            {chat[sel].map((item,i)=>
+            {store.chat[sel].map((item,i)=>
               <div key={i} 
                 className={cls(s.chatItem, cid===i?'sel':'')} 
                 onClick={()=>doSelChat(i,item)}
@@ -129,16 +140,16 @@ const Chat = () => {
         </div>
         <div className={s.chatBd}>
 
-          {item?.content && item?.content.length>0 &&
-          <div className={s.content}>
-            {item.content.map((o,i)=>
+          {store.chatItem?.content && store.chatItem?.content.length>0 &&
+          <div className={s.content} ref={ref}>
+            {store.chatItem.content.map((o,i)=>
               <div 
                 key={i} 
                 className={cls(
                   s.chatMsg,
                   sel === 0 ? o.src : (o.src === 'fr' ? 'to' : 'fr')
                 )}>
-                <img src={(o.src==='fr')?item.fr_icon[0]:item.to_icon[0]} />
+                <img src={(o.src==='fr')?store.chatItem.fr_icon[0]:store.chatItem.to_icon[0]} />
                 <p>{o.msg}</p>
               </div>
             )}
