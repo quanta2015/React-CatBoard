@@ -172,8 +172,7 @@ router.post('/queryQA', async (req, res, next) =>{
   const sql1 = `CALL PROC_QUERY(?)`
   const users = await getUsers(res)
   const data = await initName(users,toJson(await callP(sql1, {sql}, res)))
-  // const newData = formatReply(data,users)
-
+  
 
   data.map(item=>{
     let {rep} = item.content;
@@ -207,7 +206,6 @@ router.post('/saveContent', async (req, res, next) =>{
 
 router.post('/closePost', async (req, res, next) =>{
   const params = req.body
-
   // console.log(params)
   let sql = `CALL PROC_CLOSE_POST(?)`
   const users = await getUsers(res)
@@ -219,7 +217,7 @@ router.post('/closePost', async (req, res, next) =>{
 
 router.post('/favNote', async (req, res, next) =>{
   let params = req.body
-  console.log(params)
+  // console.log(params)
   const sql = `CALL PROC_UPDATE_BOARD_FAV(?)`
   const users = await getUsers(res)
   const data = await initName(users,toJson(await callP(sql, params, res)))
@@ -233,10 +231,49 @@ router.post('/initChatId', async (req, res, next) =>{
   const chat_id = uuidv4()
   const sub_date = dayjs().format('YYYY-MM-DD HH:mm:ss')
   const params = { chat_id,sub_date,content:[], ...req.body }
-
+  // console.log(params,ret)
+  const sql = `CALL PROC_INIT_CHAT_ID(?)`
+  const data = await callP(sql, params, res)
+  console.log(data)
   // const data = checkAndInsert(params);
-  // res.status(200).json({code: 0, data });
+  res.status(200).json({code: 0, data: data[0].chat_id });
 })
+
+
+router.post('/queryChat', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  const sql1 = `CALL PROC_QUERY_CHAT_FR(?)`
+  const sql2 = `CALL PROC_QUERY_CHAT_TO(?)`
+  const chatFr = await callP(sql1, params, res)
+  const chatTo = await callP(sql2, params, res)
+  chatFr.map(o=> {
+    o.fr_icon = JSON.parse(o.fr_icon)
+    o.to_icon = JSON.parse(o.to_icon)
+    o.content = JSON.parse(o.content)
+  })
+  chatTo.map(o=> {
+    o.fr_icon = JSON.parse(o.fr_icon)
+    o.to_icon = JSON.parse(o.to_icon)
+    o.content = JSON.parse(o.content)
+  })
+  console.log(chatTo,chatFr)
+  res.status(200).json({code: 0, chat: [chatFr,chatTo]});
+})
+
+router.post('/saveChat', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  const sql = `CALL PROC_SAVE_CHAT(?)`
+  const chat = await callP(sql, params, res)
+  
+
+  res.status(200).json({code: 0, chat});
+})
+
+
+
+
 
 
 router.post('/saveUserInfo', async (req, res, next) =>{
@@ -262,7 +299,7 @@ router.post('/loadMsg', async (req, res, next) =>{
 router.post('/readMsg', async (req, res, next) =>{
   const params = req.body
   let sql = `CALL PROC_READ_MSG(?)`
-  console.log(params)
+  // console.log(params)
   const users = await getUsers(res)
   const data = await initName(users,toJson(await callP(sql, params, res)))
 
@@ -284,16 +321,11 @@ router.post('/addQa', async (req, res, next) =>{
 
 
 
-
-
-
-
-
 router.post('/login', async (req, res, next) =>{
   let params = req.body
+  // console.log(params)
   let sql = `CALL PROC_LOGIN(?)`
   let r = await callP(sql, params, res)
-
   if (r.length > 0) {
     r[0].icon = JSON.parse(r[0].icon)
     res.status(200).json({code: 0, data: r[0]})
