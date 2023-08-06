@@ -54,6 +54,8 @@ const Login = () => {
           store.setUser(r.data)
           navigate('/')
           // console.log('user info:', r.data);
+        }else{
+          message.info(r.msg)
         }
       })
       

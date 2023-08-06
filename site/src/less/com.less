@@ -15,8 +15,14 @@ body {
   font-family: "Noto Serif JP", "HiraKakuProN-W3", "Meiryo", sans-serif;
   margin: 0;
   -webkit-text-size-adjust: 100%;
-}
 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 a {
   text-decoration: none;

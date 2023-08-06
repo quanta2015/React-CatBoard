@@ -18,9 +18,7 @@ const USER_KEY = 'NEKONARA_USER'
 class Store {
   constructor() {
     makeAutoObservable(this);
-
   }
-
 
   client   = null
   qa       = false
@@ -102,6 +100,17 @@ class Store {
   }
 
 
+  async login(params) {
+    const r = await post(urls.API_LOGIN,params)
+    if (r) {
+      return r
+    }else{
+      return null
+      message.error(' 网络接口数据出错!')
+    }
+  }
+
+
   async regUser(params) {
     return await this.post(urls.API_REG_USER,params)
   }
@@ -168,11 +177,16 @@ class Store {
     return await this.post(urls.API_INIT_CHAT_ID,params)
   }
 
-
-
-  async login(params) {
-    return await this.post(urls.API_LOGIN,params)
+  async queryChat(params) {
+    return await this.post(urls.API_QUERY_CHAT,params)
   }
+
+  async saveChat(params) {
+    return await this.post(urls.API_SAVE_CHAT,params)
+  }
+
+
+  
 
   async uploadImg(params) {
     try {

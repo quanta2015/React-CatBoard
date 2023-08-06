@@ -81,11 +81,20 @@ const DetailNote = ({}) => {
     }
     store.setShow(true,'loading')
     await store.saveContent(params).then(r=>{
-      
-      const msg = JSON.stringify(r.data) 
-      publishMsg(msg,store.client)
-      console.log(msg,'msg')
 
+      // 发送RT消息
+      const msg = JSON.stringify({
+        user_name: user.user_name,
+        fr: my_id,
+        to,
+        fr_icon: my_icon,
+        msg_title: title,
+        msg_type: type,
+        msg_date: sub_date,
+        ...r.data
+      }) 
+      publishMsg(msg,store.client)
+      // console.log(msg,'msg')
 
       message.info(r.msg)
       store.setShow(false,'loading')

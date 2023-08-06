@@ -40,20 +40,36 @@ const MenuUser = ({user}) => {
       console.error('Error:', err);
     });
 
-    const onMessage = (top, msg) => {
-      let _msg = JSON.parse(msg.toString());
+    const procSysMsg =(msg)=>{
       const { user_id } = store.user;
-
-      if (_msg.to === user_id) {
+      if (msg.to === user_id) {
         let m = clone(store.msgs)
-        const exist = m.some(item => item.mid === _msg.mid);
+        const exist = m.some(item => item.mid === msg.mid);
 
         if (!exist) {
-          m.push(_msg)
+          m.push(msg)
           store.setMsgs([...m])
           message.info('您有新的短消息')
         }
       }
+    }
+
+
+    const procChatMsg =(msg)=>{
+      console.log(msg)
+    }
+
+    const onMessage = (top, msg) => {
+      let _msg = JSON.parse(msg.toString())
+
+
+      if (_msg.msg_type==='chat') {
+        procChatMsg(_msg)
+      }else{
+        procSysMsg(_msg)
+      }
+
+      
     };
 
     client.on('connect', onConnect);
@@ -65,34 +81,6 @@ const MenuUser = ({user}) => {
       client.off('message', onMessage);
     };
   }, []); 
-
-
-  // var client = mqtt.connect(MQTT_SERVER);
-  // store.client = client
-  // client.on('connect', () => {
-  //   console.log('Connected to MQTT SERVER.');
-  //   client.subscribe(urls.TOPIC);
-  // });
-
-  // client.on('error', (err) => {
-  //   console.error('Error:', err);
-  // });
-
-  // client.on("message", function(top, msg) {
-  //   let _msg = JSON.parse(msg.toString())
-  //   const { user_id } = store.user
-
-  //   if (_msg.to === user_id) {
-  //     console.log('msg rec',_msg)
-  //     console.log('msgs',msgs)
-  //     const exist = msgs.some(item => item.to === _msg.to);
-
-  //     if (!exist) {
-  //       msgs.push(_msg)
-  //       setMsgs([...msgs])
-  //     }
-  //   }
-  // });
 
 
 
@@ -154,7 +142,7 @@ const MenuUser = ({user}) => {
   
   return (
     <div className={s.menuUser}>
-      <div className={s.item}>
+      <div className={s.item} onClick={()=>navigate('/chat')}>
         <img src={chat} />
         <i className={s.sp}></i>
       </div>

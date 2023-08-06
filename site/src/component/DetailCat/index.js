@@ -23,6 +23,7 @@ const Detail = ({}) => {
 
   const [sel,setSel] = useState(0)
   const [curImg,setCurImg] = useState(img[sel])
+  
 
   const doClose =()=>{
     store.setShow(false,(type==='note')?'note':'detail')
@@ -39,21 +40,18 @@ const Detail = ({}) => {
 
 
 
-  const doSendMsg =()=>{
+  const doInitChatId =()=>{
     const params = {
       board_id,
-      "board_id#user_fr": `${board_id}#${user.user_id}`,
-      user_fr: user.user_id,
-      icon_fr: user.icon[0],
-      user_to: sub_user_id,
-      icon_to: sub_icon,
+      user_fr: sub_user_id,
+      user_to: user.user_id,
       cat_name:name,
       cat_img: img[0],
     }
-    console.log('msg',params)
+    
 
     store.initChatId(params).then(r=>{
-
+      console.log('CHAT IT',r)
     })
   }
 
@@ -64,7 +62,7 @@ const Detail = ({}) => {
         <div className={'del'} onClick={doClose}></div>
 
 
-        <CardDetailCat btnTxt={'メッセージを送る'} btnEvent={doSendMsg}/>
+        <CardDetailCat btnTxt={'メッセージを送る'} btnEvent={doInitChatId}/>
 
 
       </div>

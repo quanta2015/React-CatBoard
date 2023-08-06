@@ -42,8 +42,9 @@ const Layout = () => {
         store.login(userLocal).then(r=>{
           if (r.code ===0) {
             message.info('登录成功！')
-            // console.log(r.data,'setuser')
             store.setUser(r.data)
+          }else{
+            message.info(r.msg)
           }
         })
       } catch (errorInfo) {

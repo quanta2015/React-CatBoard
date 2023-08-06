@@ -29,8 +29,8 @@ let Reg    = Loadable({ loader: () => import('./app/reg')})
 let Login  = Loadable({ loader: () => import('./app/login')})
 
 let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
-let CatInfo = Loadable({ loader: () => import('./app/catInfo')})
 
+let Chat   = Loadable({ loader: () => import('./app/chat')})
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -40,18 +40,19 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/login"  element={<Login />} />
-            <Route path="/reg"  element={<Reg />} />
+            <Route path="/login"    element={<Login />} />
+            <Route path="/reg"      element={<Reg />} />
 
-            <Route path="/"     element={<Index />} />
-            <Route path="/cat"  element={<Cat />} />
-            <Route path="/note" element={<Note />} />
-            <Route path="/qa"   element={<Qa />} />
-            <Route path="/ask"  element={<Ask />} />
+            <Route path="/"         element={<Index />} />
+            <Route path="/cat"      element={<Cat />} />
+            <Route path="/note"     element={<Note />} />
+            <Route path="/qa"       element={<Qa />} />
+            <Route path="/ask"      element={<Ask />} />
 
 
-            <Route path="/userInfo"  element={<UserInfo />} />
-            <Route path="/catInfo"   element={<CatInfo />} />
+            <Route path="/userInfo" element={<UserInfo />} />
+
+            <Route path="/chat"     element={<Chat />} />
 
           </Route>
         </Routes>
