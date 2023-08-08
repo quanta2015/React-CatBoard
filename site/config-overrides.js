@@ -27,9 +27,6 @@ function addCustomizePlugin(config) {
 
 
 
-
-
-
 module.exports = override(
   addLessLoader({
     lessLoaderOptions: {

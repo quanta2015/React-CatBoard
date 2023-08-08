@@ -23,17 +23,13 @@ const Chat = () => {
   const [msg,setMsg] = useState('')
   const [sel,setSel] = useState(0)
   const [cid,setCid] = useState(-1)
-  // const [chat,setChat] = useState([[],[]]) 
-  // const [item,setItem] = useState(null) 
-  // const [chat,setChat] = useState([]) 
 
 
-  
   useEffect(()=>{
-
     if (!user) {
       navigate('/')
     }else{
+      // 获取聊天列表
       const params = {
         user_id: user.user_id
       }
@@ -42,33 +38,48 @@ const Chat = () => {
         store.setChat(r.chat)
       })
     }
-    
   },[])
 
+
+  // 选择聊天类型
   const doSelTab =(i)=>{
     setSel(i)
     setCid(-1)
     store.setChatItem(null)
   }
 
+
+  // 选择聊天对象
   const doSelChat =(i,obj)=>{
     setCid(i)
     store.setChatItem(obj)
+
+    // 选择聊天后重置未读计数器
+    const chat = clone(store.chat)
+    chat[0].map(o=>{
+      if (o.id === obj.id) {
+        o.unread = 0
+      }
+    })
+    chat[1].map(o=>{
+      if (o.id === obj.id) {
+        o.unread = 0
+      }
+    })
+    store.setChat(chat)
+    store.resetUnread({id: obj.id})
   }
 
+
+  // 发送聊天消息
   const doSendMsg=()=>{
-    let src
-    if (sel === 0) {
-      src = 'fr'
-    }else{
-      src = 'to'
-    }
+    const src = sel===0?'fr':'to'
 
     if (msg!=='') {
-      const { content,...rest } = clone(store.chatItem)
+      const { content,unread,...rest } = clone(store.chatItem)
       const newMsg = { src, msg, sub_date: now() }
       content.push(newMsg)
-      const params = { ...rest, content };
+      const params = { ...rest, content, unread: unread+1 };
       // console.log('params',params)
       setMsg('')
       store.saveChat(params).then(r=>{
@@ -86,27 +97,27 @@ const Chat = () => {
   }
 
 
-
+  // 处理回车事件
   const handleKeyDown = (e) => {
     if (e.altKey && e.keyCode === 13) {
       doSendMsg()
     }
   }
 
+
+  // 编辑聊天消息
   const doChgMsg =(e)=>{
-    // console.log(msg)
     setMsg(e.currentTarget.value)
   }
 
 
+  // 发送消息后，滚动下拉框到底部
   useEffect(() => {
     if (ref.current) {
-      console.log('scccc')
       const element = ref.current;
       element.scrollTop = element.scrollHeight;
     }
   }, [store.chatItem]); 
-
 
 
   return (

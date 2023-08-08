@@ -192,6 +192,14 @@ class Store {
   }
 
 
+  async resetUnread(params) {
+    return await this.post(urls.API_RESET_UNREAD,params)
+  }
+
+  async addQuestion(params) {
+    return await this.post(urls.API_ADD_QUESTION,params)
+  }
+
   
 
   async uploadImg(params) {

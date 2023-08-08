@@ -33,7 +33,7 @@ const formatLink=(s)=> {
 }
 
 
-const CardInfo = ({list,title}) => {
+const CardInfo = ({list,title,btn,event}) => {
   const { store } = React.useContext(MobXProviderContext)
   const [data,setData] = useState([])
   
@@ -64,7 +64,9 @@ const CardInfo = ({list,title}) => {
           </div>
         )}
       </div>
-        
+      
+      {btn && 
+      <div className="btnIn" onClick={event}>ホームに戻る</div>}
 
     </div>
   )

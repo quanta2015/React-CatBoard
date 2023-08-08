@@ -15,11 +15,11 @@ const FormMain = ({setSubmit}) => {
 
     try {
       const params = await form.validateFields();
-      // await store.login(params).then(r=>{
-      //   if (r.code ===0) {
-      //     setSubmit(true)
-      //   }
-      // })
+      await store.addQuestion(params).then(r=>{
+        if (r.code ===0) {
+          setSubmit(true)
+        }
+      })
       
     } catch (errorInfo) {
       console.log('Failed:', errorInfo);
@@ -42,7 +42,10 @@ const FormMain = ({setSubmit}) => {
         <Form.Item 
           label="メールアドレス" 
           name="mail" 
-          rules={[{ required: true, message: 'アカウントを入力してください'}]}
+          rules={[
+            { required: true, message: 'アカウントを入力してください' },
+            { type: 'email', message: '有効なメールアドレスを入力してください' } 
+          ]}
           >
           <Input size="large" style={{height: '50px'}} placeholder="アカウント" allowClear  />
         </Form.Item>

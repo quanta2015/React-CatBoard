@@ -55,27 +55,41 @@ const MenuUser = ({user}) => {
     }
 
 
+    const addChatMsg =(id,msg)=>{
+      const chat = clone(store.chat)
+      chat[0].map(o=>{
+        if (o.id===id) {
+          o.content.push(msg)
+          o.unread += 1
+        }
+      })
+      chat[1].map(o=>{
+        if (o.id===id) {
+          o.content.push(msg)
+          o.unread += 1
+        }
+      })
+      store.setChat([...chat])
+    }
+
+
     const procChatMsg =(m)=>{
       const { id, msg} = m
 
-      if (store.chatItem.id === id) {
-        const chatItem = clone(store.chatItem)
-        chatItem.content.push(msg)
-        store.setChatItem(chatItem)
+      if (store.chatItem) {
+        console.log()
+        if (store.chatItem.id === id) {
+          const chatItem = clone(store.chatItem)
+          chatItem.content.push(msg)
+          store.setChatItem(chatItem)
+        }else{
+          addChatMsg(id,msg)
+        }
+      }else{
+        addChatMsg(id,msg)
       }
-      // store.chatItem
-      // store.chat[0].map(o=>{
-      //   if (o.id===id) {
-      //     o.content.push(msg)
-      //   }
-      // })
-      // store.chat[1].map(o=>{
-      //   if (o.id===id) {
-      //     o.content.push(msg)
-      //   }
-      // })
-      // store.setChat([...chat])
     }
+
 
     const onMessage = (top, msg) => {
       let _msg = JSON.parse(msg.toString())
@@ -86,8 +100,6 @@ const MenuUser = ({user}) => {
       }else{
         procSysMsg(_msg)
       }
-
-      
     };
 
     client.on('connect', onConnect);
@@ -101,6 +113,20 @@ const MenuUser = ({user}) => {
   }, []); 
 
 
+  useEffect(()=>{
+    if (!user) {
+      navigate('/')
+    }else{
+      // 获取聊天列表
+      const params = {
+        user_id: user.user_id
+      }
+      store.queryChat(params).then(r=>{
+        console.log('取得データ',r)
+        store.setChat(r.chat)
+      })
+    }
+  },[])
 
 
   const doSelMenu =(url)=>{
@@ -162,12 +188,14 @@ const MenuUser = ({user}) => {
     <div className={s.menuUser}>
       <div className={s.item} onClick={()=>navigate('/chat')}>
         <img src={chat} />
-        <i className={s.sp}></i>
+        <i className={s.sp}> 
+          {store.chat[0].reduce((s, o) => s + o.unread, 0)+ store.chat[1].reduce((s, o) => s + o.unread, 0)}
+        </i>
       </div>
       <div className={s.item}>
         <img src={bell} />
 
-        {(store.msgs.length>0) && <i className={s.sp}></i> }
+        {(store.msgs.length>0) && <i className={s.sp}>{store.msgs.length}</i> }
 
         {(store.msgs.length>0) && 
         <div className={s.menuSub}>

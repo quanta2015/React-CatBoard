@@ -20,8 +20,9 @@ export const API_CLOSE_POST    = API_SERVER + '/closePost'
 export const API_READ_MSG      = API_SERVER + '/readMsg'
 export const API_QUERY_CHAT    = API_SERVER + '/queryChat'
 export const API_SAVE_CHAT     = API_SERVER + '/saveChat'
+export const API_RESET_UNREAD  = API_SERVER + '/resetUnread'
 
-
+export const API_ADD_QUESTION  = API_SERVER + '/addQuestion'
 
 
 
