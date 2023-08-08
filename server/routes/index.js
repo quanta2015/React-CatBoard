@@ -318,6 +318,25 @@ router.post('/addQa', async (req, res, next) =>{
   res.status(200).json({code: 0, msg:'添加QA成功！'})
 })
 
+router.post('/addQuestion', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_ADD_QUESTION(?)`
+  let r = await callP(sql, params, res)
+  res.status(200).json({code: 0, msg:'添加问题成功！'})
+})
+
+
+
+router.post('/resetUnread', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_RESET_UNREAD(?)`
+  let r = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, msg:'重置UNREAD成功！'})
+})
+   
 
 
 
