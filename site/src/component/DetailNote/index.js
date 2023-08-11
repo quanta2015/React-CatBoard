@@ -10,7 +10,7 @@ import s from './index.module.less';
 import icon_eye   from '@/img/icon/eye.svg'
 import icon_heart from '@/img/icon/heart.svg'
 import icon_clock from '@/img/icon/clock.svg'
-import icon_list from '@/img/icon/list.svg'
+import icon_flag from '@/img/icon/menu-flag.svg'
 import icon_face from '@/img/icon/facebook.svg'
 import icon_twwi from '@/img/icon/twwi.svg'
 
@@ -68,9 +68,10 @@ const DetailNote = ({}) => {
       title,
     }
     store.favNote(params).then(r=>{
-      // console.log('favData',r)
+      console.log('favmsg',r)
 
       if (!isFav) {
+        console.log('favmsg',r.data[0])
         const msg = JSON.stringify(r.data[0]) 
         publishMsg(msg,store.client)
       }
@@ -78,6 +79,25 @@ const DetailNote = ({}) => {
       setIsFav(!isFav)
     })
   }
+
+
+  const doCollect=()=>{
+    const params ={
+      board_id,
+      user_id: my_id,
+    }
+    store.saveCollect(params).then(r=>{
+      console.log('collect',r)
+      store.setCollect(r.data)
+      message.info(r.msg)
+    })
+  }
+
+
+  // console.log(clone(store.collect),'coll')
+
+  // console.log(store.isCollect(board_id))
+
 
 
 
@@ -123,18 +143,18 @@ const DetailNote = ({}) => {
                 <img src={icon_heart} className={isFav?s.fav:''}/>
                 <span>いいねを押す</span>
               </p>
-              <p>
-                <img src={icon_list} />
+              <p onClick={doCollect}>
+                <img src={icon_flag} className={store.isCollect(board_id)?s.fav:''} />
                 <span>マイリストに追加</span>
               </p>
             </div>}
 
             <div className={s.ft}>
               <h1> SNSでシェア！</h1>
-              <p>
+              <li>
                 <img src={icon_face} />
                 <img src={icon_twwi} />
-              </p>
+              </li>
             </div>
 
           </div>

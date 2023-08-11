@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from 'react';
+import { useNavigate } from 'react-router-dom'
 import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
-import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker } from 'antd';
+import { message } from 'antd';
 import {PRE_IMG} from '@/constant/urls'
+import { scrollToTop,cfm } from '@/util/fn'
 import CardDetailCat from '@/component/CardDetailCat'
 import s from './index.module.less';
 
@@ -14,10 +16,11 @@ import icon_lt  from '@/img/icon/left.svg'
 import icon_rt  from '@/img/icon/right.svg'
 
 const Detail = ({}) => {
+  const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
 
   const { user } = store
-  const { board_id,cat,type,sub_date,sub_user,sub_icon,sub_user_id,addr,title,sub,content,period,view,fav,id } = store.item
+  const { board_id,cat,type,sub_date,sub_user,sub_icon,sub_user_id,addr,title,sub,content,period,view,fav,id,close } = store.item
   const { age,attr,clr,image,img,name,sex,size,status} = cat
 
 
@@ -51,20 +54,44 @@ const Detail = ({}) => {
     
 
     store.initChatId(params).then(r=>{
-      console.log('CHAT IT',r)
+      // console.log('CHAT IT',r)
+      scrollToTop()
+      store.setShow(false,'detail')
+      navigate('/chat')
     })
   }
+
+
+  const doClosePost =async()=>{
+    store.setShow(true,'loading')
+    store.closeBoard({board_id}).then(r=>{
+      // console.log(r.data)
+      store.setShow(false,'loading')
+      // store.setShow(false,'detail')
+      message.info(r.msg)
+      store.setItem(r.data)
+      store.setRefresh()
+    })
+  }
+
+
+  const doConfirm =()=>{
+    cfm('本当に投稿を閉じるには',doClosePost)
+  }
+
 
   return (
     <div className={s.detail} >
 
       <div className={s.main}>
-        <div className={'del'} onClick={doClose}></div>
+        <div className={s.mainWrap}>
+          <div className={'del'} onClick={doClose}></div>
+          {user.user_id === sub_user_id  && close===0 &&
+            <div className={s.stop} onClick={doConfirm}>締め切る</div>}
 
 
-        <CardDetailCat btnTxt={'メッセージを送る'} btnEvent={doInitChatId}/>
-
-
+          <CardDetailCat btnTxt={'メッセージを送る'} btnEvent={doInitChatId}/>
+        </div>
       </div>
     </div>
   )

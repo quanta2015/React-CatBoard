@@ -15,51 +15,20 @@ const {clone,initName,toJson,INF_TYPE,SECRET_KEY,KEY_IMG} = require('../util/fn'
 dotenv.config()
 
 
-async function checkAndInsert(params) {
-  const { board_id, user_fr } = params;
-
-  // const _params = {
-  //     TableName: "Nekonara_chat2",
-  //     IndexName: "boardid-userfr-index",
-  //     KeyConditionExpression: "#bc = :bc_value",
-  //     ExpressionAttributeNames: {
-  //         "#bc": "board_id#user_fr",
-  //     },
-  //     ExpressionAttributeValues: {
-  //         ":bc_value": { S: `${board_id}#${user_fr}` }
-  //     },
-  //     ScanIndexForward: false,
-  // };
-
-  // try {
-  //   const data = await client.send(new QueryCommand(_params));
-
-  //   if (data.Items.length === 0) {
-  //     const insertParams = {
-  //       TableName: 'Nekonara_chat2',
-  //       Item: marshall(params),
-  //     };
-
-  //     await client.send(new PutItemCommand(insertParams));
-  //     console.log('inserted...');
-  //     return params.chat_id
-  //   } else {
-  //     // Return chat_id since the record already exists
-  //     const existingChatId = unmarshall(data.Items[0]).chat_id;
-  //     console.log('exists');
-  //     return existingChatId
-  //   }
-  // } catch (err) {
-  //   console.error('Error:', err);
-  // }
-}
-
-
-
 const getUsers = async (res)=>{
   const sql = `CALL PROC_QUERY_USER(?)`
   return await callP(sql, null , res)
 }
+
+router.post('/queryByMe', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  const sql = `CALL PROC_QUERY_BY_ME(?)`
+  const users = await getUsers(res)
+  const data   = await initName(users,toJson(await callP(sql,params,res)))
+  res.status(200).json({code: 0, data})
+})
+
 
 router.post('/queryAll', async (req, res, next) =>{
   
@@ -217,11 +186,14 @@ router.post('/closePost', async (req, res, next) =>{
 
 router.post('/favNote', async (req, res, next) =>{
   let params = req.body
-  // console.log(params)
+  console.log(params)
   const sql = `CALL PROC_UPDATE_BOARD_FAV(?)`
   const users = await getUsers(res)
-  const data = await initName(users,toJson(await callP(sql, params, res)))
-  // const data = await callP(sql, params, res)
+  const r = await callP(sql, params, res)
+  const data = await initName(users,toJson(r))
+  console.log(r)
+
+
 
   res.status(200).json({code: 0,data, msg:'更新成功！' })
 })
@@ -272,10 +244,6 @@ router.post('/saveChat', async (req, res, next) =>{
 })
 
 
-
-
-
-
 router.post('/saveUserInfo', async (req, res, next) =>{
   const params = req.body
   let sql = `CALL PROC_SAVE_USER(?)`
@@ -309,10 +277,10 @@ router.post('/readMsg', async (req, res, next) =>{
 
 
 
-router.post('/addQa', async (req, res, next) =>{
+router.post('/saveQa', async (req, res, next) =>{
   const params = req.body
   console.log(params)
-  let sql = `CALL PROC_ADD_QA(?)`
+  let sql = `CALL PROC_SAVE_QA(?)`
   let r = await callP(sql, params, res)
   // r[0].icon = JSON.parse(r[0].icon)
   res.status(200).json({code: 0, msg:'添加QA成功！'})
@@ -336,7 +304,47 @@ router.post('/resetUnread', async (req, res, next) =>{
   // r[0].icon = JSON.parse(r[0].icon)
   res.status(200).json({code: 0, msg:'重置UNREAD成功！'})
 })
+
+
+router.post('/saveCat', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_SAVE_CAT(?)`
+  let r = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, msg:'发布猫信息成功！'})
+})
    
+
+router.post('/queryQuestion', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_QUERY_QUESTION(?)`
+  let data = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, data, msg:'检索问题信息成功！'})
+})
+
+
+
+router.post('/saveNote', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_SAVE_NOTE(?)`
+  let data = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, data, msg:'保存記事成功！'})
+})
+
+
+router.post('/delBoard', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_DEL_BOARD(?)`
+  let data = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, msg:'删除数据成功！'})
+})
 
 
 

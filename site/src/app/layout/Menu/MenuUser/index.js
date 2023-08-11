@@ -24,7 +24,7 @@ const MenuUser = ({user}) => {
   const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
   const type = store.user?parseInt(store.user?.user_type):1
-  const menu = MENU_USER.filter(o=> o.type>=type)
+  const menu = MENU_USER.filter(o=> o.type===type)
   const [msgs,setMsgs] = useState([])
 
 
@@ -134,6 +134,7 @@ const MenuUser = ({user}) => {
       store.delUser()
       navigate('/')
     }else{
+      store.reset()
       navigate(url)
     }
   }

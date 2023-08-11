@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { observer,MobXProviderContext } from 'mobx-react'
 import classnames from 'classnames';
-import { Button, Form, Input, Radio,Select,Upload,Modal,DatePicker,TimePicker } from 'antd';
+import { Button, Form, Input, message,Select,Upload,Modal,DatePicker,TimePicker } from 'antd';
 import {PRE_IMG} from '@/constant/urls'
 import s from './index.module.less';
 
@@ -11,24 +11,39 @@ import icon_usr from '@/img/icon/user.svg'
 import icon_cal from '@/img/icon/calendar.svg'
 import icon_lt  from '@/img/icon/left.svg'
 import icon_rt  from '@/img/icon/right.svg'
+import icon_flag from '@/img/icon/menu-flag.svg'
+
 
 const CardDetailCat = ({btnTxt,btnEvent}) => {
   const { store } = React.useContext(MobXProviderContext)
-
-  const { user } = store
-  const { cat,type,sub_date,sub_user,addr,title,sub,content,period,view,fav,id } = store.item
-  const { age,attr,clr,image,img,name,sex,size,status } = cat
+  const { user,subType } = store
+  const { cat,sub_date,board_id,sub_user,addr,view,fav,id,close } = store.item
+  const { age,attr,type,clr,image,img,status,name,sex,size } = cat
 
 
   const [sel,setSel] = useState(0)
   const [curImg,setCurImg] = useState(img[sel])
 
- 
+  
+  // 选择图片轮播
   const doSel =(step)=>{
     const len = img.length;
     const cur = (sel + step + len) % len;
     setSel(cur);
     setCurImg(img[cur]);
+  }
+
+  // 添加到收藏
+  const doCollect=()=>{
+    const params ={
+      board_id,
+      user_id: user.user_id,
+    }
+    store.saveCollect(params).then(r=>{
+      // console.log('collect',r)
+      store.setCollect(r.data)
+      message.info(r.msg)
+    })
   }
 
 
@@ -53,8 +68,11 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
 
       <div className={s.bd}>
         <div className={s.img}>
+
           <img className={s.arrow} src={icon_lt} onClick={()=>doSel(-1)} />
           <div className={s.list}>
+            {(close === 1) &&  <em className={"close"} style={{color:`var(--clr-${subType})`}}>解決しました！</em>}
+
             {img.map((item,i)=>
               <img src={`${PRE_IMG}${curImg}`} key={i} className={i===sel?'act':''} />
             )}
@@ -98,7 +116,7 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
         <div className={s.com}>
           <div className={s.row}>
             <label>その他特徴</label>
-            <p>{title}</p>
+            <p>{attr}</p>
           </div>
 
           <div className={s.row}>
@@ -108,7 +126,7 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
           
           <div className={s.row}>
             <label>保護した時の状況</label>
-            <p>{content.cnt}</p>
+            <p>{status}</p>
           </div>
         </div>
 
@@ -116,7 +134,16 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
 
       { user && 
       <div className={s.ft}>
-        <div className={classnames(s.btn,type)} onClick={btnEvent}>{btnTxt}</div>
+        <div className={s.btnItem} onClick={doCollect}>
+          <span>迷子情報を保存</span>
+          <img src={icon_flag} className={store.isCollect(board_id)?s.fav:''}/>
+        </div>
+        <div className={s.btnItem} onClick={btnEvent}>
+          <span>こちらから飼い主様に連絡できます</span>
+          <div className={classnames(s.btn,subType)}>{btnTxt}</div>
+        </div>
+
+        
       </div>}
 　
     </div>

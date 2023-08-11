@@ -1,10 +1,8 @@
 .cardDetailCat {
 
   width: calc(1000px + 20px);
-  overflow: scroll;
-  padding: 20px 80px;
+  padding: 80px 80px 20px;
   box-sizing: border-box;
-  height: 90vh;
 
 
 
@@ -51,7 +49,7 @@
 
       .list {
         display: flex;
-
+        position: relative;
 
         img {
           width: 640px;
@@ -96,6 +94,7 @@
     .com {
       display: flex;
       flex-direction: column;
+      width: 100%;
 
       .row {
         display: flex;
@@ -120,17 +119,40 @@
 
   .ft {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px 0;
 
+    .btnItem {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        opacity: .9;
+      }
+
+      span {
+        margin-bottom: 5px;
+        font-weight: 300;
+      }
+
+      img {
+        width: 32px;
+      }
+    }
+
     .btn {
+      font-size: 15px;
       color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 600px;
+      width: 200px;
       height: 40px;
       padding: 5px 12px;
       justify-content: center;
@@ -138,13 +160,23 @@
       border-radius: 10px;
       border: 2px solid #FFF;
       background: #666;
+      box-sizing: border-box;
       box-shadow: 0px 3.25px 0px 0px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        opacity: .9;
+      }
     }
   }
 
 }
 
 
+.fav {
+  filter: var(--fil-lose);
+}
 
 
 @media screen and (max-width: 768px) {}

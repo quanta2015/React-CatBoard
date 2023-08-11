@@ -13,6 +13,21 @@
   }
 }
 
+.addNote {
+  width: var(--sys-width);
+  height: calc(100vh - var(--menu-height));
+  top: var(--menu-height);
+  position: fixed;
+  z-index: 99;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+}
+
+
 .qa,
 .load,
 .note {
@@ -30,7 +45,6 @@
   &>img {
     width: 100px;
     height: 100px;
-
   }
 }
 
@@ -40,10 +54,12 @@
 }
 
 
+
 .edit {
   width: var(--sys-width);
-  height: calc(100vh - var(--menu-height));
+  height: 100vh;
   position: fixed;
+  top: 0;
   z-index: 99;
   background: #fff;
   display: flex;

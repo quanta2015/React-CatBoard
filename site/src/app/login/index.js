@@ -51,6 +51,7 @@ const Login = () => {
       await store.login(params).then(r=>{
         if (r.code ===0) {
           message.info('登录成功！')
+          store.setCollect(r.collect)
           store.setUser(r.data)
           navigate('/')
           // console.log('user info:', r.data);

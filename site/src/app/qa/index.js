@@ -5,7 +5,7 @@ import { Button, Input,Select,DatePicker, Pagination} from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import cls from 'classnames';
 import { INF_TYPE,AREA_LIST } from '@/constant/data'
-import {formatTime,fixBody} from '@/util/fn'
+import {formatTime,fixBody,scrollToTop} from '@/util/fn'
 import FormQa from './FormQa'
 import CardQ3 from '@/component/CardQ3'
 
@@ -44,6 +44,7 @@ const QA = () => {
       r.data.map(o=>o.type='qa')
       setPageList(getPageList(r.data,1))
       store.setShow(false,'loading')
+      scrollToTop()
     })
   },[query,load,refresh])
 

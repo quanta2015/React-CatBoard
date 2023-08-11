@@ -1,0 +1,57 @@
+.formpost {
+  width: var(--sys-width);
+  height: 100%;
+  flex-direction: column;
+  /* background: #eee; */
+  /* padding: 40px 60px; */
+  box-sizing: border-box;
+  min-height: var(--win-height);
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  overflow: hidden;
+  border-top: 5px solid #ccc;
+
+  .wrap {
+    width: calc(100% + 20px);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 50px 100px;
+    height: 100%;
+    overflow: scroll;
+    box-sizing: border-box;
+
+    .form {
+      padding: 50px 200px;
+      display: flex;
+      flex-direction: column;
+
+      :global {
+        .btnIn {
+          background: var(--clr-nav);
+          width: 300px;
+
+          align-self: center;
+        }
+      }
+
+      .close {
+        font-size: 20px;
+        align-self: center;
+        width: 200px;
+        color: #666;
+        margin: 30px;
+        cursor: pointer;
+        text-align: center;
+        transition: .3s;
+
+        &:hover {
+          color: var(--clr-nav);
+        }
+      }
+    }
+
+  }
+
+}

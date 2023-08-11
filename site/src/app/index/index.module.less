@@ -170,6 +170,21 @@
   align-items: center;
   font-family: Inter;
   margin: 30px 0;
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover {
+    opacity: .9;
+
+    span {
+      color: var(--clr-nav);
+    }
+
+    img {
+      filter: var(--fil-nav);
+    }
+
+  }
 
   h1 {
     font-size: 40px;
@@ -184,12 +199,14 @@
     font-size: 16px;
     font-weight: 600;
     font-size: 25px;
+    transition: .3s;
   }
 
   &>img {
     width: 19px;
     height: 19px;
     flex-shrink: 0;
+    transition: .3s;
   }
 }
 

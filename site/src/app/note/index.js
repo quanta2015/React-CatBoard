@@ -4,7 +4,7 @@ import { observer,MobXProviderContext } from 'mobx-react'
 import { Button, Input,Select,DatePicker, Pagination} from 'antd';
 import { useSearchParams } from 'react-router-dom';
 import { INF_TYPE,AREA_LIST } from '@/constant/data'
-import {formatTime} from '@/util/fn'
+import {formatTime,scrollToTop} from '@/util/fn'
 
 
 import Card  from '@/component/Card'
@@ -45,6 +45,8 @@ const Note = () => {
       r.data.map(o=>o.type='note')
       setPageList(getPageList(r.data,1))
       store.setShow(false,'loading')
+      scrollToTop()
+
     })
   },[query])
 

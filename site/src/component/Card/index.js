@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { observer,MobXProviderContext } from 'mobx-react'
 import Rank from '@/component/Rank'
-import classnames from 'classnames';
+import cls from 'classnames';
 import s from './index.module.less';
 import {PRE_IMG} from '@/constant/urls'
 import {INF_TYPE} from '@/constant/data'
@@ -20,20 +20,23 @@ import icon_ord   from '@/img/icon/ord.svg'
 
 const Card = (item) => {
   const { store } = React.useContext(MobXProviderContext)
-  const { type,cat,sub_date,sub_user,addr,title,sub,period,see,fav,id } = item
+  const { type,cat,sub_date,category,sub_user,addr,title,sub,period,see,fav,id,close } = item
   
   
 
   const doShowDetail =(item)=>{
+    store.subType = category==='迷子'?'lose':'prot'
     store.setItem(item)
     store.setShow(true,(type==='note')?'note':'detail')
   }
 
-
+  console.log(close)
 
   return (
-    <div className={classnames(s.card,type)} data-type={INF_TYPE[type]} onClick={()=>doShowDetail(item)}>
+    <div className={cls(s.card,type)} data-type={INF_TYPE[type]} onClick={()=>doShowDetail(item)}>
       <Rank id={id} />
+
+      {(close === 1) &&  <em className={"close"} style={{color:`var(--clr-${type})`}}>解決しました！</em>}
 
       <div className={s.img}>
         {cat && <img src={`${PRE_IMG}${cat.img[0]}`} alt=''/>}

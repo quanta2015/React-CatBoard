@@ -18,20 +18,24 @@ configure({enforceActions: 'observed'})
 
 
 
-let Layout = Loadable({ loader: () => import('./app/layout')})
-let Index  = Loadable({ loader: () => import('./app/index')})
-let Cat    = Loadable({ loader: () => import('./app/cat')})
-let Note   = Loadable({ loader: () => import('./app/note')})
-let Qa     = Loadable({ loader: () => import('./app/qa')})
-let Ask    = Loadable({ loader: () => import('./app/ask')})
+const Layout = Loadable({ loader: () => import('./app/layout')})
+const Index  = Loadable({ loader: () => import('./app/index')})
+const Cat    = Loadable({ loader: () => import('./app/cat')})
+const Note   = Loadable({ loader: () => import('./app/note')})
+const Qa     = Loadable({ loader: () => import('./app/qa')})
+const Ask    = Loadable({ loader: () => import('./app/ask')})
 
-let Reg    = Loadable({ loader: () => import('./app/reg')})
-let Login  = Loadable({ loader: () => import('./app/login')})
+const Reg    = Loadable({ loader: () => import('./app/reg')})
+const Login  = Loadable({ loader: () => import('./app/login')})
 
-let UserInfo = Loadable({ loader: () => import('./app/userInfo')})
+const UserInfo = Loadable({ loader: () => import('./app/userInfo')})
+const Edit = Loadable({ loader: () => import('./app/edit')})
+const Collect = Loadable({ loader: () => import('./app/collect')})
 
-let Chat   = Loadable({ loader: () => import('./app/chat')})
+const Chat   = Loadable({ loader: () => import('./app/chat')})
 
+const AskView    = Loadable({ loader: () => import('./app/askView')})
+const NoteView    = Loadable({ loader: () => import('./app/noteView')})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -51,8 +55,15 @@ root.render(
 
 
             <Route path="/userInfo" element={<UserInfo />} />
+            <Route path="/edit"     element={<Edit />} />
+            <Route path="/collect"  element={<Collect />} />
+            
 
             <Route path="/chat"     element={<Chat />} />
+
+
+            <Route path="/askView"  element={<AskView />} />
+            <Route path="/noteView" element={<NoteView />} />
 
           </Route>
         </Routes>

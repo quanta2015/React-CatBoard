@@ -9,8 +9,30 @@
 
 import dayjs from 'dayjs'
 import * as urls from '@/constant/urls'
+import { Modal} from 'antd';
+import {ExclamationCircleFilled} from '@ant-design/icons'
+
+const { confirm } = Modal;
+
 
 export const clone=(o)=>  JSON.parse(JSON.stringify(o))
+
+
+
+
+export const cfm =(msg,event,params=null)=>{
+
+  confirm({
+    title: msg,
+    icon: <ExclamationCircleFilled />,
+    okType: 'danger',
+    okText: 'はい',
+    cancelText: 'いいえ',
+    onOk() {
+      event(params)
+    },
+  });
+}
 
 
 export const publishMsg =(msg,client)=> {
@@ -23,6 +45,30 @@ export const publishMsg =(msg,client)=> {
   });
 }
 
+
+export const noProp =(obj) => (Object.keys(obj).length === 0)
+
+
+export const encodeImg2 = (list)=>{
+  return list.map(code=> `${urls.PRE_IMG}${code}` )
+}
+
+
+export const encodeImg = (code)=>{
+  return [`${urls.PRE_IMG}${code}`]
+}
+
+
+export const extractImg = (url)=>{
+  
+  return url.replace(urls.PRE_IMG,'')
+
+  
+}
+
+
+
+
 export const now=()=> dayjs().format('YYYY-MM-DD HH:mm:ss')
 
 export const isN=(e)=>{
@@ -33,6 +79,10 @@ export const isMobile =(width)=>{
   return document.querySelector('html').clientWidth<width
 }
 
+
+export const scrollToTop = (method)=>{
+  window.scrollTo({ top: 0, behavior:method });
+}
 
 export const scrollToBottom =(direction)=> {
   setTimeout(() =>{

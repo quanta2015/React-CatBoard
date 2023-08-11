@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { message } from 'antd'
 import {get,post} from '@/util/net.js'
 import * as urls from '@/constant/urls'
-import {fixBody} from '@/util/fn'
+import {fixBody,clone,scrollToTop} from '@/util/fn'
 import axios  from 'axios'
 
 
@@ -21,15 +21,20 @@ class Store {
   }
 
   client   = null
-  qa       = false
   user     = null
+  collect  = null
+  mobile   = false
+  loading  = false
+
+  qa       = false
   edit     = false
   note     = false
-  mobile   = false
   detail   = false
-  loading  = false
-  loginReq = false
   refresh  = false
+  addNote  = false
+  loginReq = false
+  subType  = null
+
 
   chat     = [[],[]]
   chatItem = null
@@ -38,11 +43,14 @@ class Store {
   item     = {}
 
   reset =()=>{
+    scrollToTop()
     this.edit     = false
+    this.note     = false
     this.detail   = false
     this.loading  = false
     this.loginReq = false
     this.qa       = false
+    this.addNote  = false
   }
 
 
@@ -51,6 +59,10 @@ class Store {
 
   setMsgs =(msgs)=>{
     this.msgs = msgs
+  }
+
+  setCollect = (collect)=>{
+    this.collect = collect
   }
 
 
@@ -80,6 +92,11 @@ class Store {
   setShow =(status,attr)=> {
     fixBody(status)
     this[attr] = status
+  }
+
+
+  isCollect = (board_id) => {
+    return this.collect.some(item => item.board_id === board_id)
   }
 
 
@@ -131,6 +148,14 @@ class Store {
     return await this.post(urls.API_QUERY_CATS,params)
   }
 
+
+  async queryByMe(params) {
+    return await this.post(urls.API_QUERY_BY_ME,params)
+  }
+
+
+  
+
   async queryNote(params) {
     return await this.post(urls.API_QUERY_NOTE,params)
   }
@@ -150,8 +175,8 @@ class Store {
     return await this.post(urls.API_SAVE_USERINFO,params)
   }
 
-  async addQa(params) {
-    return await this.post(urls.API_ADD_QA,params)
+  async saveQa(params) {
+    return await this.post(urls.API_SAVE_QA,params)
   }
 
   async replyQa(params) {
@@ -170,6 +195,11 @@ class Store {
 
   async closePost(params) {
     return await this.post(urls.API_CLOSE_POST,params)
+  }
+
+
+  async closeBoard(params) {
+    return await this.post(urls.API_CLOSE_BOARD,params)
   }
 
   async readMsg(params) {
@@ -200,7 +230,40 @@ class Store {
     return await this.post(urls.API_ADD_QUESTION,params)
   }
 
+  async queryQuestion(params) {
+    return await this.post(urls.API_QUERY_QUESTION,params)
+  }
+
+  async saveNote(params) {
+    return await this.post(urls.API_SAVE_NOTE,params)
+  }
+
+  async deleteBoard(params) {
+    return await this.post(urls.API_DEL_BOARD,params)
+  }
+
   
+
+
+  async saveCat(params) {
+    return await this.post(urls.API_SAVE_CAT,params)
+  }
+
+  async saveCollect(params) {
+    return await this.post(urls.API_SAVE_COLLECT,params)
+  }
+
+
+  async queryCollect(params) {
+    return await this.post(urls.API_QUERY_COLLECT,params)
+  }
+
+
+
+
+  
+
+
 
   async uploadImg(params) {
     try {

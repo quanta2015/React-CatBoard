@@ -105,7 +105,7 @@
     .ft {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-evenly;
+      justify-content: space-between;
       width: 100%;
       margin: 20px;
 
@@ -144,6 +144,21 @@
           margin-left: 12px;
         }
       }
+
+      li {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+
+        img {
+          width: 40px;
+          height: 40px;
+
+          &+img {
+            margin-left: 40px;
+          }
+        }
+      }
     }
 
   }
@@ -153,7 +168,6 @@
 .fav {
   filter: var(--fil-lose);
 }
-
 
 
 @media screen and (max-width: 768px) {}

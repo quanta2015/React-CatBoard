@@ -71,6 +71,8 @@ const UploadImg = ({file,img,setImgs,form}) => {
     </div>
   );
 
+  // console.log(fileList,'fileList')
+
   return (
     <>
       <Upload
@@ -93,4 +95,4 @@ const UploadImg = ({file,img,setImgs,form}) => {
 
 }
 
-export default  observer(UploadImg)
+export default  UploadImg

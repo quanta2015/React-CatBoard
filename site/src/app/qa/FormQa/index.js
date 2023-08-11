@@ -26,7 +26,7 @@ const FormMain = ({setShowForm,setLoad,load}) => {
       content: {cnt: content, rep:[]}
     }
 
-    store.addQa(params).then(r=>{
+    store.saveQa(params).then(r=>{
       message.info(r.msg)
       // console.log(r)
       fixBody(false)

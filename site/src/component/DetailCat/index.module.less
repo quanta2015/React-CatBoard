@@ -26,12 +26,13 @@
     font-weight: 700;
     line-height: 24px;
     overflow: hidden;
+
+    .mainWrap {
+      width: calc(100% + 20px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
   }
-
-
-
-
-
 }
 
 
@@ -64,7 +65,24 @@
   &:after {
     transform: rotate(-45deg);
   }
+}
 
+
+.stop {
+  position: absolute;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333;
+  right: 80px;
+  top: 20px;
+  padding: 0 20px;
+  background: #cc0000;
+  cursor: pointer;
+  transition: 0.5s;
+  z-index: 99999;
+  color: #fff;
 }
 
 

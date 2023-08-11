@@ -21,6 +21,7 @@ const getPageList = (o,p) => o.filter((o,i)=> (i>=SIZE*(p-1))&&(i<=p*SIZE-1))
 const Cat = () => {
   
   const { store } = React.useContext(MobXProviderContext)
+  const { refresh } = store
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
 
@@ -51,7 +52,7 @@ const Cat = () => {
 
       store.setShow(false,'loading')
     })
-  },[type,query])
+  },[type,query,refresh])
 
 
 
@@ -107,12 +108,18 @@ const Cat = () => {
   }
 
 
+  const doPost =()=>{
+    store.subType = type
+    store.setShow(true,'edit')
+  }
+
+
   return (
     <div className={cls(s.cat,`g-${type}`)}>
       <div className={s.wrap}>
         <div className={s.hd} >
           <h1>猫ちゃんの迷子情報はこちらから投稿できます。</h1>
-          <span>{INF_TYPE[type]}情報を投稿</span>
+          <span onClick={doPost}>{INF_TYPE[type]}情報を投稿</span>
         </div>
 
 
@@ -146,7 +153,7 @@ const Cat = () => {
               <Option value="before">それ以前</Option>
             </Select>
 
-            <Button onClick={doQuery}>検索</Button>
+            <Button onClick={doQuery} style={{background: `var(--clr-${type})`}}>検索</Button>
           </div>
 
           <div className={s.list}>

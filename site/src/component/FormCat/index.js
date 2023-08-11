@@ -29,7 +29,7 @@ const FormCat = ({}) => {
            
       <Form.Item 
         label="毛色・柄" 
-        name={['cat', 'color']}
+        name={['cat', 'clr']}
         rules={[{ required: true, message: `猫ちゃんの毛色・柄を記入してください` }]}>
         <Input placeholder="（例）薄い茶色で縞模様" style={{height: '50px'}} />
       </Form.Item>

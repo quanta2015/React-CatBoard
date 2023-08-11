@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React,{useEffect,useState} from 'react';
+import { useNavigate } from 'react-router-dom'
 import {Input, Table, Space, Pagination, Spin,Carousel,Button} from 'antd'
 import {API_SERVER} from '@/constant/apis'
 import { observer,MobXProviderContext } from 'mobx-react'
@@ -22,6 +23,7 @@ import slide03 from '@/img/slide03.png'
 
 
 const Index = () => {
+  const navigate = useNavigate();
   const { store } = React.useContext(MobXProviderContext)
 
   const [loseList, setLoseList] = useState([])
@@ -67,16 +69,18 @@ const Index = () => {
 
   const [name, setName] = useState('')
 
-  const Header = (title)=>(
+  const Header = (title,url)=>(
     <div className={s.header}>
       <h1>{title}</h1>
-      <span>{`${title}　一覧を見る`}</span>
+      <span onClick={()=>navigate(url)}>{`${title}　一覧を見る`}</span>
       <img src={icon_right} />
     </div>
   )
 
 
+
   const doNewArticle =(type)=>{
+    store.subType = type
     store.setShow(true,'edit')
   }
 
@@ -117,22 +121,22 @@ const Index = () => {
           
           <div className={s.adv}></div>
           <section>
-            {Header('迷子情報')}
+            {Header('迷子情報','/cat?type=lose')}
             <div>{loseList.slice(0, 3).map((item,i)=> <Card key={i} {...item} /> )}</div>
           </section>
           <div className={s.adv}></div>
           <section>
-            {Header('保護情報')}
+            {Header('保護情報','/cat?type=prot')}
             <div>{protList.slice(0, 3).map((item,i)=> <Card key={i} {...item} /> )}</div>
           </section>
           <div className={s.adv}></div>
           <section>
-            {Header('記事')}
+            {Header('記事','/note')}
             <div>{noteList.slice(0, 3).map((item,i)=> <Card key={i} {...item} /> )}</div>
           </section>
           <div className={s.adv}></div>
           <section>
-            {Header('Q&A')}
+            {Header('Q&A','/qa')}
             <div>
               <div className={s.wrap}>
                 <span className={s.title}>受付中の質問</span>
