@@ -15,10 +15,20 @@ import icon_del from '@/img/icon/delete.svg'
 import icon_cal from '@/img/icon/calendar.svg'
 import icon_map  from '@/img/icon/map.svg'
 
-const CardCat = ({item,i,doEditCat,doDel}) => {
+
+
+
+const CardCat = ({item,i,doEdit,doDel}) => {
+  const { store } = React.useContext(MobXProviderContext) 
+
+  const doShowDetail =()=>{
+    store.subType = item.category==='迷子'?'lose':'prot'
+    store.setItem(item)
+    store.setShow(true,'detail')
+  }
 
   return (
-    <div className={s.itemCat} key={i}>
+    <div className={s.itemCat} key={i} onClick={doShowDetail}>
       <label className={DEC_TYPE[item?.category]}>{item?.category}</label>
       <img src={`${PRE_IMG}${item?.cat?.img[0]}`} />
       <div className={s.info}>
@@ -55,9 +65,8 @@ const CardCat = ({item,i,doEditCat,doDel}) => {
           
           <div className={s.fn}>
 
-            {doEditCat &&
-            <div className={s.btn} onClick={()=>doEditCat(item)}><img src={icon_edit}/>修改</div>}
-
+            {doEdit &&
+            <div className={s.btn} onClick={()=>doEdit(item)}><img src={icon_edit}/>修改</div>}
 
             {doDel && 
             <div className={s.btn} onClick={()=>doDel(item)}><img src={icon_del} />删除</div>}

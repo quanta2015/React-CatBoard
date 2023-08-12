@@ -14,7 +14,6 @@ import FormCat from '@/component/FormCat'
 import FormPostBasic from '@/component/FormPostBasic'
 import FormPostOther from '@/component/FormPostOther';
 import CardInfo from '@/component/CardInfo'
-import CardDetailCat from '@/component/CardDetailCat'
 
 import s from './index.module.less';
 

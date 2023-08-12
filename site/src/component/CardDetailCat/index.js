@@ -42,6 +42,7 @@ const CardDetailCat = ({btnTxt,btnEvent}) => {
     store.saveCollect(params).then(r=>{
       // console.log('collect',r)
       store.setCollect(r.data)
+      store.setRefresh()
       message.info(r.msg)
     })
   }

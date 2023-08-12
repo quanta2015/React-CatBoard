@@ -77,7 +77,7 @@ const Edit = () => {
   const doChgKey =(e)=> {
     const val = e.target.value
     if (val==='') {
-      setQuery(false)
+      setQuery(!query)
     }
     setKey(val)
   }
@@ -170,14 +170,19 @@ const Edit = () => {
 
         <div className={s.bd}>   
           <div className={s.sect}>
+
+            {pageList.length>0 && 
             <div className={s.list}>
               {pageList.map((item,i)=>
                 item.board_type==='cat' ? 
-                  <CardCat {...{item,i,doEditCat,doDel:showDeleteConfirm}} />
+                  <CardCat {...{item,i,doEdit:doEditCat,doDel:showDeleteConfirm}} />
                   :
                   <CardQa {...{item,i,doEditQa,showDeleteConfirm}} />
               )}
-            </div>
+            </div>}
+
+            {pageList.length===0 && <div className={s.none}>データがありません</div>}
+
             <div className={s.page}>
               <Pagination defaultCurrent={1} pageSize={SIZE} total={list.length} onChange={(e)=>setPage(e)} />
             </div>

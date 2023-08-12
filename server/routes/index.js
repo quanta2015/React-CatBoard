@@ -59,7 +59,7 @@ router.post('/queryCat', async (req, res, next) =>{
   };
 
   const sql = `
-    SELECT board_id, board_type, category, sub_date, sub_user, addr, cat, title, content, fav, favCount, see
+    SELECT board_id, board_type, category, sub_date, sub_user, addr, cat, title, content, fav, favCount, see, close
     FROM tab_board
     WHERE board_type = '${params.boardType}' AND category = '${params.category}'
     ${params.areaCondition}
@@ -182,6 +182,18 @@ router.post('/closePost', async (req, res, next) =>{
 
   res.status(200).json({code: 0, data:data[0], msg:'帖子关闭成功'})
 })
+
+
+router.post('/closeBoard', async (req, res, next) =>{
+  const params = req.body
+  // console.log(params)
+  let sql = `CALL PROC_CLOSE_BOARD(?)`
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+
+  res.status(200).json({code: 0, data:data[0], msg:'帖子关闭成功'})
+})
+
 
 
 router.post('/favNote', async (req, res, next) =>{
@@ -339,7 +351,7 @@ router.post('/saveNote', async (req, res, next) =>{
 
 router.post('/delBoard', async (req, res, next) =>{
   const params = req.body
-  console.log(params)
+  // console.log(params)
   let sql = `CALL PROC_DEL_BOARD(?)`
   let data = await callP(sql, params, res)
   // r[0].icon = JSON.parse(r[0].icon)
@@ -347,15 +359,43 @@ router.post('/delBoard', async (req, res, next) =>{
 })
 
 
+router.post('/saveCollect', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+  let sql = `CALL PROC_SAVE_COLLECT(?)`
+  let data = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, data, msg:'收藏记事成功！'})
+})
+
+
+router.post('/queryCollect', async (req, res, next) =>{
+  const params = req.body
+  console.log(params)
+
+  
+  let sql = `CALL PROC_QUERY_COLLECT(?)`
+
+  const users = await getUsers(res)
+  const data = await initName(users,toJson(await callP(sql, params, res)))
+  // let data = await callP(sql, params, res)
+  // r[0].icon = JSON.parse(r[0].icon)
+  res.status(200).json({code: 0, data, msg:'收藏记事成功！'})
+})
+
+
+
 
 router.post('/login', async (req, res, next) =>{
   let params = req.body
   // console.log(params)
-  let sql = `CALL PROC_LOGIN(?)`
-  let r = await callP(sql, params, res)
+  let sql1 = `CALL PROC_LOGIN(?)`
+  let sql2 = `CALL PROC_QUERY_COLLECT(?)`
+  let r = await callP(sql1, params, res)
   if (r.length > 0) {
+    let s = await callP(sql2, { user_id:r[0].user_id }, res)
     r[0].icon = JSON.parse(r[0].icon)
-    res.status(200).json({code: 0, data: r[0]})
+    res.status(200).json({code: 0, data: r[0], collect: s})
   } else {
     res.status(200).json({code: 1, msg: '用户不存在或者密码错误！'})
   }

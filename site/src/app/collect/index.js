@@ -86,7 +86,7 @@ const Collect = () => {
   const doChgKey =(e)=> {
     const val = e.target.value
     if (val==='') {
-      setQuery(false)
+      setQuery(!query)
     }
     setKey(val)
   }
@@ -95,49 +95,10 @@ const Collect = () => {
 
 
   const doShowDetail =(item)=>{
+
+    console.log(item,'item')
     store.setItem(item)
-    store.setShow(true,'qa')
-  }
-
-
-  const doEditCat =(item)=>{
-    // console.log('item',item)
-    store.setItem(item)
-    store.subType = DEC_TYPE[item.category]
-    setType('cat')
-    setShowEdit(true)
-  }
-
-  const doEditQa =(item)=>{
-    // console.log('item',item)
-    store.setItem(item)
-    // store.subType = DEC_TYPE[item.category]
-    setType('qa')
-    setShowEdit(true)
-  }
-
-  
-
-  const doDelBoard =async(item)=>{
-    store.setShow(true,'loading')
-    await store.deleteBoard({board_id: item.board_id}).then(r=>{
-      store.setShow(false,'loading')
-      store.setRefresh()
-      message.info(r.msg)
-    })
-  }
-
-  const showDeleteConfirm =(o)=>{
-    confirm({
-      title: 'レコードの削除を確認します?',
-      icon: <ExclamationCircleFilled />,
-      okType: 'danger',
-      okText: 'はい',
-      cancelText: 'いいえ',
-      onOk() {
-        doDelBoard(o)
-      },
-    });
+    store.setShow(true,'note')
   }
 
 
@@ -215,14 +176,13 @@ const Collect = () => {
             <div className={s.list}>
               {pageList.map((item,i)=>
                 item.board_type==='cat' ? 
-                  <CardCat {...{item,i,doEditCat,doDel:null}} />
+                  <CardCat {...{item,i,doEdit:null,doDel:null}} />
                   :
                   renderNote(item,i)
               )}
             </div>}
 
-            {pageList.length===0 && 
-            <div className={s.none}>データがありません</div>}
+            {pageList.length===0 && <div className={s.none}>データがありません</div>}
 
 
             <div className={s.page}>
